@@ -5,6 +5,8 @@ import index from '../pages/index'
 import more from '../pages/more'
 import mycenter from '../pages/mycenter'
 import details from '../pages/details'
+import website from '../pages/website'
+import submit from '../pages/submit'
 Vue.use(Router)
 
 export default new Router({
@@ -29,6 +31,14 @@ export default new Router({
       path: '/vue-home/dist/more',
       name: 'more',
       component: more
+    }, {
+      path: '/vue-home/dist/website',
+      name: 'website',
+      component: website
+    }, {
+      path: '/vue-home/dist/submit',
+      name: 'submit',
+      component: submit
     },
 
   ]

@@ -3,11 +3,18 @@ $class-green:#369219;
 @mixin border-btm {
   border-bottom: 0.1rem #dcdcdc solid;
 }
-
+@font-face {
+  font-family: 'iconfont';  /* project id 512084 */
+  src: url('//at.alicdn.com/t/font_512084_3b35m6uveuzestt9.eot');
+  src: url('//at.alicdn.com/t/font_512084_3b35m6uveuzestt9.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_512084_3b35m6uveuzestt9.woff') format('woff'),
+  url('//at.alicdn.com/t/font_512084_3b35m6uveuzestt9.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_512084_3b35m6uveuzestt9.svg#iconfont') format('svg');
+}
 @mixin wrapper {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    // height: 100vh; 
     background-color: #fbfcfe;
-   
+    color: #000;
 }

@@ -27,7 +27,7 @@
                     <span>108元</span>
                 </div>
                 <div class="remain">
-                   <mu-linear-progress class="progress" mode="determinate" color="#1e7fea" size="10" :value="value"/><span>剩余37份</span>
+                   <mu-linear-progress class="progress" mode="determinate" color="#1e7fea" :size="10" :value="value"/><span>剩余37份</span>
                 </div>
             </div>
             <a class="content-right" @click="routerClickdetails">立即抢购</a>

@@ -1,5 +1,6 @@
 <template>
 <div class="wrapper">
+  <i class="iconfont" @click="routerClickgoback">&#xe600;</i>
   <mu-tabs :value="activeTab" @change="handleTabChange" class="tabs" lineClass>
     <mu-tab value="tab1" title="进行中"/>
     <mu-tab value="tab2" title="已结束"/>
@@ -18,11 +19,11 @@
             <span>￥198</span>
             </div>
             <div class="remain">
-                <mu-linear-progress class="progress" mode="determinate" color="#1e7fea" size="10" :value="value"/><span>剩余37份</span>
+                <mu-linear-progress class="progress" mode="determinate" color="#1e7fea" :size="10" :value="value"/><span>剩余37份</span>
             </div>
         </div>
       
-        <div class="button">立即抢购</div>
+        <div class="button"  @click="routerClickdetails">立即抢购</div>
       </div>
     </div>
   </div>
@@ -39,7 +40,7 @@
             <span>￥198</span>
             </div>
             <div class="remain">
-                <mu-linear-progress class="progress" mode="determinate" color="#1e7fea" size="10" :value="value"/><span>剩余37份</span>
+                <mu-linear-progress class="progress" mode="determinate" color="#1e7fea" :size="10" :value="value"/><span>剩余37份</span>
             </div>
         </div>
       
@@ -67,6 +68,10 @@ export default {
   methods: {
     handleTabChange (val) {
       this.activeTab = val
+    },routerClickdetails(){
+        this.$router.push("/vue-home/dist/details");
+    }, routerClickgoback(){
+       this.$router.go(-1);
     }
   }
 }
@@ -76,6 +81,15 @@ export default {
   @import '../assets/sass/_base.scss';
      .wrapper {
       @include wrapper;
+        .iconfont{
+            font-family:"iconfont"; font-size:rem(50); font-style:normal;
+            position: absolute;
+            width: rem(100);
+            top:rem(3);
+            left:rem(20);
+            color: #666666;
+            z-index: 10;
+        }
       .lineClass{
         width: 25%;
         width: rem(20);
