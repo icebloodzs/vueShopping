@@ -1,0 +1,6 @@
+$gb_width: 750;    //640是设计图(画布)的宽度，可根据需要调整
+
+//px ====> rem
+@function rem($size) {
+   @return $size/$gb_width*10rem;
+}
