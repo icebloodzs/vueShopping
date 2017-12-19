@@ -14,71 +14,79 @@
        </div>
     </div>
     <div class="main">
-        <mu-paper>
-            <mu-bottom-nav :value="bottomNav" @change="handleTabChange">
-                <mu-bottom-nav-item value="tab1" title="全部"/>
-                <mu-bottom-nav-item value="tab2" title="待付款"/>
-                <mu-bottom-nav-item value="tab3" title="未核销"/>
-                <mu-bottom-nav-item value="tab4" title="已完成"/>
-            </mu-bottom-nav>
-        </mu-paper>
+         <mu-tabs :value="bottomNav" @change="handleTabChange">
+            <mu-tab value="tab1" title="全部"/>
+            <mu-tab value="tab2" title="待付款"/>
+            <mu-tab value="tab3" title="未核销"/>
+            <mu-tab value="tab4" title="已完成"/>
+        </mu-tabs>
+       
         <div v-if="bottomNav === 'tab1'">
            <div class="content">
                <div class="content-head">
                    <span>2012-12-12 &nbsp 17:06:24</span><span>支付超时</span>
                </div>
              <div class="content-con">
-                 <img src="../assets/img/dwqvas_02.jpg" alt="">
-                 <div class="content-con-text">
-                     <span>第五空间蔬菜第五空间蔬菜</span>
-                     <span>来自：大牌抢购</span>
-                     <span>￥89.00</span>
-                 </div>
+                <div class="content-con-left">
+                    <img src="../assets/img/dwqvas_02.jpg" alt="">
+                    <div class="content-con-text">
+                        <span>第五空间蔬菜第五空间蔬菜</span>
+                        <span>来自：大牌抢购</span>
+                        <span>￥89.00</span>
+                    </div>
+                </div>
              </div>
            </div>
         </div>
         <div v-if="bottomNav === 'tab2'">
            <div class="content">
                <div class="content-head">
-                   <span>2012-12-12 &nbsp 17:06:24</span><span>支付超时</span>
+                   <span>2012-12-12 &nbsp 17:06:24</span><span>待付款</span>
                </div>
-             <div class="content-con">
-                 <img src="../assets/img/dwqvas_02.jpg" alt="">
-                 <div class="content-con-text">
-                     <span>第五空间蔬菜第五空间蔬菜</span>
-                     <span>来自：大牌抢购</span>
-                     <span>￥89.00</span>
-                 </div>
+             <div class="content-con tab2">
+                   <div class="content-con-left">
+                        <img src="../assets/img/dwqvas_02.jpg" alt="">
+                        <div class="content-con-text">
+                            <span>第五空间蔬菜第五空间蔬菜</span>
+                            <span>来自：大牌抢购</span>
+                            <span>￥89.00</span>
+                        </div>
+                    </div>
+                    <div class="content-con-button"  @click="routerClickPay">支付</div>
              </div>
            </div>
         </div>
         <div v-if="bottomNav === 'tab3'">
-          <div class="content">
+            <div class="content"  @click="routerClickCancel">
                <div class="content-head">
-                   <span>2012-12-12 &nbsp 17:06:24</span><span>支付超时</span>
+                   <span>2012-12-12 &nbsp 17:06:24</span><span>待使用</span>
                </div>
              <div class="content-con">
-                 <img src="../assets/img/dwqvas_02.jpg" alt="">
-                 <div class="content-con-text">
-                     <span>第五空间蔬菜第五空间蔬菜</span>
-                     <span>来自：大牌抢购</span>
-                     <span>￥89.00</span>
-                 </div>
+                <div class="content-con-left">
+                    <img src="../assets/img/dwqvas_02.jpg" alt="">
+                    <div class="content-con-text">
+                        <span>第五空间蔬菜第五空间蔬菜</span>
+                        <span>来自：大牌抢购</span>
+                        <span>￥89.00</span>
+                    </div>
+                </div>
              </div>
            </div>
         </div>
         <div v-if="bottomNav === 'tab4'">
-           <div class="content">
+            <div class="content">
                <div class="content-head">
-                   <span>2012-12-12 &nbsp 17:06:24</span><span>支付超时</span>
+                   <span>2012-12-12 &nbsp 17:06:24</span><span>已完成</span>
                </div>
              <div class="content-con">
-                 <img src="../assets/img/dwqvas_02.jpg" alt="">
-                 <div class="content-con-text">
-                     <span>第五空间蔬菜第五空间蔬菜</span>
-                     <span>来自：大牌抢购</span>
-                     <span>￥89.00</span>
-                 </div>
+                <div class="content-con-left">
+                    <img src="../assets/img/dwqvas_02.jpg" alt="">
+                    <div class="content-con-text">
+                        <span>第五空间蔬菜第五空间蔬菜</span>
+                        <span>来自：大牌抢购</span>
+                        <span>￥89.00</span>
+                    </div>
+                </div>
              </div>
            </div>
         </div>
@@ -116,6 +124,10 @@
                this.$router.go(0);
             },routerClickhome(){
               this.$router.push("/vue-home/dist");
+            },routerClickPay(){
+              this.$router.push("/vue-home/dist/pay");
+            },routerClickCancel(){
+              this.$router.push("/vue-home/dist/cancel");
             },
       getData() {
         // let that = this
@@ -211,11 +223,21 @@
         }
     }
     .main{
-        .mu-buttom-item-wrapper{
+        .mu-tab-link{
             font-size: rem(30);
-            // background-color: #fff;
-            // color: #000;
-      }
+            background-color: #fff;
+            color: #000;
+             border: 1px solid #fff;
+        }
+        .mu-tab-active{
+            color: #1f7ee8;
+           
+        }
+        .mu-tabs{
+        span:nth-child(5){
+            background-color: #1f7ee8 !important;
+        }
+        }
       .content{
           width:100%;
           padding:rem(28) rem(24) 0 rem(24);
@@ -236,30 +258,47 @@
           .content-con{
               display: flex;
               flex-direction: row;
-              img{
-                  width: rem(146);
-                  height: rem(160);
+              &.tab2{
+                     justify-content: space-between;
               }
-              .content-con-text{
-                  display: flex;
-                  flex-direction: column;
-                  margin-left: rem(15);
-                  margin-top: rem(15);
-                    span:nth-child(1){
-                        color: #000;
-                        font-size: rem(25); 
-                        line-height: rem(40);
+                .content-con-left{
+                    display: flex;
+                    flex-direction: row;
+                    img{
+                        width: rem(146);
+                        height: rem(160);
                     }
-                    span:nth-child(2){
-                        color: #989898;
-                        font-size: rem(25); 
-                        line-height: rem(40);
-                    }
-                     span:nth-child(3){
-                        color: #1f7eec;
-                        font-size: rem(25);
-                        line-height: rem(40); 
-                    }
+                .content-con-text{
+                    display: flex;
+                    flex-direction: column;
+                    margin-left: rem(15);
+                    margin-top: rem(15);
+                        span:nth-child(1){
+                            color: #000;
+                            font-size: rem(25); 
+                            line-height: rem(40);
+                        }
+                        span:nth-child(2){
+                            color: #989898;
+                            font-size: rem(25); 
+                            line-height: rem(40);
+                        }
+                        span:nth-child(3){
+                            color: #1f7eec;
+                            font-size: rem(25);
+                            line-height: rem(40); 
+                        }
+                }
+              }
+              .content-con-button{
+                  color: #fff;
+                  width: rem(106);
+                  height: rem(60);
+                  line-height: rem(60);
+                  text-align: center;
+                  background-color: #fe9d00;
+                  border-radius: rem(5);
+                  margin-top: rem(70);
               }
           } 
       }

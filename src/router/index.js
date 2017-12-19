@@ -7,6 +7,8 @@ import mycenter from '../pages/mycenter'
 import details from '../pages/details'
 import website from '../pages/website'
 import submit from '../pages/submit'
+import pay from '../pages/pay'
+import cancel from '../pages/cancel'
 Vue.use(Router)
 
 export default new Router({
@@ -39,7 +41,15 @@ export default new Router({
       path: '/vue-home/dist/submit',
       name: 'submit',
       component: submit
-    },
+    },{
+      path: '/vue-home/dist/pay',
+      name: 'pay',
+      component: pay
+    },{
+      path: '/vue-home/dist/cancel',
+      name: 'cancel',
+      component: cancel
+    }
 
   ]
 })

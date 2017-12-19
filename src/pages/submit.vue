@@ -32,7 +32,32 @@
             <div class="bind-phone-con-right">绑定新号码 <i class="iconfont">&#xe62d;</i></div>
          </div>
       </div>
-      <div class="submit-order">提交订单</div>
+      <div class="submit-order"  @click="openBottomSheet">提交订单</div>
+      <div class="mu-overlay" v-if="bottomSheet" @click="closeBottomSheet"  style="opacity: 0.4; background-color: rgb(0, 0, 0); position: fixed; z-index:1;"></div>
+      <!-- <mu-bottom-sheet :open="bottomSheet" @close="closeBottomSheet"> -->
+          <div class="muz-list" v-if="bottomSheet">
+             
+              <div class="mu-list-head"> <strong>支付方式</strong></div>
+              <div class="mu-list-item" :class="{ active: isActive}" @click="isActive1">
+                  <img src="../assets/img/zhongyuan_logo_02.png" alt="">
+                  中原银行卡支付（2366）
+                  </div>
+                <div class="mu-list-item" :class="{ actives: isActives}" @click="isActive2">
+                    <img src="../assets/img/weixin_logo_02.png" alt=""> 
+                    微信支付
+                    </div>
+                 <i class="iconfont" :class="{ iconfontsite: isActive}">&#xe721;</i>
+                <div class="mu-list-button">立即支付</div>
+          </div>
+    <!-- <mu-list @itemClick="closeBottomSheet">
+      <mu-sub-header>
+       支付方式
+      </mu-sub-header>
+      <mu-list-item title="中原银行卡支付（2366）"/>
+      <mu-list-item title="微信支付"/>
+      
+    </mu-list> -->
+  <!-- </mu-bottom-sheet> -->
   </div>
 </div>
 
@@ -47,7 +72,11 @@ export default {
   data () {
     return {
      counter:1,
-     unitprice:180.00
+     unitprice:180.00,
+       bottomSheet: false,
+       isActive:true,
+       isActives:false
+
     }
   },
   methods: {
@@ -56,9 +85,19 @@ export default {
     },routerClickminus(){
         if(this.counter>1)
         this.counter -= 1;
+    },  closeBottomSheet () {
+      this.bottomSheet = false
+    }, openBottomSheet () {
+      this.bottomSheet = true
+    },isActive1 () {
+      this. isActive = true,
+       this.isActives = false
+    },isActive2 () {
+      this. isActive = false,
+       this.isActives = true
     }
         
-        // renturn (counter>)1 ? "counter -= 1;
+       
     
   }
 }
@@ -184,6 +223,52 @@ export default {
               font-size: rem(35);
               line-height: rem(106);
               text-align: center;
+          }
+          .muz-list{
+              width: 100%;
+              bottom: 0;
+              position: absolute;
+            //   height: rem(400);
+              font-size: rem(30);
+              line-height: rem(100);
+              text-align: center;
+              z-index: 2;
+              background: #fff;
+              .mu-list-item{
+                  display: flex;
+                  flex-direction: row;
+                    border-top: 1px solid #fff; 
+                    border-bottom: 1px solid #fff; 
+                  img{
+                      height: rem(100);
+                      width: rem(120);
+                  }
+              }
+              .mu-list-button{
+                  color: #fff;
+                   background: #29a1f7;
+              }
+               .iconfont{
+                    font-family:"iconfont"; font-size:rem(50); font-style:normal;
+                    position: absolute;
+                    height: rem(100);
+                    bottom:rem(100);
+                    right:rem(65);
+                    color: #29a1f7;
+                    z-index: 3;
+                    &.iconfontsite{
+                        bottom:rem(200);
+                    }
+             }
+             .active{
+                border-top: 1px solid #e9e9e9; 
+                border-bottom: 1px solid #e9e9e9; 
+               
+             }
+             .actives{
+                border-top: 1px solid #e9e9e9; 
+                border-bottom: 1px solid #e9e9e9; 
+             }
           }
       }
     }
