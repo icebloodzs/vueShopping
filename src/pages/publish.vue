@@ -31,8 +31,8 @@
     <!--未登陆提示-->
     <mu-dialog :open="!accesstoken" title="温馨提示：">
       请先登录
-      <mu-flat-button slot="actions" primary to="/vue-home/dist/" label="取消" />
-      <mu-flat-button slot="actions" primary to="/vue-home/dist/login" label="确定" />
+      <mu-flat-button slot="actions" primary to="/dist/" label="取消" />
+      <mu-flat-button slot="actions" primary to="/dist/login" label="确定" />
     </mu-dialog>
     <!--输入提示-->
     <mu-dialog :open="publish" title="温馨提示：">

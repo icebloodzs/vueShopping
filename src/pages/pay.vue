@@ -66,9 +66,9 @@ export default {
     routerClickgoback(){
        this.$router.go(-1);
     },routerClicksubmit(){
-          this.$router.push("/vue-home/dist/submit");
+          this.$router.push("/dist/submit");
       },routerClickdetails(){
-                this.$router.push("/vue-home/dist/details");
+                this.$router.push("/dist/details");
             }
   }
 }

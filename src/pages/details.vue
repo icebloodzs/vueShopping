@@ -43,7 +43,9 @@
      </div>
      <div class="content-detail">
        <div class="content-detail-title">商品详情</div>
-       <div class="content-detail-con"></div>
+       <div class="content-detail-con">
+         
+       </div>
      </div>
    </div>
    <div class="button" @click="routerClicksubmit">立即抢购</div>
@@ -56,6 +58,8 @@
    import a from '../assets/img/banner1.jpg'
     import b from '../assets/img/banner2.jpg'
     import c from '../assets/img/banner3.jpg'
+
+   
 export default {
     components: {
         'app-banner': Banner
@@ -77,11 +81,13 @@ export default {
     handleTabChange (val) {
       this.activeTab = val
     },routerClickwebsite(){
-          this.$router.push("/vue-home/dist/website");
+          this.$router.push("/dist/website");
       },routerClicksubmit(){
-          this.$router.push("/vue-home/dist/submit");
+          this.$router.push("/dist/submit");
       }, routerClickgoback(){
        this.$router.go(-1);
+    }, routerClickdetails() {
+      this.$router.push("/dist/detail");
     }
   }
 }
@@ -282,7 +288,7 @@ export default {
             border-bottom: 1px solid  #e9e9e9;
           }
           .content-detail-con{
-            height: rem(500);
+            height: rem(300);
             background-color: #fff;
           }
         }

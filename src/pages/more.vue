@@ -1,7 +1,7 @@
 <template>
 <div class="wrapper">
   <i class="iconfont" @click="routerClickgoback">&#xe600;</i>
-  <mu-tabs :value="activeTab" @change="handleTabChange" class="tabs" lineClass>
+  <mu-tabs :value="activeTab" @change="handleTabChange" :lineClass="['blue']">
     <mu-tab value="tab1" title="进行中"/>
     <mu-tab value="tab2" title="已结束"/>
   </mu-tabs>
@@ -30,8 +30,8 @@
   <div v-if="activeTab === 'tab2'">
     <div class="content">
       <img src="../assets/img/banner1.jpg">
-      <div class="time"></div>
-      <div class="focus"></div>
+     <div class="time">距结束 &nbsp 00：05：56</div>
+      <div class="focus">1236人在关注</div>
       <span class="tilte">组员圆周 您的每日营养专家现实秒杀会员专56元速来抢购</span>
       <div class="content-bottom">
         <div class="price">
@@ -44,7 +44,7 @@
             </div>
         </div>
       
-        <div class="button">立即抢购</div>
+        <div class="button-end">已结束</div>
       </div>
     </div>
   </div>
@@ -69,7 +69,7 @@ export default {
     handleTabChange (val) {
       this.activeTab = val
     },routerClickdetails(){
-        this.$router.push("/vue-home/dist/details");
+        this.$router.push("/dist/details");
     }, routerClickgoback(){
        this.$router.go(-1);
     }
@@ -85,22 +85,32 @@ export default {
             font-family:"iconfont"; font-size:rem(50); font-style:normal;
             position: absolute;
             width: rem(100);
-            top:rem(3);
-            left:rem(20);
+            top:0;
+             height: rem(80);
+            line-height: rem(90);
+            left:rem(25);
             color: #666666;
             z-index: 10;
         }
-      .lineClass{
-        width: 25%;
-        width: rem(20);
-      }
-      .mu-tab-link{
-        font-size: rem(30);
-         background-color: #fff;
-         color: #000;
-      }
+      .mu-tab-link {
+          font-size: rem(30);
+          background-color: #fff;
+          color: #000;
+          border: 1px solid #fff;
+          height: rem(80);
+          line-height: rem(80);
+        }
+        .mu-tab-active {
+          color: #1f7ee8;
+        }
+        .mu-tabs {
+          span:nth-child(5) {
+            background-color: #1f7ee8 !important;
+          }
+        }
       .content{
         position: relative;
+        margin-top:rem(5);
         .time{
           position: absolute;
           font-size: rem(30);
@@ -154,6 +164,7 @@ export default {
                   .progress{
                       width: rem(200);
                       margin-right: rem(6);
+                       height: rem(12);
                   }
                   span{
                     display: block;
@@ -162,7 +173,7 @@ export default {
               }
             }
             .button{
-               margin-right: rem(24);
+              margin-right: rem(24);
               width: rem(200);
               height: rem(60);
               background-color: #ff9c00;
@@ -170,10 +181,27 @@ export default {
               line-height: rem(60);
               font-size: rem(25);
               color: #fff;
+              border-radius: rem(5);
+            }
+            .button-end{
+              margin-right: rem(24);
+              width: rem(200);
+              height: rem(60);
+              background-color: #d2d2d2;
+              text-align: center;
+              line-height: rem(60);
+              font-size: rem(25);
+                border-radius: rem(5);
+              color: #fff;
             }
         }
       }
      }
-
-
+</style>
+<style lang="scss">
+ @import '../style/mixin';
+.blue {
+  background: #1979e7 !important;
+  height: rem(4);
+}
 </style>

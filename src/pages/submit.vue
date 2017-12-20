@@ -22,7 +22,7 @@
               <span> 数量:</span><span class="info-amount-right"> <div class="minus operation" @click="routerClickminus">-</div><span>{{ counter }}</span><div class="plus operation" v-on:click="counter += 1">+</div></span>
           </div>
           <div class="info-subtotal price">
-              <span>小计:</span><span>￥{{ counter*unitprice }}</span>
+              <span>小计:</span><span>￥{{ counter*unitprice | currency }}</span>
           </div>
       </div>
       <div class="bind-phone">
@@ -71,11 +71,11 @@ export default {
     },
   data () {
     return {
-     counter:1,
-     unitprice:180.00,
-       bottomSheet: false,
-       isActive:true,
-       isActives:false
+        counter:1,
+        unitprice:180.00,
+        bottomSheet: false,
+        isActive:true,
+        isActives:false
 
     }
   },

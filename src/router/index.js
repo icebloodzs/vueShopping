@@ -15,38 +15,42 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/vue-home/dist',
+      path: '',
+      redirect: {name:"index"}
+    },
+    {
+      path: '/',
       name: 'index',
       component: index
     }, 
     {
-      path: '/vue-home/dist/mycenter',
+      path: '/dist/mycenter',
       name: 'center',
       component: mycenter
     }, 
     {
-      path: '/vue-home/dist/details',
+      path: '/dist/details/:id',
       name: 'details',
       component: details
     }, 
     {
-      path: '/vue-home/dist/more',
+      path: '/dist/more',
       name: 'more',
       component: more
     }, {
-      path: '/vue-home/dist/website',
+      path: '/dist/website',
       name: 'website',
       component: website
     }, {
-      path: '/vue-home/dist/submit',
+      path: '/dist/submit',
       name: 'submit',
       component: submit
     },{
-      path: '/vue-home/dist/pay',
+      path: '/dist/pay',
       name: 'pay',
       component: pay
     },{
-      path: '/vue-home/dist/cancel',
+      path: '/dist/cancel',
       name: 'cancel',
       component: cancel
     }
