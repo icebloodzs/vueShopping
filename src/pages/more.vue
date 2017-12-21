@@ -9,8 +9,9 @@
   <div v-if="activeTab === 'tab1'">
     <div class="content">
       <img src="../assets/img/banner1.jpg">
-      <div class="time">距结束 &nbsp 00：05：56</div>
-      <div class="focus">1236人在关注</div>
+        <moredown :endTime="endTime"></moredown>
+      <!-- <div class="time">距结束 &nbsp 00：05：56</div> -->
+      <div class="focus"><i class="iconfont">&#xe826;</i><span>1236人在关注</span></div>
       <span class="tilte">组员圆周 您的每日营养专家现实秒杀会员专56元速来抢购</span>
       <div class="content-bottom">
         <div class="price">
@@ -30,8 +31,8 @@
   <div v-if="activeTab === 'tab2'">
     <div class="content">
       <img src="../assets/img/banner1.jpg">
-     <div class="time">距结束 &nbsp 00：05：56</div>
-      <div class="focus">1236人在关注</div>
+    <!-- <moredown :endTime="endTime"></moredown> -->
+      <div class="focus"><i class="iconfont">&#xe826;</i>1236人在关注</div>
       <span class="tilte">组员圆周 您的每日营养专家现实秒杀会员专56元速来抢购</span>
       <div class="content-bottom">
         <div class="price">
@@ -55,14 +56,16 @@
 </template>
 <script>
   import $ from "jquery";
+  import moredown from '../components/moredown.vue'
 export default {
     components: {
-       
+        'moredown':moredown
     },
   data () {
     return {
       activeTab: 'tab1',
-      value:37
+      value:37,
+        endTime : '2017-12-21 18:00:00',
     }
   },
   methods: {
@@ -119,11 +122,21 @@ export default {
           left: rem(15);
         }
         .focus{
-          position: absolute;
-           font-size: rem(25);
-          color: #fff;
-           top: rem(275);
-          right: rem(25);
+            position: absolute;
+            font-size: rem(22);
+            color: #fff;
+            top: rem(275);
+            right: rem(25);
+          
+          .iconfont{
+            top: -0.42rem;
+            left: -0.43rem;
+            width: rem(17);
+            font-size: rem(30);
+            height: rem(22);
+            position: absolute;
+           color: #1f7ee8;
+          }
         }
         margin-bottom: rem(40);
         img{

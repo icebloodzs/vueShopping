@@ -5,7 +5,7 @@
        <img src="../assets/img/dwqvas_02.jpg">
        <div class="header-middle">
            <span>你好哈士奇</span>
-           <span>收货地址 &nbsp  <strong>></strong></span>
+           <span>收货地址 &nbsp <i class="iconfont">&#xe62d;</i></span>
           
        </div>
        <div class="header-right">
@@ -172,20 +172,28 @@ export default {
     }
     .header-middle {
       margin-left: rem(30);
+      width: rem(175);
       span:nth-child(1) {
         display: block;
-        font-size: rem(30);
+        font-size: rem(35);
         color: #fff;
         line-height: 1.5;
         margin-bottom: rem(15);
+        text-align: left;
+          opacity: .9;
       }
       span:nth-child(2) {
         display: block;
         font-size: rem(25);
         color: #fff;
-        line-height: rem(40);
+        line-height: rem(45);
         background-color: #1772b8;
         text-align: center;
+        opacity: .8;
+        border-radius: rem(8);
+         .iconfont{
+            font-family:"iconfont"; font-style:normal;
+          }
       }
     }
     .header-right {
@@ -197,21 +205,21 @@ export default {
         width: rem(80);
         height: rem(82);
         border-radius: rem(40);
-        background-color: #232323;
-        color: #fff;
+        background-color: rgba(0, 0, 0, .3);
+
+        color: #dde4ea;
         font-size: rem(20);
         z-index: 1;
-        opacity: .6;
       }
       .index {
         line-height: rem(80);
-        top: rem(30);
+        top: rem(23);
         right: rem(24);
+        font-size: rem(24);
       }
       .personal {
-        top: rem(122);
+        top: rem(123);
         right: rem(24);
-        line-height: rem(35);
       }
     }
   }

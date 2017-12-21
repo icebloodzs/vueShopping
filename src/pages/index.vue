@@ -2,10 +2,9 @@
 <!--首页-->
     <div class="wrapper">
         <!-- 轮播 -->
-        <app-banner :listImg="listImg"></app-banner>
+        <app-banner :listImg="listImg" ></app-banner>
         <div class="circle index"  @click="routerClickhome">首页</div>
         <div class="circle personal"  @click="routerClickcenter">个人<br>中心</div>
-        
         <div class="classify">
             <div class="classify-list list1"><img src="../assets/img/list_03.jpg" >特惠</div>
             <div class="classify-list list2"><img src="../assets/img/list_03.jpg" >抢购</div>
@@ -14,7 +13,7 @@
         </div>
         <div class="more">
             <span>大牌抢购</span>
-            <span  @click="routerClick">更多 ></span>
+            <span  @click="routerClick">更多<i class="iconfont">&#xe62d;</i></span>
         </div>
         <div class="content-item">
             <img class="content-img" src="../assets/img/dwqvas_02.jpg">
@@ -83,6 +82,7 @@ export default {
 
 <style scoped lang="scss">
 @import "../style/mixin";
+
 .wrapper {
   position: relative;
   background-color: #fbfcfe;
@@ -97,7 +97,7 @@ export default {
     border-radius: rem(40);
     background-color: #232323;
     color: #fff;
-    font-size: rem(20);
+    font-size: rem(22);
      opacity: .8;
     z-index: 1;
   }
@@ -109,7 +109,6 @@ export default {
   .personal {
     top: rem(150);
     left: rem(655);
-    line-height: rem(35);
   }
 
   .classify {
@@ -150,6 +149,9 @@ export default {
       font-size: rem(30);
       color: #71cefa;
       margin-right: rem(35);
+        .iconfont{
+          font-family:"iconfont"; font-style:normal;margin-left: rem(13);
+          }
     }
   }
   .content-item {

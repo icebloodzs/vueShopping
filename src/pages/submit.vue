@@ -111,7 +111,6 @@ export default {
           height: 100vh;
           background-color: #f2f2f2;
           .confirm-head{
-              padding-left: rem(50);
               height: rem(90);
               background-color: #fff;
               font-size: rem(30);

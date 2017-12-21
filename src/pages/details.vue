@@ -1,8 +1,11 @@
 <template>
 <div class="wrapper">
-   <app-banner :listImg="listImg"></app-banner>
+   <app-banner :listImg="listImg"  style="height:4.27rem;"></app-banner>
+    
+   <!-- <detailsdown :endTime="endTime"></detailsdown> -->
+  <div class="focus"><i class="iconfont">&#xe826;</i><span>1236人在关注</span></div>
+   
    <div class="goback"> <i class="iconfont" @click="routerClickgoback">&#xe600;</i></div>
-  
    <div class="content">
      <div class="content-head">
      <div class="content-title">祖元花轴 您的每日营养专家现实秒杀会员56元</div>
@@ -11,9 +14,10 @@
          <span class="original-price">￥128</span>
          <div class="content-price-left-con"><span>￥198</span><span>剩余24份</span></div>
        </div>
-       <div class="content-price-right">
+       <!-- <div class="content-price-right">
          距结束<span>00</span>:<span>05</span>:<span>56</span>
-       </div>
+       </div> -->
+       <detailsdown :endTime="endTime"></detailsdown>
      </div>
      <div class="content-indate">
        <div class="content-indate-left">此商品有效期至</div>
@@ -24,7 +28,7 @@
        <div class="content-purchase-right">已有<span>67</span>人抢购</div>
      </div>
      </div>
-     <div class="content-website">
+     <div v-if="offLine" class="content-website">
        <div class="content-website-title">领取网点</div>
        <div class="content-website-con">
          <div class="content-website-con-left">
@@ -55,28 +59,33 @@
 <script>
   import $ from "jquery";
    import Banner from '../components/Banner.vue'
+   import detailsdown from '../components/detailsdown.vue'
    import a from '../assets/img/banner1.jpg'
     import b from '../assets/img/banner2.jpg'
     import c from '../assets/img/banner3.jpg'
 
+
    
 export default {
-    components: {
-        'app-banner': Banner
-    },
+  components: {
+      'app-banner': Banner,
+      'detailsdown':detailsdown
+  },
   data () {
     return {
       activeTab: 'tab1',
       value:37,
-       listImg: [{
-                    url: a
-                }, {
-                    url: b
-                }, {
-                    url: c
-                }]
-    }
-  },
+      offLine:true,
+     endTime : '2017-12-21 19:00:00',
+      listImg: [{
+                  url: a
+              }, {
+                  url: b
+              }, {
+                  url: c
+              }]
+  }
+},
   methods: {
     handleTabChange (val) {
       this.activeTab = val
@@ -93,26 +102,45 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-
-  @import '../style/mixin';
+ @import '../style/mixin';
   @import '../assets/sass/_base.scss';
     .wrapper {
     @include wrapper;
-    .goback{
-        width: rem(60);
-        height: rem(60);
-        border-radius: rem(30);
-        background-color: #2c2c2c;
-        color: #fff;
-        position: absolute;
-        top: rem(12);
-        left: rem(15);
-        z-index: 1;
-        text-align: center;
-       .iconfont{
-         font-family:"iconfont"; font-size:rem(36); font-style:normal;line-height: rem(60);
+       .focus{
+            position: absolute;
+            font-size: rem(22);
+            color: #fff;
+            top: rem(275);
+            right: rem(25);
+            z-index: 2;
+          .iconfont{
+            font-family:"iconfont"; 
+            font-style:normal;
+            top: -0.1rem;
+            left: -0.43rem;
+            width: rem(17);
+            font-size: rem(30);
+            height: rem(22);
+            position: absolute;
+           color: #1f7ee8;
+          }
         }
-    }
+      .goback{
+          width: rem(60);
+          height: rem(60);
+          border-radius: rem(30);
+          background-color: #2c2c2c;
+          color: #fff;
+          position: absolute;
+          top: rem(12);
+          left: rem(15);
+          z-index: 1;
+          text-align: center;
+        .iconfont{
+          font-family:"iconfont"; font-size:rem(36); font-style:normal;line-height: rem(60);
+          }
+      }
+      
    
       .content{
         display: flex;
@@ -166,23 +194,23 @@ export default {
                  }
              }
           }
-          .content-price-right{
-            display: flex;
-            flex-direction: row;
-            font-size: rem(25);
-            height: rem(55);
-            align-items: center;
-            span{
-              color: #fff;
-              display: block;
-              width: rem(44);
-              height: rem(30);
-              background-color: #000;
-              line-height: rem(30);
-              text-align: center;
-              margin: 0 rem(10);
-            }
-          }
+          // .content-price-right{
+          //   display: flex;
+          //   flex-direction: row;
+          //   font-size: rem(25);
+          //   height: rem(55);
+          //   align-items: center;
+          //   span{
+          //     color: #fff;
+          //     display: block;
+          //     width: rem(44);
+          //     height: rem(30);
+          //     background-color: #000;
+          //     line-height: rem(30);
+          //     text-align: center;
+          //     margin: 0 rem(10);
+          //   }
+          // }
         }
         .content-indate{
           font-size: rem(25);

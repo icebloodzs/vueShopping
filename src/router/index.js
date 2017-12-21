@@ -29,7 +29,7 @@ export default new Router({
       component: mycenter
     }, 
     {
-      path: '/dist/details/:id',
+      path: '/dist/details',
       name: 'details',
       component: details
     }, 

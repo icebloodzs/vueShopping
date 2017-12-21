@@ -25,7 +25,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.counter.length);
+    // console.log(this.counter.length);
     let that = this;
     var swiper = new Swiper(".swiper-container", {
       pagination: {
