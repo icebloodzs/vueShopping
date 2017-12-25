@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import MuseUI from 'muse-ui'
 import 'muse-ui/dist/muse-ui.css'
-import 'muse-ui/dist/theme-carbon.css' // 使用 carbon 主题
+import 'muse-ui/dist/theme-light.css' // 使用 carbon 主题
 import * as filters from './util/filter' //import * as obj from "xxx" 会将 "xxx" 中所有 export 导出的内容组合成一个对象返回
 import './config/flexible'
 import util from './config/util'

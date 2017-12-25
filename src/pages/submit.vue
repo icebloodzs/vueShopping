@@ -25,7 +25,7 @@
               <span>小计:</span><span>￥{{ counter*unitprice | currency }}</span>
           </div>
       </div>
-      <div class="bind-phone">
+      <div class="bind-phone" @click="bindPhone">
          <div class="bind-phone-tilte">您绑定的电话</div> 
          <div class="bind-phone-con">
             <div class="bind-phone-con-left">150****5158</div>
@@ -82,7 +82,10 @@ export default {
   methods: {
     routerClickgoback(){
        this.$router.go(-1);
-    },routerClickminus(){
+    },bindPhone(){
+       this.$router.push("/dist/bindphone");
+    },
+    routerClickminus(){
         if(this.counter>1)
         this.counter -= 1;
     },  closeBottomSheet () {

@@ -76,7 +76,7 @@ export default {
       activeTab: 'tab1',
       value:37,
       offLine:true,
-     endTime : '2017-12-21 19:00:00',
+      endTime : '2017-12-22 17:30:00',
       listImg: [{
                   url: a
               }, {

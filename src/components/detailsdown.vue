@@ -1,21 +1,17 @@
 <template>
      <div class="content-price-right">
          距结束<span>{{hour}}</span>:<span>{{min}}</span>:<span>{{sec}}</span>
-       </div>
+    </div>
 </template>
-
 <script>
-
 export default {
-//   props: ["listImg"],
      props : {
            endTime : {
                type : String
            }
        },
    
-// var d = new Date(2017, 11, 21, 20, 15, 30, 123);
-// d.getTime()
+
 // var d = new Date( 1513858530123);
 // d.toLocaleString()
   data: function() {

@@ -5,8 +5,7 @@
        <img src="../assets/img/dwqvas_02.jpg">
        <div class="header-middle">
            <span>你好哈士奇</span>
-           <span>收货地址 &nbsp <i class="iconfont">&#xe62d;</i></span>
-          
+           <span @click="profile">收货地址 &nbsp <i class="iconfont">&#xe62d;</i></span>
        </div>
        <div class="header-right">
             <div class="circle index" @click="routerClickhome">首页</div>
@@ -148,7 +147,9 @@ export default {
         this.data.pay = false
     },checkCancel(){
         this.data.cancel = false
-    },
+    },profile(){
+      this.$router.push("/dist/profile");
+    }
   }
 };
 </script>

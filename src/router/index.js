@@ -9,6 +9,9 @@ import website from '../pages/website'
 import submit from '../pages/submit'
 import pay from '../pages/pay'
 import cancel from '../pages/cancel'
+import bindphone from '../pages/bindphone'
+import profile from '../pages/profile'
+import addprofile from '../pages/addprofile'
 Vue.use(Router)
 
 export default new Router({
@@ -53,6 +56,18 @@ export default new Router({
       path: '/dist/cancel',
       name: 'cancel',
       component: cancel
+    },{
+      path: '/dist/bindphone',
+      name: 'bindphone',
+      component: bindphone
+    },{
+      path: '/dist/profile',
+      name: 'profile',
+      component: profile
+    },{
+      path: '/dist/addprofile',
+      name: 'addprofile',
+      component: addprofile
     }
 
   ]
