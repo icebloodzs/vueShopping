@@ -34,7 +34,9 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test')]
+        include: [resolve('src'), resolve('test'),resolve('node_modules/_dom7@2.0.1@dom7/dist/dom7.modular')
+        ,resolve('node_modules/_swiper@4.0.7@swiper/dist/js/swiper.esm.bundle')
+      ]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,

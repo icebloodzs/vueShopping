@@ -11,7 +11,7 @@ import './config/flexible'
 import util from './config/util'
 Vue.use(util);
 Vue.use(MuseUI)
-Vue.config.productionTip = false
+// Vue.config.productionTip = false
 
 Object.keys(filters).forEach(k => Vue.filter(k, filters[k])) //注册过滤器
 Vue.filter("currency", function(value) {   //全局方法 Vue.filter() 注册一个自定义过滤器,必须放在Vue实例化前面

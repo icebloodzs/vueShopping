@@ -21,6 +21,9 @@
              </div>
          </div>
     </div>
+    <div class="add-profile">
+             添加新地址
+    </div>
   </div>
 </div>
 
@@ -110,7 +113,16 @@ export default {
                     }
                 }
             }
-          }   
+          } 
+          .add-profile{
+              position: fixed;
+              width: 100%;
+              line-height: rem(90);
+              background-color: rgb(202, 38, 38);
+              bottom:0;
+                text-align: center;
+                color: #fff;
+          }  
       }
     }
 
