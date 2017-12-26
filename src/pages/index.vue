@@ -16,7 +16,7 @@
             <span  @click="routerClick">更多<i class="iconfont">&#xe62d;</i></span>
         </div>
         <div class="content-item">
-            <img class="content-img" src="../assets/img/dwqvas_02.jpg">
+            <img @click="routerClickdetails" class="content-img" src="../assets/img/dwqvas_02.jpg">
             <div class="content-middle">
                 <span>预装园粥今日大牌抢购</span>
                 <span>五折优惠</span>
