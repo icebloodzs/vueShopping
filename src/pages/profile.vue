@@ -14,6 +14,24 @@
                  <div class="profile-item-con">
                      <span>河南省郑州市管族回族区心怡路与东站北街交叉口正大乐城2楼410房间进门右拐嘟嘟科技</span>
                  </div>
+                 <div class="radio">
+                     <mu-radio :label="defaultaddress" name="group" nativeValue="simple1"  class="demo-radio"/>
+                 </div>
+                 <div class="profile-item-btn">
+                     <div  @click="edit" class="edit btn">编辑</div>
+                     <div class="del btn">删除</div>
+                 </div>
+             </div>
+             <div class="profile-item">
+                 <div class="profile-item-head">
+                     <span>张中原</span><span>17638167198</span>
+                 </div>
+                 <div class="profile-item-con">
+                     <span>河南省郑州市管族回族区心怡路与东站北街交叉口正大乐城2楼410房间进门右拐嘟嘟科技</span>
+                 </div>
+                  <div class="radio">
+                     <mu-radio label="设为默认" name="group" nativeValue="simple1"  class="demo-radio"/>
+                 </div>
                  <div class="profile-item-btn">
                      <div  @click="edit" class="edit btn">编辑</div>
                      <div class="del btn">删除</div>
@@ -21,7 +39,7 @@
              </div>
          </div>
     </div>
-    <div class="add-profile">
+    <div @click="edit" class="add-profile">
              添加新地址
     </div>
   </div>
@@ -41,7 +59,8 @@ export default {
         time:0,
         btntxt:"获取验证码",
         phone:"",
-        code:""
+        code:"",
+        defaultaddress:"设为默认"
 
     }
   },
@@ -86,6 +105,7 @@ export default {
                     padding-right:   rem(26)  ;
                     border-bottom: 1px solid #e5e5e5;
                     padding-left: rem(48);
+                    position: relative;
                     .profile-item-head{
                         display: flex;
                         justify-content: space-between;
@@ -96,6 +116,7 @@ export default {
                         font-size: rem(24);
                         line-height:rem(40);
                     }
+                   
                     .profile-item-btn{
                         display: flex;
                         justify-content: space-between;
@@ -127,4 +148,15 @@ export default {
     }
 
 </style>
+<style lang="scss" >
+  @import '../style/mixin';
+    .radio{
+        position: absolute;
+        top:rem(170);
+        .mu-radio-label{
+            font-size: rem(30);
+        }
+    }
+</style>
+
 
