@@ -15,6 +15,7 @@
             <span>大牌抢购</span>
             <span  @click="routerClick">更多<i class="iconfont">&#xe62d;</i></span>
         </div>
+        <div class="left-icon"></div>
         <div class="content-item">
             <img @click="routerClickdetails" class="content-img" src="../assets/img/dwqvas_02.jpg">
             <div class="content-middle">
@@ -143,16 +144,25 @@ export default {
     span:nth-child(1) {
       font-size: rem(33);
       font-weight: 600;
-      margin-left: rem(35);
+      margin-left: rem(37);
     }
     span:nth-child(2) {
       font-size: rem(30);
-      color: #71cefa;
+      color: #17bafb;
       margin-right: rem(35);
         .iconfont{
           font-family:"iconfont"; font-style:normal;margin-left: rem(13);
           }
     }
+  }
+  .left-icon{
+    width: rem(15);
+    height: rem(45);
+    background-color: #1e7fea;
+    position: absolute;
+    border-radius: 0 rem(6) rem(6) 0;
+    top: rem(504);
+    left: 0;
   }
   .content-item {
     height: rem(212);
@@ -175,9 +185,10 @@ export default {
           font-size: rem(25);
           color: #d2d2d2;
           text-decoration: line-through;
+           font-weight: 400;
         }
         span:nth-child(1) {
-          color: #1e7fea;
+          color: #1e80eb;
           font-size: rem(40);
           text-decoration: none;
         }
@@ -197,12 +208,14 @@ export default {
         .progress {
           width: rem(200);
           margin-right: rem(6);
-          height: rem(12);
+          height: rem(14);
+          border-radius: rem(7);
         }
         span {
           font-weight: 400;
           display: block;
-          // margin-top: rem(-10);
+          color: #666666;
+          margin-top: rem(-10);
         }
       }
     }

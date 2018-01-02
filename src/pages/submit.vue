@@ -5,10 +5,11 @@
           <strong><i class="iconfont" @click="routerClickgoback">&#xe600;</i></strong>
          信息确认
       </div>
+     
       <div class="gain-info">
             <img src="../assets/img/border.png">
-            <span>收货人：孙富贵 13345668899</span>
-            <span>地址：北京市劲舞路花园路男300米路东</span>
+            <span>收货人：&nbsp孙富贵 &nbsp 13345668899</span>
+            <span>地&nbsp&nbsp&nbsp址：&nbsp北京市劲舞路花园路男300米路东...</span>
             <img src="../assets/img/border.png">    
       </div>
       <div class="info-tilte">
@@ -16,13 +17,19 @@
               川锅一号大火锅全豪华套餐
           </span>
       </div>
-      <div class="info-content ">
+      <div class="info-content">
           <div class="info-amount price">
-              
-              <span> 数量:</span><span class="info-amount-right"> <div class="minus operation" @click="routerClickminus">-</div><span>{{ counter }}</span><div class="plus operation" v-on:click="counter += 1">+</div></span>
+            <span> 数量:</span>
+            <span class="info-amount-right">
+                <div class="minus operation" @click="routerClickminus">一</div>
+                <span>{{ counter }}</span>
+                <div class="plus operation" v-on:click="counter += 1">
+                    <i class="iconfont">&#xe6b9;</i>
+                </div>
+            </span>
           </div>
           <div class="info-subtotal price">
-              <span>小计:</span><span>￥{{ counter*unitprice | currency }}</span>
+              <span>小计:</span><span><span>&#65509</span> {{ counter*unitprice | currency }}</span>
           </div>
       </div>
       <div class="bind-phone" @click="bindPhone">
@@ -120,7 +127,7 @@ export default {
               line-height: rem(90);
               text-align: center;
               .iconfont{
-                   font-family:"iconfont"; font-size:rem(30); font-style:normal;
+                   font-family:"iconfont"; font-size:rem(48); font-style:normal;
                     position: absolute;
                     width: rem(120);
                     left:0;
@@ -154,77 +161,95 @@ export default {
               color :#666666;
           }
           .info-content{
-              .price{
-                  display: flex;
-                  justify-content: space-between;
-                 
-                  height: rem(90);
-                  font-size: rem(30);
-                  background-color: #fff;
-                  border: 1px solid  #f2f2f2;
-                   padding: 0 rem(30);
-                   line-height: rem(90);
-
-                   .operation{
-                       border: 1px solid #999999;
-                       width: rem(42);
-                       height: rem(42);
-                       margin: auto 0;
-                       font-size: rem(50);
-                       line-height: rem(35);
-                       text-align: center;
-                   }
-                   .info-amount-right{
-                       display: flex;
+            width: 100%;
+            background-color: #fff;
+            padding: 0 rem(30);
+            .price{
+                display: flex;
+                justify-content: space-between;
+                height: rem(90);
+                font-size: rem(30);
+                line-height: rem(90);
+                    .operation{
+                        border: rem(2) solid #999;
+                        width: rem(44);
+                        height: rem(44);
+                        margin: auto 0;
+                        color: #999;
+                        text-align: center;
+                        border-radius: rem(5);
+                    }
+                    .minus{
+                        font-size: rem(28);
+                        line-height: rem(44);
+                        text-align: center;
+                    }
+                    .plus{
+                        line-height: rem(44);
+                        .iconfont{
+                            margin: auto;
+                            text-align: center;
+                            font-family:"iconfont"; 
+                            font-size:rem(44); 
+                            font-style:normal;
+                        }
+                    }
+                    .info-amount-right{
+                        display: flex;
                         flex-direction: row;
                         span:nth-child(2){
-                         margin: 0 rem(18);
-                         }
-                   }
-                  
-
-              }
-              .info-subtotal{
-                    span:nth-child(2){
-                       color:#ff5500;
-                   }
-              }
-              
-          }
-          .bind-phone{
-              .bind-phone-tilte{
-                    height: rem(82);
+                            margin: 0 rem(18);
+                        }
+                    }
+            }
+            .info-subtotal{
+                border-top: 1px solid  #f2f2f2;
+                span:nth-child(2){
+                    color:#fe5400;
+                    span{
+                        font-family: "SimSun";
+                    }
+                }
+            }
+        }
+        .bind-phone{
+            .bind-phone-tilte{
+                height: rem(82);
+                font-size: rem(30);
+                line-height: rem(82);
+                padding-left: rem(30);
+                color: #666;
+            }
+            .bind-phone-con{
+                display: flex;
+                justify-content: space-between;
                     font-size: rem(30);
-                    line-height: rem(82);
-                    padding-left: rem(30)
-              }
-              .bind-phone-con{
-                    display: flex;
-                    justify-content: space-between;
-                     font-size: rem(30);
-                     line-height: rem(90);
-                    background-color: #fff;
-                     padding: 0 rem(30);
-                    .bind-phone-con-left{
-                        color: #989898;
+                    line-height: rem(90);
+                background-color: #fff;
+                    padding: 0 rem(30);
+                .bind-phone-con-left{
+                    color: #989898;
+                }
+                .bind-phone-con-right{
+                    .iconfont{
+                        font-family:"iconfont"; 
+                        font-size:rem(30); 
+                        font-style:normal;
+                        color: #858585;
                     }
-                    .bind-phone-con-right{
-                         .iconfont{
-                              font-family:"iconfont"; font-size:rem(30); font-style:normal;
-                  }
-                    }
-              }
-          }
+                }
+            }
+        }
           .submit-order{
-              width: 100%;
-              position: fixed;
-              bottom: 0;
-              background-color: #29a1f7;
-              height: rem(106);
-              color: #fff;
-              font-size: rem(35);
-              line-height: rem(106);
-              text-align: center;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            background-color: #29a1f7;
+            height: rem(106);
+            color: #fff;
+            font-size: rem(35);
+            line-height: rem(106);
+            text-align: center;
           }
           .muz-list{
               width: 100%;

@@ -15,7 +15,7 @@
                         <span> <i class="iconfont">&#xe715;</i>4.8km</span>
                     </div>
                     <div class="content-website-con-right">
-                    <i class="iconfont">&#xe8bd;</i>
+                    <i class="iconfont">&#xe676;</i>
                     </div>
             </div>
                
@@ -75,6 +75,7 @@ export default {
                     border-bottom: 1px solid  #e9e9e9;
                     justify-content: space-between;
                     align-items: center;
+                    height: rem(168);
                     .content-website-con-left{
                     display: flex;
                     flex-direction: column;
@@ -100,7 +101,7 @@ export default {
               height: rem(70);
               padding: rem(10) rem(30);
               .iconfont{
-                font-family:"iconfont"; font-size:rem(40); font-style:normal;
+                font-family:"iconfont"; font-size:rem(40); font-style:normal;color:#666;
                }
             }
           }

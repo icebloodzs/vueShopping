@@ -84,6 +84,7 @@ export default {
   @import '../assets/sass/_base.scss';
      .wrapper {
       @include wrapper;
+      height: 100vh;
         .iconfont{
             font-family:"iconfont"; font-size:rem(50); font-style:normal;
             position: absolute;
@@ -118,7 +119,7 @@ export default {
           position: absolute;
           font-size: rem(30);
           color: #fff;
-          top: rem(275);
+          top: rem(270);
           left: rem(15);
         }
         .focus{
@@ -145,14 +146,16 @@ export default {
        .tilte{
           display: block;
           font-size: rem(25);
-          margin-top: rem(23);
-          margin-bottom: rem(23);
-          margin-left: rem(24);
+          padding-top: rem(23);
+          padding-bottom: rem(23);
+          padding-left: rem(24);
+          background-color: #fff;
         }
         .content-bottom{
           display: flex;
           justify-content: space-between;
           align-items: center;
+           background-color: #fff;
           .price{
              margin-left: rem(24);
            .price-list{
@@ -161,9 +164,10 @@ export default {
                         font-size: rem(30);
                     }
                     span:nth-child(2){
-                        font-size: rem(25);
-                       color: #d2d2d2;
+                      font-size: rem(25);
+                      color: #d2d2d2;
                       text-decoration: line-through;
+                      margin-left:rem(10);
                     }
               }
               .remain{

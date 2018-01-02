@@ -11,7 +11,7 @@
      <div class="content-title">祖元花轴 您的每日营养专家现实秒杀会员56元</div>
      <div class="content-price">
        <div class="content-price-left">
-         <span class="original-price">￥128</span>
+         <span class="original-icon">￥</span><span class="original-price">128</span>
          <div class="content-price-left-con"><span>￥198</span><span>剩余24份</span></div>
        </div>
        <!-- <div class="content-price-right">
@@ -37,7 +37,7 @@
             <span> <i class="iconfont">&#xe715;</i>4.8km</span>
          </div>
          <div class="content-website-con-right">
-           <i class="iconfont">&#xe8bd;</i>
+           <i class="iconfont">&#xe676;</i>
           </div>
        </div>
         <div class="content-website-all"  @click="routerClickwebsite" >
@@ -126,19 +126,23 @@ export default {
           }
         }
       .goback{
-          width: rem(60);
-          height: rem(60);
-          border-radius: rem(30);
-          background-color: #2c2c2c;
-          color: #fff;
-          position: absolute;
-          top: rem(12);
-          left: rem(15);
-          z-index: 1;
-          text-align: center;
+        width: rem(60);
+        height: rem(60);
+        border-radius: rem(30);
+        background-color:  rgba(0,0,0,.7);
+        color: #fff;
+        position: absolute;
+        top: rem(12);
+        left: rem(15);
+        z-index: 1;
+        text-align: center;
         .iconfont{
-          font-family:"iconfont"; font-size:rem(36); font-style:normal;line-height: rem(60);
-          }
+          font-family:"iconfont";
+          font-size:rem(36); 
+          font-style:normal;
+          line-height: rem(60);
+          margin-left: rem(10);
+        }
       }
       
    
@@ -146,10 +150,10 @@ export default {
         display: flex;
         flex-direction: column;
         width: 100%;
-        // padding : 0 rem(30) 0;
         .content-head{
           background-color: #fff;
-          padding: 0 rem(30) 0;
+          // padding: 0 rem(30) 0;
+          padding-left:rem(30);
         .content-title{
           font-size: rem(30);
           text-align: left; 
@@ -161,38 +165,45 @@ export default {
           flex-direction: row;
           // padding: rem(27) 0;
           justify-content: space-between;
-          height: rem(55);
-        
+          height: rem(60);
+           padding-right:rem(30);
           .content-price-left{
             display: flex;
             flex-direction: row;
-              height: rem(55);
+            align-items: flex-end;
+            height: rem(60);
+            .original-icon{
+              display: block;
+              line-height: rem(45);
+              font-size: rem(45);
+              color:#1e7deb;
+            }
             .original-price{
               display: block;
-              height: rem(55);
-              line-height: rem(55);
-              font-size: rem(55);
+              line-height: rem(60);
+              font-size: rem(60);
               color:#1e7deb;
               margin-right: rem(15);
             }
-             .content-price-left-con{
-                display: flex;
-                flex-direction: column;
-                height: rem(55);
-                span:nth-child(1){
-                  font-size: rem(20);
-                  line-height: rem(20);
-                  color: #d2d2d2;
-                  text-decoration: line-through;
-                }
-                 span:nth-child(2){
-                   display: block;
-                   height: rem(25);
-                   margin-top: rem(5);
-                   font-size: rem(25);
-                    line-height:rem(25);
-                 }
-             }
+            .content-price-left-con{
+              display: flex;
+              flex-direction: column;
+              height: rem(60);
+              span:nth-child(1){
+                font-size: rem(20);
+                line-height: rem(20);
+                color: #878787;
+                text-decoration: line-through;
+                margin-top: rem(5);
+              }
+              span:nth-child(2){
+                display: block;
+                height: rem(25);
+                margin-top: rem(10);
+                font-size: rem(25);
+                line-height:rem(25);
+              }
+            }
           }
           // .content-price-right{
           //   display: flex;
@@ -221,7 +232,7 @@ export default {
           line-height: rem(88);
           border-top: 1px solid  #e9e9e9;
           border-bottom: 1px solid  #e9e9e9;
-         
+          padding-right: rem(30);
         }
         .content-purchase{
           display: flex;
@@ -238,6 +249,7 @@ export default {
           .content-purchase-right{
               font-size: rem(25);
               line-height: rem(66);
+              padding-right:rem(30);
               span{
                 color: #28a2f5;
               }
@@ -246,7 +258,7 @@ export default {
         }
         .content-website{
           margin-top: rem(20);
-          padding : 0 rem(30) 0;
+          padding-left: rem(30);
           background-color: #fff;
           .content-website-title{
             height: rem(90);
@@ -259,6 +271,7 @@ export default {
             border-bottom: 1px solid  #e9e9e9;
             justify-content: space-between;
             align-items: center;
+            height: rem(168);
             .content-website-con-left{
               display: flex;
               flex-direction: column;
@@ -284,8 +297,9 @@ export default {
               width: rem(120);
               height: rem(70);
               padding: rem(10) rem(30);
+              margin-right: rem(30);
               .iconfont{
-                font-family:"iconfont"; font-size:rem(40); font-style:normal;
+                font-family:"iconfont"; font-size:rem(40); font-style:normal;color:#666;
                }
             }
           }
@@ -295,19 +309,20 @@ export default {
               height: rem(90);
               line-height: rem(90);
               .content-website-all-left{
-                color: #0080e1;
+                color: #0280e6;
                 
               }
               .content-website-all-right{
-                 .iconfont{
-                font-family:"iconfont"; font-size:rem(30); font-style:normal;
+                margin-right: rem(30);
+                .iconfont{
+                  font-family:"iconfont"; font-size:rem(30); font-style:normal;color:#c7c8cd;
                }
               }
           }
         }
         .content-detail{
-           background-color: #fff;
-          padding: 0 rem(30) 0;
+          background-color: #fff;
+          padding-left:rem(30);
           margin-top: rem(20);
           .content-detail-title{
             font-size: rem(30);

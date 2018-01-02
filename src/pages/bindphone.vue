@@ -1,21 +1,21 @@
 <template>
 <div class="wrapper">
   <div class="bind">
-      <div class="bind-head">
-          <strong><i class="iconfont" @click="routerClickgoback">&#xe600;</i></strong>
-          绑定手机号
-      </div>
-      <div class="bind-con">
-           <mu-text-field v-model="phone" label="手机号" labelFloat/><br/>
-            <mu-text-field v-model="code" label="验证码" labelFloat /><br/>  
+        <div class="bind-head">
+            <strong><i class="iconfont" @click="routerClickgoback">&#xe600;</i></strong>
+            绑定手机号
+        </div>
+        <div class="bind-con">
+            <label>手机号</label><mu-text-field hintText="填写手机号" v-model="phone" /><br/>
+            <label>验证码</label><mu-text-field hintText="请输入短信验证码" v-model="code" /><br/>  
             <div :disabled="disabled" @click="sendCode" class="btns">{{btntxt}}</div>
-     </div>
-     <div class="container">
-       <div @click="saveCode" class="button">
-           保存
-       </div>
+        </div>
+        <div class="container">
+            <div @click="saveCode" class="button">
+                保存
+            </div>
+        </div>
     </div>
-      </div>
   </div>
 </div>
 
@@ -87,6 +87,7 @@ export default {
     .wrapper {
     @include wrapper;
     height: 100vh; 
+      background-color: #f4f4f4;
       .bind{
           .bind-head{
               height: rem(90);
@@ -109,12 +110,11 @@ export default {
                 color: #1f80eb;
                 border: 1px solid  #1f80eb;
                 width: rem(170);
-                //   height: rem(60);
                 text-align: center;
-                line-height: rem(60);
-                right: rem(30);
-                // top: rem(330);
-                bottom: 30px;
+                line-height: rem(52);
+                height: rem(52);
+                right: rem(38);
+                bottom: rem(36);
             }
           }   
             .button{
@@ -136,41 +136,63 @@ export default {
   .bind-con{
         background-color: #fff;
         margin-top:rem(20);
-    .mu-text-field-content{
-        width:rem(750);
-        font-size:rem(30);
-        padding-left:1.27rem;
-         padding-top:rem(50);
-         .mu-text-field-input{
-             height: rem(60);
-            //    position: relative;
-         }
-    }
-    .mu-text-field-line{
-        width:rem(450);
-        margin-left:1.27rem;
-    }
-    .mu-text-field-help{
-         margin-left:1.27rem;
-        font-size:rem(30);
-        width:100%;
-    }
-    .mu-text-field-focus-line{
-          width:rem(450);
-        margin-left:1.27rem;
-    }
-    
-    .mu-text-field-label{
-        width:100%;
-        color:#000;
-        font-size:rem(40);
-        color: #1f80eb;
-        &.float{
-        font-size:rem(30);
-        color:#000;
+        label{
+            position: absolute;
+            // margin-top:rem(38);
+            font-size:rem(30);
+            line-height: rem(105);
+            height: rem(105);
+            margin-left:rem(50);
         }
-    }
-   
+        .mu-text-field{
+            width: 100%;
+            height:rem(105);
+            .mu-text-field-content{
+                width:rem(750);
+                font-size:rem(30);
+                padding-left:rem(242);
+                padding-top:rem(50);
+                .mu-text-field-input{
+                    height: rem(105);
+                    margin-top: rem(-50);
+                    font-size:rem(36);
+                }
+            }
+            .mu-text-field-line{
+                width:100%;
+                margin-left:rem(45);
+                  margin-top:rem(6);
+            }
+            .mu-text-field-focus-line{
+                width:100%;
+                margin-left:rem(45);
+                margin-top:rem(6);
+                &.focus{
+                    width:100%;
+                }
+            }
+            .mu-text-field-hint{
+             
+                height: rem(100);
+                line-height:rem(100);
+                margin-top:rem(-50);
+            }
+            .mu-text-field-help{
+                margin-left:1.27rem;
+                font-size:rem(30);
+                width:100%;
+            }
+            .mu-text-field-label{
+                width:100%;
+                color:#000;
+                font-size:rem(40);
+                color: #1f80eb;
+                &.float{
+                    font-size:rem(30);
+                    color:#000;
+                }
+            }
+        }
     }
    
 </style>
