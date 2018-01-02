@@ -15,7 +15,13 @@
                      <span>河南省郑州市管族回族区心怡路与东站北街交叉口正大乐城2楼410房间进门右拐嘟嘟科技</span>
                  </div>
                  <div class="radio">
-                     <mu-radio :label="defaultaddress" name="group" nativeValue="simple1"  class="demo-radio"/>
+                        <label  class="demo--label">
+                            <input class="demo--radio" type="radio" name="demo-checkbox2" value="设为默认" >
+                            <span class="demo--checkbox demo--radioInput"></span>设为默认
+                        </label>
+
+                        <!-- <input type="radio"  name="default" value="default" />设为默认 -->
+                     <!-- <mu-radio :label="defaultaddress" name="group" nativeValue="simple1"  class="demo-radio"/> -->
                  </div>
                  <div class="profile-item-btn">
                      <div  @click="edit" class="edit btn">编辑</div>
@@ -30,7 +36,11 @@
                      <span>河南省郑州市管族回族区心怡路与东站北街交叉口正大乐城2楼410房间进门右拐嘟嘟科技</span>
                  </div>
                   <div class="radio">
-                     <mu-radio label="设为默认" name="group" nativeValue="simple1"  class="demo-radio"/>
+                       <label  class="demo--label">
+                            <input class="demo--radio" type="radio" name="demo-checkbox2" value="默认地址">
+                            <span class="demo--checkbox demo--radioInput"></span>设为默认
+                        </label>
+                     <!-- <mu-radio checked="true" :label="defaultaddress" name="group" nativeValue="simple1"  class="demo-radio"/> -->
                  </div>
                  <div class="profile-item-btn">
                      <div  @click="edit" class="edit btn">编辑</div>
@@ -39,7 +49,7 @@
              </div>
          </div>
     </div>
-    <div @click="edit" class="add-profile">
+    <div @click="add" class="add-profile">
              添加新地址
     </div>
   </div>
@@ -60,16 +70,25 @@ export default {
         btntxt:"获取验证码",
         phone:"",
         code:"",
-        defaultaddress:"设为默认"
+        checked:"",
+        defaultaddress:""
 
     }
+  },
+  check(){
+      if(checked){
+          this.defaultaddress="qwdwqd"
+      }
   },
   methods: {
     routerClickgoback(){
        this.$router.go(-1);
     },
-     edit(){
+     add(){
        this.$router.push("/dist/addprofile");
+    },
+     edit(){
+       this.$router.push("/dist/editprofile");
     }
 
   }
@@ -112,6 +131,20 @@ export default {
                         font-size: rem(30);
                         line-height:rem(66);
                     }
+                     .radio{
+                        position: absolute;
+                        top:rem(150);
+                        font-size: rem(30);
+                        .demo--label{margin:rem(20) rem(20) 0 0;display:inline-block}
+                        .demo--radio{display:none}
+                        .demo--radioInput{
+                            background-color:#fff;border:1px solid rgba(0,0,0,0.5);border-radius:100%;display:inline-block;height:rem(30);
+                            margin-right:rem(10);margin-top:-1px;vertical-align:middle;width:rem(30);line-height:1}
+                        .demo--radio:checked + .demo--radioInput:after{
+                            background-color:#57ad68;border-radius:100%;content:"";display:inline-block;height:rem(20);margin:rem(5);width:rem(20)}
+                        .demo--checkbox.demo--radioInput,.demo--radio:checked + .demo--checkbox.demo--radioInput:after{
+                            border-radius:0}
+                    }
                     .profile-item-con{
                         font-size: rem(24);
                         line-height:rem(40);
@@ -150,13 +183,7 @@ export default {
 </style>
 <style lang="scss" >
   @import '../style/mixin';
-    .radio{
-        position: absolute;
-        top:rem(170);
-        .mu-radio-label{
-            font-size: rem(30);
-        }
-    }
+   
 </style>
 
 

@@ -12,6 +12,7 @@ import cancel from '../pages/cancel'
 import bindphone from '../pages/bindphone'
 import profile from '../pages/profile'
 import addprofile from '../pages/addprofile'
+import editprofile from '../pages/editprofile'
 Vue.use(Router)
 
 export default new Router({
@@ -68,6 +69,10 @@ export default new Router({
       path: '/dist/addprofile',
       name: 'addprofile',
       component: addprofile
+    },{
+      path: '/dist/editprofile',
+      name: 'editprofile',
+      component: editprofile
     }
 
   ]
