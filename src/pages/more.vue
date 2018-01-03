@@ -1,9 +1,9 @@
 <template>
 <div class="wrapper">
   <i class="iconfont" @click="routerClickgoback">&#xe600;</i>
-  <mu-tabs :value="activeTab" @change="handleTabChange" :lineClass="['blue']">
-    <mu-tab value="tab1" title="进行中"/>
-    <mu-tab value="tab2" title="已结束"/>
+  <mu-tabs class="tabs" :value="activeTab" @change="handleTabChange" :lineClass= "{ blue:isActive,actleft:actleft }">
+    <mu-tab value="tab1"  @active="tab1Active" title="进行中"/>
+    <mu-tab value="tab2"  @active="tab2Active" title="已结束"/>
   </mu-tabs>
   <div class="main">
   <div v-if="activeTab === 'tab1'">
@@ -17,10 +17,10 @@
         <div class="price">
            <div class="price-list">
             <span>￥128</span>
-            <span>￥198</span>
+            <span>￥198.00</span>
             </div>
             <div class="remain">
-                <mu-linear-progress class="progress" mode="determinate" color="#1e7fea" :size="10" :value="value"/><span>剩余37份</span>
+                <mu-linear-progress class="progress" mode="determinate" color="#1e7fea" :max="50"  :value="value"/><span>剩余37份</span>
             </div>
         </div>
       
@@ -38,10 +38,10 @@
         <div class="price">
            <div class="price-list">
             <span>￥128</span>
-            <span>￥198</span>
+            <span>￥198.00</span>
             </div>
             <div class="remain">
-                <mu-linear-progress class="progress" mode="determinate" color="#1e7fea" :size="10" :value="value"/><span>剩余37份</span>
+                <mu-linear-progress class="progress" mode="determinate" color="#1e7fea" :max="50" :value="value"/><span>剩余37份</span>
             </div>
         </div>
       
@@ -55,26 +55,32 @@
 
 </template>
 <script>
-  import $ from "jquery";
-  import moredown from '../components/moredown.vue'
+import $ from "jquery";
+import moredown from '../components/moredown.vue'
 export default {
-    components: {
-        'moredown':moredown
-    },
+  components: {
+    'moredown':moredown
+  },
   data () {
     return {
+      actleft:true,
+      isActive: false,
       activeTab: 'tab1',
       value:37,
-        endTime : '2017-12-21 18:00:00',
+      endTime : '2017-12-21 18:00:00',
     }
   },
   methods: {
     handleTabChange (val) {
       this.activeTab = val
     },routerClickdetails(){
-        this.$router.push("/dist/details");
-    }, routerClickgoback(){
-       this.$router.go(-1);
+      this.$router.push("/dist/details");
+    },routerClickgoback(){
+      this.$router.go(-1);
+    },tab2Active () {
+      this.isActive = true
+    },tab1Active () {
+      this.isActive = false
     }
   }
 }
@@ -105,7 +111,7 @@ export default {
           line-height: rem(80);
         }
         .mu-tab-active {
-          color: #1f7ee8;
+          color: #1979e7;
         }
         .mu-tabs {
           span:nth-child(5) {
@@ -155,7 +161,8 @@ export default {
           display: flex;
           justify-content: space-between;
           align-items: center;
-           background-color: #fff;
+          background-color: #fff;
+          padding-bottom:rem(10);
           .price{
              margin-left: rem(24);
            .price-list{
@@ -179,13 +186,16 @@ export default {
                   line-height: rem(25);
                   margin-top: rem(20);
                   .progress{
-                      width: rem(200);
-                      margin-right: rem(6);
-                       height: rem(12);
+                    width: rem(200);
+                    margin-right: rem(6);
+                    height: rem(14);
+                    border-radius: rem(7);
+                    background-color: #e4e4e4;
                   }
                   span{
                     display: block;
                     margin-top: rem(-10);
+                    color: #666;
                   }
               }
             }
@@ -217,8 +227,17 @@ export default {
 </style>
 <style lang="scss">
  @import '../style/mixin';
-.blue {
-  background: #1979e7 !important;
-  height: rem(4);
-}
+.tabs{
+  height: rem(90)!important;
+  background-color: #fff!important;
+  .actleft{
+    background: #1979e7 !important;
+    height: rem(4) !important;
+    width:rem(150)  !important;
+    transform: translate3d(rem(110),0px,0px)!important;
+    &.blue{
+      transform: translate3d(rem(490),0px,0px)!important;
+    }
+  }
+} 
 </style>

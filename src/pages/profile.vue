@@ -2,8 +2,8 @@
 <div class="wrapper">
   <div class="profile">
     <div class="profile-head">
-        <strong><i class="iconfont" @click="routerClickgoback">&#xe600;</i></strong>
-    收获地址
+        <strong><i class="iconfont" @click="routerClickgoback">&#xe600;</i>收获地址</strong>
+        
     </div>
     <div class="profile-con">
          <div class="profile-list">
@@ -108,10 +108,13 @@ export default {
               line-height: rem(90);
               text-align: center;
               .iconfont{
-                   font-family:"iconfont"; font-size:rem(30); font-style:normal;
-                    position: absolute;
-                    width: rem(120);
-                    left:0;
+                font-family:"iconfont"; 
+                font-size:rem(35); 
+                font-style:normal;
+                position: absolute;
+                width: rem(120);
+                left:0;
+                color:#d4d4d4;
               }
           }
           .profile-con{
@@ -161,8 +164,9 @@ export default {
                                 width: rem(72);
                                 height: rem(46);
                                 line-height:rem(46);
-                                border: 1px solid #000;
+                                border: rem(1) solid #000;
                                 text-align: center;
+                                border-radius: rem(5);
                             }
                     }
                 }

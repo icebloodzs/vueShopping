@@ -20,12 +20,14 @@
               <strong>核销码</strong>
           </div>
           <div class="cancel-code-con">
-              <div class="cancel-code-up">
+                <div class="cancel-code-icon left"></div>
+                <div class="cancel-code-icon right"></div>
+                <div class="cancel-code-up">
                   <span>有效期至2017-10-06 &nbsp 14:30:25</span><span>未核销</span>
-              </div>
-              <div class="cancel-code-down">
-                  核销码:&nbsp<span>5869 2568</span>
-              </div>
+                </div>
+                <div class="cancel-code-down">
+                    核销码:&nbsp<span>5869 2568</span>
+                </div>
           </div>
       </div>
       <div class="cancel-con">
@@ -90,22 +92,27 @@ export default {
   @import '../assets/sass/_base.scss';
     .wrapper {
     @include wrapper;
+    background-color: #f4f4f4;
+    padding-bottom: rem(20);
       .cancel{
            font-size: rem(30);
           .cancel-head{
               height: rem(90);
               background-color: #fff;
-              font-size: rem(30);
+              font-size: rem(35);
               line-height: rem(90);
               text-align: center;
               color: #000;
               font-weight: 600;
                border-bottom: 1px solid  #e9e9e9;
               .iconfont{
-                   font-family:"iconfont"; font-size:rem(30); font-style:normal;
-                    position: absolute;
-                    width: rem(120);
-                    left:0;
+                font-family:"iconfont"; 
+                font-size:rem(30); 
+                font-style:normal;
+                position: absolute;
+                width: rem(120);
+                left:0;
+                color:#9d9d9d;
               }
           }
         //   .cancel-button{
@@ -127,6 +134,24 @@ export default {
             .cancel-code-con{
                 margin: 0 rem(25) rem(20);
                 background-color: #fff;
+                position: relative;
+                .cancel-code-icon{
+                    width: rem(22);
+                    height:rem(22);
+                    position: absolute;
+                    border-radius: 50%;
+                    z-index: 2;
+                    background-color: #f4f4f4;
+                     top:rem(85);
+                }
+                .left{
+                    left:rem(-11);
+                    margin-right: rem(30);
+                }
+                .right{
+                    margin-left: rem(30);
+                    right:rem(-11);
+                }
                 .cancel-code-up{
                     line-height: rem(94);
                     display: flex;
@@ -140,14 +165,14 @@ export default {
                     }
                 }
                 .cancel-code-down{
-                    border-top: 1px dashed #e9e9e9;
-                      line-height: rem(94);
-                      text-align: center;
-                        // color: #c8c8c8;
-                      span{
-                          color: #1c7ee9;
-                         
-                      }
+                    border-top: rem(4) dashed #f4f4f4;
+                    line-height: rem(94);
+                    text-align: center;
+                    // color: #c8c8c8;
+                    span{
+                        color: #1c7ee9;
+                        
+                    }
                 }
             }
 
@@ -174,11 +199,11 @@ export default {
                         font-size: rem(30);
                          display: flex;
                          justify-content: space-between;
-                         color: #666666;
+                         color: #666;
                         margin-top: rem(20);
                       .cancel-head-down-right{
                           .iconfont{
-                                font-family:"iconfont"; font-size:rem(30); font-style:normal;
+                                font-family:"iconfont"; font-size:rem(30); font-style:normal;color:#9d9d9d;
                             }
                       }
                   }
@@ -196,7 +221,7 @@ export default {
                 .content-cancel-con{
                     display: flex;
                     border-top: 1px solid  #e9e9e9;
-                    border-bottom: 1px dashed  #e9e9e9;
+                    border-bottom: rem(4) dashed  #f4f4f4;
                     justify-content: space-between;
                     align-items: center;
                     height: rem(170);

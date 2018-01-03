@@ -19,15 +19,16 @@
         <div class="content-item">
             <img @click="routerClickdetails" class="content-img" src="../assets/img/dwqvas_02.jpg">
             <div class="content-middle">
-                <span>预装园粥今日大牌抢购</span>
-                <span>五折优惠</span>
+                <span><strong>预装园粥今日大牌抢购</strong></span>
+                <span> <strong>五折优惠</strong></span>
                 <div class="price">
                     <span>58</span>
                     <span>元</span>
                     <span>108元</span>
                 </div>
                 <div class="remain">
-                   <mu-linear-progress class="progress" mode="determinate" color="#1e7fea"  :value="value"/><span>剩余37份</span>
+                   <mu-linear-progress :max="50" class="progress" mode="determinate" color="#1e7fea"  :value="value"/>
+                   <span>剩余37份</span>
                 </div>
             </div>
             <a class="content-right" @click="routerClickdetails">立即抢购</a>
@@ -49,7 +50,7 @@ export default {
   },
   data() {
     return {
-      value: 50,
+      value: 37,
      
       listImg: [
         {
@@ -176,20 +177,25 @@ export default {
       display: flex;
       flex-direction: column;
       margin-top: rem(28);
-      span {
+      span:nth-child(1) {
         font-size: rem(30);
-        font-weight: 600;
+        line-height: rem(30);
+      }
+      span:nth-child(2) {
+         font-size: rem(30);
+         line-height: rem(50);
       }
       .price {
         span {
           font-size: rem(25);
           color: #d2d2d2;
           text-decoration: line-through;
-           font-weight: 400;
+          line-height: 1.5;
         }
         span:nth-child(1) {
           color: #1e80eb;
           font-size: rem(40);
+
           text-decoration: none;
         }
         span:nth-child(2) {
@@ -205,17 +211,22 @@ export default {
         color: #d2d2d2;
         height: rem(18);
         line-height: rem(18);
+        justify-content: space-between;
+        flex-wrap: nowrap;
         .progress {
           width: rem(200);
           margin-right: rem(6);
           height: rem(14);
           border-radius: rem(7);
+          background-color: #e4e4e4;
         }
         span {
-          font-weight: 400;
           display: block;
-          color: #666666;
-          margin-top: rem(-10);
+          color: #666;
+          height: rem(28);
+          font-size: rem(28);
+          line-height: rem(28);
+          margin-top: rem(-8);
         }
       }
     }

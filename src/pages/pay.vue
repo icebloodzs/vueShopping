@@ -8,7 +8,7 @@
       <div class="pay-head-con" @click="routerClickdetails">
           <img src="../assets/img/dwqvas_02.jpg" alt="">
           <div class="pay-head-right">
-              <div class="pay-head-title">幸福里商鼎路店单人下午套餐</div>
+              <div class="pay-head-title"><strong>幸福里商鼎路店单人下午套餐</strong></div>
                 <div class="pay-head-down">
                     <div class="pay-head-down-left">总价:￥658</div>
                     <div class="pay-head-down-right"><i class="iconfont">&#xe62d;</i></div>
@@ -27,7 +27,7 @@
                         <span> <i class="iconfont">&#xe715;</i>4.8km</span>
                     </div>
                     <div class="content-pay-con-right">
-                    <i class="iconfont">&#xe8bd;</i>
+                    <i class="iconfont">&#xe676;</i>
                     </div>
                 </div>
                  <div class="content-pay-info">
@@ -36,12 +36,12 @@
                        
                      </div>
                      <div class="content-pay-info-con">
-                         <span>订单总额:&nbsp ￥89</span>
-                         <span>优惠金额:&nbsp ￥24</span>
-                         <span>实付金额:&nbsp ￥65</span>
-                         <span>联系方式:&nbsp 13523518708</span>
-                         <span>订单编号:&nbsp 1731526897</span>
-                         <span>下单时间:&nbsp 2017-10-26 &nbsp 14:15:03</span>
+                         <span>订单总额：&nbsp ￥89</span>
+                         <span>优惠金额：&nbsp ￥24</span>
+                         <span>实付金额：&nbsp ￥65</span>
+                         <span>联系方式：&nbsp 13523518708</span>
+                         <span>订单编号：&nbsp 1731526897</span>
+                         <span>下单时间：&nbsp 2017-10-26 &nbsp 14:15:03</span>
                      </div>
                  </div>
             </div>
@@ -78,6 +78,8 @@ export default {
   @import '../assets/sass/_base.scss';
     .wrapper {
     @include wrapper;
+    height: 100vh; 
+    background-color: #f4f4f4;
       .pay{
           .pay-head{
               height: rem(90);
@@ -93,6 +95,7 @@ export default {
                     position: absolute;
                     width: rem(120);
                     left:0;
+                    color: #d4d4d4;
               }
           }
           .pay-button{
@@ -100,6 +103,7 @@ export default {
               height: rem(75);
               color: #fff;
               background-color: #ff9c00;
+              font-size: rem(30);
               line-height: rem(75);
               text-align: center;
               border-radius: rem(12);
@@ -131,7 +135,7 @@ export default {
                         margin-top: rem(20);
                       .pay-head-down-right{
                           .iconfont{
-                                font-family:"iconfont"; font-size:rem(30); font-style:normal;
+                                font-family:"iconfont"; font-size:rem(30); font-style:normal;color:#d4d4d4;
                             }
                       }
                   }
@@ -142,9 +146,9 @@ export default {
                 padding: 0 rem(20);
                 background-color: #fff;
                  .content-pay-title{
-                     font-size: rem(30);
-                       line-height: rem(88);
-                       text-align: left;
+                    font-size: rem(32);
+                    line-height: rem(88);
+                    text-align: left;
                }
                 .content-pay-con{
                     display: flex;
@@ -178,7 +182,7 @@ export default {
               height: rem(70);
               padding: rem(10) rem(30);
               .iconfont{
-                font-family:"iconfont"; font-size:rem(40); font-style:normal;
+                font-family:"iconfont"; font-size:rem(45); font-style:normal;color:#666;
                }
             }
           }

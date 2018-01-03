@@ -13,11 +13,11 @@
        </div>
     </div>
     <div class="main">
-         <mu-tabs :value="bottomNav" @change="handleTabChange" :lineClass="['blue']">
-            <mu-tab value="tab1" title="全部"/>
-            <mu-tab :titleClass="[data&&data.pay&&'befor']"  @click="checkPay" value="tab2" title="待付款"/>
+         <mu-tabs class="centertab" :value="bottomNav" @change="handleTabChange" :lineClass="classObject">
+            <mu-tab value="tab1" @active="tab1Active" title="全部"/>
+            <mu-tab :titleClass="[data&&data.pay&&'befor']" @active="tab2Active"  @click="checkPay" value="tab2" title="待付款"/>
             <mu-tab :titleClass="[data&&data.cancel&&'befor']" @click="checkCancel" value="tab3" title="未核销"/>
-            <mu-tab value="tab4" title="已完成"/>
+            <mu-tab @active="tab4Active" value="tab4" title="已完成"/>
         </mu-tabs>
        
         <div v-if="bottomNav === 'tab1'">
@@ -77,7 +77,7 @@
                <div class="content-head">
                    <span>2012-12-12 &nbsp 17:06:24</span><span>已完成</span>
                </div>
-             <div class="content-con">
+             <div class="content-con tab4">
                 <div class="content-con-left">
                     <img src="../assets/img/dwqvas_02.jpg" alt="">
                     <div class="content-con-text">
@@ -86,6 +86,7 @@
                         <span>￥89.00</span>
                     </div>
                 </div>
+                <div class="content-physical-button"  @click="routerClickPay">查看物流</div>
              </div>
            </div>
         </div>
@@ -104,7 +105,13 @@ export default {
       accesstoken: "",
       user: {},
       user_msg: {},
-      data: null
+      data: null,
+      classObject: {
+        tabone: true,
+        tabtwo: false,
+        tabthree:false,
+        tabfour:false
+      }
     };
   },
   created() {
@@ -143,11 +150,32 @@ export default {
     routerClickCancel() {
       this.$router.push("/dist/cancel");
        this.data.used = false;
-    },checkPay(){
-        this.data.pay = false
+    },tab1Active(){
+      this.classObject.tabone = true
+       this.classObject.tabtwo =  false
+        this.classObject.tabthree =  false
+         this.classObject.tabfour =  false
+    },tab2Active(){
+     this.classObject.tabone =  false
+       this.classObject.tabtwo =  true
+        this.classObject.tabthree =  false
+         this.classObject.tabfour =  false
+    },
+    checkPay(){
+      this.data.pay = false
     },checkCancel(){
+        this.classObject.tabone =  false
+       this.classObject.tabtwo =  false
+        this.classObject.tabthree =  true
+         this.classObject.tabfour =  false
         this.data.cancel = false
-    },profile(){
+    },tab4Active(){
+      this.classObject.tabone =  false
+       this.classObject.tabtwo =  false
+        this.classObject.tabthree =  false
+         this.classObject.tabfour =  true
+    },
+    profile(){
       this.$router.push("/dist/profile");
     }
   }
@@ -159,6 +187,7 @@ export default {
 @import "../assets/sass/_base.scss";
 .wrapper {
   @include wrapper;
+  height: 100vh; 
   .header {
     display: flex;
     flex-direction: row;
@@ -250,7 +279,7 @@ export default {
         justify-content: space-between;
         span:nth-child(1) {
           color: #656565;
-          font-size: rem(20);
+          font-size: rem(22);
         }
         span:nth-child(2) {
           color: #299ff6;
@@ -260,7 +289,10 @@ export default {
       .content-con {
         display: flex;
         flex-direction: row;
-        &.tab2 {
+        &.tab2{
+          justify-content: space-between;
+        }
+        &.tab4{
           justify-content: space-between;
         }
         .content-con-left {
@@ -278,17 +310,17 @@ export default {
             span:nth-child(1) {
               color: #000;
               font-size: rem(25);
-              line-height: rem(40);
+              line-height: rem(35);
             }
             span:nth-child(2) {
               color: #989898;
               font-size: rem(25);
-              line-height: rem(40);
+              line-height: rem(44);
             }
             span:nth-child(3) {
-              color: #1f7eec;
+              color: #1d80e8;
               font-size: rem(25);
-              line-height: rem(40);
+              line-height: rem(44);
             }
           }
         }
@@ -302,6 +334,17 @@ export default {
           border-radius: rem(5);
           margin-top: rem(70);
         }
+        .content-physical-button{
+          width: rem(130);
+          height: rem(42);
+          border: 1px solid #666;
+          color: #666;
+          font-size: rem(25);
+          border-radius:rem(5); 
+          text-align: center;
+          line-height: rem(42);
+          margin-top: rem(60);
+        }
       }
     }
   }
@@ -311,6 +354,27 @@ export default {
 <style lang="scss">
 @import "../style/mixin";
 @import "../assets/sass/_base.scss";
+.centertab{
+  height: rem(100)!important;
+  background-color: #fff!important;
+  .mu-tab-link-highlight{
+    background: #1979e7 !important;
+    height: rem(4) !important;
+    width:rem(110)  !important;
+  }
+  .tabone{
+    transform: translate3d(rem(45),0px,0px)!important;
+  }
+  .tabtwo{
+    transform: translate3d(rem(230),0px,0px)!important;
+  }
+  .tabthree{
+    transform: translate3d(rem(415),0px,0px)!important;
+  }
+  .tabfour{
+    transform: translate3d(rem(600),0px,0px)!important;
+  }
+}
 // .blue {
 //   background: #1979e7 !important;
 //   height: rem(4);

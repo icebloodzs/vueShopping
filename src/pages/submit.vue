@@ -2,8 +2,8 @@
 <div class="wrapper">
   <div class="confirm">
       <div class="confirm-head">
-          <strong><i class="iconfont" @click="routerClickgoback">&#xe600;</i></strong>
-         信息确认
+          <strong><i class="iconfont" @click="routerClickgoback">&#xe600;</i> 信息确认</strong>
+        
       </div>
      
       <div class="gain-info">
@@ -19,7 +19,7 @@
       </div>
       <div class="info-content">
           <div class="info-amount price">
-            <span> 数量:</span>
+            <span> 数量：</span>
             <span class="info-amount-right">
                 <div class="minus operation" @click="routerClickminus">一</div>
                 <span>{{ counter }}</span>
@@ -29,7 +29,7 @@
             </span>
           </div>
           <div class="info-subtotal price">
-              <span>小计:</span><span><span>&#65509</span> {{ counter*unitprice | currency }}</span>
+              <span>小计：</span><span><span>&#65509</span> {{ counter*unitprice | currency }}</span>
           </div>
       </div>
       <div class="bind-phone" @click="bindPhone">
@@ -181,16 +181,15 @@ export default {
                     }
                     .minus{
                         font-size: rem(28);
-                        line-height: rem(44);
+                        line-height: rem(42);
                         text-align: center;
                     }
                     .plus{
-                        line-height: rem(44);
+                        line-height: rem(42);
                         .iconfont{
-                            margin: auto;
                             text-align: center;
                             font-family:"iconfont"; 
-                            font-size:rem(44); 
+                            font-size:rem(40); 
                             font-style:normal;
                         }
                     }
@@ -205,9 +204,13 @@ export default {
             .info-subtotal{
                 border-top: 1px solid  #f2f2f2;
                 span:nth-child(2){
-                    color:#fe5400;
+                    color:#ff5500;
+                    font-weight: 600;
+                    font-size: rem(32);
                     span{
                         font-family: "SimSun";
+                        font-size: rem(26);
+                        font-weight: 600;
                     }
                 }
             }

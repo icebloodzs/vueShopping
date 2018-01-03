@@ -8,7 +8,7 @@
         <div class="bind-con">
             <label>手机号</label><mu-text-field hintText="填写手机号" v-model="phone" /><br/>
             <label>验证码</label><mu-text-field hintText="请输入短信验证码" v-model="code" /><br/>  
-            <div :disabled="disabled" @click="sendCode" class="btns">{{btntxt}}</div>
+            <button :disabled="disabled" @click="sendCode" class="btns">{{btntxt}}</button>
         </div>
         <div class="container">
             <div @click="saveCode" class="button">
@@ -96,10 +96,12 @@ export default {
               line-height: rem(90);
               text-align: center;
               .iconfont{
-                   font-family:"iconfont"; font-size:rem(30); font-style:normal;
-                    position: absolute;
-                    width: rem(120);
-                    left:0;
+                font-family:"iconfont"; 
+                font-size:rem(35); font-style:normal;
+                position: absolute;
+                width: rem(120);
+                left:0;
+                color: #404040;
               }
           }
           .bind-con{
@@ -108,13 +110,15 @@ export default {
                 position: absolute;
                 font-size: rem(25);
                 color: #1f80eb;
-                border: 1px solid  #1f80eb;
+                border: rem(2) solid  #1f80eb;
                 width: rem(170);
                 text-align: center;
                 line-height: rem(52);
                 height: rem(52);
                 right: rem(38);
                 bottom: rem(36);
+                background-color: #fff;
+                border-radius: rem(5);
             }
           }   
             .button{
@@ -126,6 +130,7 @@ export default {
                 color: #fff;
                 line-height: rem(70);
                 margin: rem(60) auto;
+                border-radius: rem(5);
             }
       }
     }
@@ -138,7 +143,6 @@ export default {
         margin-top:rem(20);
         label{
             position: absolute;
-            // margin-top:rem(38);
             font-size:rem(30);
             line-height: rem(105);
             height: rem(105);

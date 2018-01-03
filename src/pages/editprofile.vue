@@ -3,12 +3,12 @@
   <div class="addprofile">
       <div class="addprofile-head">
         <strong><i class="iconfont" @click="routerClickgoback">&#xe600;</i></strong>
-        编辑收获地址
+         编辑收获地址
       </div>
       <div class="addprofile-con">
-        <mu-text-field :errorText = "namewarn" v-model="name" @input="input" label="收货人" labelFloat/><br/>
-        <mu-text-field :errorText = "phonewarn" v-model="phone" @input="input" label="联系电话" labelFloat /><br/>  
-        <mu-text-field v-model="address" multiLine :rows="3" :rowsMax="6"  label="详细地址"  :errorText="addresswarn" @input="input" @textOverflow="handleInputOverflow" :maxLength="50" labelFloat/> 
+         <label>收货人</label><mu-text-field  :errorText = "namewarn" v-model="name" @input="input" /><br/>
+         <label>联系电话</label><mu-text-field :errorText = "phonewarn" v-model="phone" @input="input"  /><br/>  
+         <label>详细地址</label><mu-text-field class="address" v-model="address" multiLine :rows="3" :rowsMax="6" :errorText="addresswarn" @input="input" :maxLength="50" /> 
      </div>
      <div class="container">
        <div @click="saveProfile" class="button">
@@ -35,7 +35,6 @@ export default {
         name:"张中原",
         phone:"17638167198",
         address:"",
-        inputErrorText: '',
         }
   },
   methods: {
@@ -47,11 +46,14 @@ export default {
          if(!this.name==''){
           this.namewarn = ""
         }
-         if(!this.phone==''&&reg.test(this.phone)){
+         if(!this.address==''){
+          this.addresswarn = ""
+        }
+         if(!this.phone==''){
           this.phonewarn = ""
         }
-          if(!this.address==''){
-          this.addresswarn = ""
+        if(this.address.length > 50){
+          this.addresswarn = "超过啦！！！！"
         }
     },
     saveProfile(){
@@ -59,27 +61,18 @@ export default {
       
         if(this.name==''){
            this.namewarn = "请填写收货人姓名 ~"
-        } 
-         if(this.address==''){
-          this.addresswarn = "不能一个字都不输入哦 ~"
-        }
-        if(this.phone==''){
+        }else if(this.phone==''){
           this.phonewarn = "请填写联系电话 ~"
         }else if(!reg.test(this.phone)){
           this.phonewarn = "请正确填写联系电话 ~"
+        }else if(this.address==''){
+            this.addresswarn = "不能一个字都不输入哦 ~"
+        }else if(this.address.length > 50){
+          this.addresswarn = "超过啦！！！！"
         }else{
              this.$router.push("/dist/profile");
         }
-        
-       
     },
-     handleInputOverflow (isOverflow) {
-         if(!this.address==''){
-            this.addresswarn = ""
-         }
-      this.addresswarn = isOverflow ? '超过啦！！！！' : ''
-    }
-
   }
 }
 </script>
@@ -88,7 +81,8 @@ export default {
   @import '../assets/sass/_base.scss';
     .wrapper {
     @include wrapper;
-    height: 100vh; 
+    height: 100vh;
+    background-color: #f4f4f4; 
       .addprofile{
           .addprofile-head{
               height: rem(90);
@@ -97,10 +91,13 @@ export default {
               line-height: rem(90);
               text-align: center;
               .iconfont{
-                   font-family:"iconfont"; font-size:rem(30); font-style:normal;
-                    position: absolute;
-                    width: rem(120);
-                    left:0;
+                font-family:"iconfont"; 
+                font-size:rem(35); 
+                font-style:normal;
+                position: absolute;
+                width: rem(120);
+                left:0;
+                color:#666;
               }
           }
             .button{
@@ -112,77 +109,8 @@ export default {
                 color: #fff;
                 line-height: rem(70);
                 margin: rem(60) auto;
-                
+                border-radius: rem(5);
             }
       }
     }
-
-</style>
-<style lang="scss">
-  @import '../style/mixin';
-  .addprofile-con{
-        background-color: #fff;
-        margin-top:rem(20);
-    padding-bottom:rem(20);
-    .has-label{
-        margin-top:rem(30);
-         
-    }
-    .mu-text-field-content{
-        width:rem(750);
-        font-size:rem(30);
-        padding-left:1.27rem;
-         padding-top:rem(50);
-         margin:rem(20) 0;
-         .mu-text-field-input{
-             height: rem(60);
-             width:rem(450);
-            //    position: relative;
-         }
-    }
-    .mu-text-field-line{
-        width:rem(450);
-        margin-left:1.27rem;
-    }
-    .mu-text-field-help{
-        margin-top:rem(20);
-        margin-left:0.6rem;
-        font-size:rem(30);
-        width:rem(500);
-        display: flex;
-      justify-content: space-between;
-        div:nth-child(1){
-         margin-left:rem(45);
-        }
-    }
-    .mu-text-field-focus-line{
-          width:rem(450);
-        margin-left:1.27rem;
-    }
-    
-    .mu-text-field-label{
-        width:rem(300);
-        color:#000;
-        font-size:rem(40);
-        color: #1f80eb;
-        &.float{
-        font-size:rem(30);
-        color:#000;
-        }
-    }
-     .focus-state{
-            .mu-text-field-label{
-                width:rem(300);
-            }
-            .mu-text-field-help{
-
-            }
-        }
-    .multi-line{
-        
-    }
-       
-   
-    }
-   
 </style>

@@ -49,6 +49,7 @@ export default {
   @import '../assets/sass/_base.scss';
     .wrapper {
     @include wrapper;
+    height: 100vh; 
       .website{
           .website-head{
               padding-left: rem(50);
@@ -71,37 +72,39 @@ export default {
                 
                 .content-website-con{
                     display: flex;
-                    border-top: 1px solid  #e9e9e9;
                     border-bottom: 1px solid  #e9e9e9;
                     justify-content: space-between;
                     align-items: center;
-                    height: rem(168);
+                    height: rem(170);
+                    // padding-bottom: rem();
                     .content-website-con-left{
-                    display: flex;
-                    flex-direction: column;
-                    line-height: rem(48);
-                    span:nth-child(1){
-                        font-size: rem(27);
+                      display: flex;
+                      flex-direction: column;
+                      // line-height: rem(48);
+                      span:nth-child(1){
+                          font-size: rem(28);
+                          line-height: rem(48);
+                      }
+                      span:nth-child(2){
+                          font-size: rem(25);
+                          color: #666;
+                           line-height: rem(40);
+                      }
+                      span:nth-child(3){
+                        font-size: rem(22);
+                        color: #999;
+                        .iconfont{
+                          font-family:"iconfont"; font-size:rem(30); font-style:normal;
+                        }
+                      }
                     }
-                    span:nth-child(2){
-                        font-size: rem(25);
-                        color: #666666;
-                    }
-               span:nth-child(3){
-                  font-size: rem(22);
-                  color: #999999;
-                  .iconfont{
-                     font-family:"iconfont"; font-size:rem(30); font-style:normal;
-                  }
-              }
-            }
             .content-website-con-right{
               border-left:  1px solid  #e9e9e9;
               width: rem(120);
               height: rem(70);
               padding: rem(10) rem(30);
               .iconfont{
-                font-family:"iconfont"; font-size:rem(40); font-style:normal;color:#666;
+                font-family:"iconfont"; font-size:rem(45); font-style:normal;color:#666;
                }
             }
           }

@@ -8,15 +8,12 @@
    <div class="goback"> <i class="iconfont" @click="routerClickgoback">&#xe600;</i></div>
    <div class="content">
      <div class="content-head">
-     <div class="content-title">祖元花轴 您的每日营养专家现实秒杀会员56元</div>
+     <div class="content-title"><strong>祖元花轴 您的每日营养专家现实秒杀会员56元</strong></div>
      <div class="content-price">
        <div class="content-price-left">
          <span class="original-icon">￥</span><span class="original-price">128</span>
          <div class="content-price-left-con"><span>￥198</span><span>剩余24份</span></div>
        </div>
-       <!-- <div class="content-price-right">
-         距结束<span>00</span>:<span>05</span>:<span>56</span>
-       </div> -->
        <detailsdown :endTime="endTime"></detailsdown>
      </div>
      <div class="content-indate">
@@ -299,7 +296,7 @@ export default {
               padding: rem(10) rem(30);
               margin-right: rem(30);
               .iconfont{
-                font-family:"iconfont"; font-size:rem(40); font-style:normal;color:#666;
+                font-family:"iconfont"; font-size:rem(45); font-style:normal;color:#666;
                }
             }
           }
