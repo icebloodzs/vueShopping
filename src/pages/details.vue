@@ -1,10 +1,7 @@
 <template>
 <div class="wrapper">
-   <app-banner :listImg="listImg"  style="height:4.27rem;"></app-banner>
-    
-   <!-- <detailsdown :endTime="endTime"></detailsdown> -->
+  <app-banner :listImg="listImg"  style="height:4.27rem;"></app-banner>
   <div class="focus"><i class="iconfont">&#xe826;</i><span>1236人在关注</span></div>
-   
    <div class="goback"> <i class="iconfont" @click="routerClickgoback">&#xe600;</i></div>
    <div class="content">
      <div class="content-head">
@@ -202,23 +199,6 @@ export default {
               }
             }
           }
-          // .content-price-right{
-          //   display: flex;
-          //   flex-direction: row;
-          //   font-size: rem(25);
-          //   height: rem(55);
-          //   align-items: center;
-          //   span{
-          //     color: #fff;
-          //     display: block;
-          //     width: rem(44);
-          //     height: rem(30);
-          //     background-color: #000;
-          //     line-height: rem(30);
-          //     text-align: center;
-          //     margin: 0 rem(10);
-          //   }
-          // }
         }
         .content-indate{
           font-size: rem(25);

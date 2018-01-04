@@ -3,9 +3,7 @@
   <div class="confirm">
       <div class="confirm-head">
           <strong><i class="iconfont" @click="routerClickgoback">&#xe600;</i> 信息确认</strong>
-        
       </div>
-     
       <div class="gain-info">
             <img src="../assets/img/border.png">
             <span>收货人：&nbsp孙富贵 &nbsp 13345668899</span>
@@ -149,8 +147,6 @@ export default {
                      span:nth-child(3){
                         margin-bottom: rem(15);
                     }
-                  
-                   
           }
           .info-tilte{
               background-color: #f2f2f2;

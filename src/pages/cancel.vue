@@ -41,7 +41,7 @@
                         <span> <i class="iconfont">&#xe715;</i>4.8km</span>
                     </div>
                     <div class="content-cancel-con-right">
-                    <i class="iconfont">&#xe8bd;</i>
+                    <i class="iconfont">&#xe676;</i>
                     </div>
                 </div>
                  <div class="content-cancel-info">
@@ -50,12 +50,12 @@
                        
                      </div>
                      <div class="content-cancel-info-con">
-                         <span>订单总额:&nbsp ￥89</span>
-                         <span>优惠金额:&nbsp ￥24</span>
-                         <span>实付金额:&nbsp ￥65</span>
-                         <span>联系方式:&nbsp 13523518708</span>
-                         <span>订单编号:&nbsp 1731526897</span>
-                         <span>下单时间:&nbsp 2017-10-26 &nbsp 14:15:03</span>
+                         <span>订单总额：￥89</span>
+                         <span>优惠金额：￥24</span>
+                         <span>实付金额：￥65</span>
+                         <span>联系方式：13523518708</span>
+                         <span>订单编号：1731526897</span>
+                         <span>下单时间：2017-10-26 &nbsp 14:15:03</span>
                      </div>
                  </div>
             </div>
@@ -115,16 +115,6 @@ export default {
                 color:#9d9d9d;
               }
           }
-        //   .cancel-button{
-        //       width: rem(700);
-        //       height: rem(75);
-        //       color: #fff;
-        //       background-color: #ff9c00;
-        //       line-height: rem(75);
-        //       text-align: center;
-        //       border-radius: rem(12);
-        //       margin: rem(20) rem(25);
-        //   }
         .cancel-code{
             .cancel-code-title{
                 line-height: rem(74);
@@ -250,7 +240,7 @@ export default {
               height: rem(70);
               padding: rem(10) rem(30);
               .iconfont{
-                font-family:"iconfont"; font-size:rem(40); font-style:normal;
+                font-family:"iconfont"; font-size:rem(45); font-style:normal;color:#666;
                }
             }
           }
@@ -265,7 +255,7 @@ export default {
              .content-cancel-info-con{
                  display: flex;
                  flex-direction: column; 
-                color: #a1a1a1;
+                color: #666;
                 line-height: rem(50);
                 padding: rem(20) 0;
              }

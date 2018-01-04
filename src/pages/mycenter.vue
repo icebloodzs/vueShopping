@@ -86,7 +86,7 @@
                         <span>￥89.00</span>
                     </div>
                 </div>
-                <div class="content-physical-button"  @click="routerClickPay">查看物流</div>
+                <div class="content-physical-button"  @click="routerClickPhysical">查看物流</div>
              </div>
            </div>
         </div>
@@ -160,8 +160,7 @@ export default {
        this.classObject.tabtwo =  true
         this.classObject.tabthree =  false
          this.classObject.tabfour =  false
-    },
-    checkPay(){
+    },checkPay(){
       this.data.pay = false
     },checkCancel(){
         this.classObject.tabone =  false
@@ -174,9 +173,10 @@ export default {
        this.classObject.tabtwo =  false
         this.classObject.tabthree =  false
          this.classObject.tabfour =  true
-    },
-    profile(){
+    },profile(){
       this.$router.push("/dist/profile");
+    },routerClickPhysical(){
+      window.location.href="http://m.kuaidi100.com/index_all.html?postid=885911248753980437#result";
     }
   }
 };

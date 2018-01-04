@@ -18,17 +18,22 @@
       <div class="pay-button"  @click="routerClicksubmit">立即付款</div>
       <div class="pay-con">
            <div class="content-pay">
-              
-               <div class="content-pay-title"> <strong>适用门店</strong></div>
-                <div class="content-pay-con">
-                    <div class="content-pay-con-left">
-                        <span>涵斧宫自助餐厅（正大乐城店）</span>
-                        <span>管城回族区心怡路与东站交叉口正大乐城2楼</span>
-                        <span> <i class="iconfont">&#xe715;</i>4.8km</span>
+               <div v-if = "type === 'store'" class="content-store">
+                    <div class="content-pay-title"> <strong>适用门店</strong></div>
+                    <div class="content-pay-con">
+                        <div class="content-pay-con-left">
+                            <span>涵斧宫自助餐厅（正大乐城店）</span>
+                            <span>管城回族区心怡路与东站交叉口正大乐城2楼</span>
+                            <span> <i class="iconfont">&#xe715;</i>4.8km</span>
+                        </div>
+                        <div class="content-pay-con-right">
+                        <i class="iconfont">&#xe676;</i>
+                        </div>
                     </div>
-                    <div class="content-pay-con-right">
-                    <i class="iconfont">&#xe676;</i>
-                    </div>
+                </div>
+                 <div  v-if = "type === 'gain'" class="gain-info">
+                        <span>收货人：&nbsp孙富贵 &nbsp 13345668899</span>
+                        <span>地&nbsp&nbsp&nbsp址：&nbsp北京市劲舞路花园路男300米路东...</span>
                 </div>
                  <div class="content-pay-info">
                      <div class="content-pay-info-title">
@@ -59,7 +64,7 @@ export default {
     },
   data () {
     return {
-     
+     type:"store"
     }
   },
   methods: {
@@ -145,11 +150,27 @@ export default {
                 margin : 0  rem(25) ;
                 padding: 0 rem(20);
                 background-color: #fff;
-                 .content-pay-title{
+                .gain-info{
+                    display: flex;
+                    flex-direction: column;
+                    background-color: #fff;
+                    span{
+                        padding-left: rem(20);
+                        font-size: rem(30);
+                        line-height: rem(60);
+                    }
+                    span:nth-child(2){
+                        margin-top: rem(15);
+                    }
+                    span:nth-child(3){
+                        margin-bottom: rem(15);
+                    }
+                }
+                .content-pay-title{
                     font-size: rem(32);
                     line-height: rem(88);
                     text-align: left;
-               }
+                }
                 .content-pay-con{
                     display: flex;
                     border-top: 1px solid  #e9e9e9;
