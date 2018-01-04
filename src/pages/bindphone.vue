@@ -21,8 +21,7 @@
 
 </template>
 <script>
-  import $ from "jquery";
-   
+import $ from "jquery";
 export default {
     components: {
         
@@ -34,7 +33,6 @@ export default {
         btntxt:"获取验证码",
         phone:"",
         code:""
-
     }
   },
   methods: {
@@ -116,7 +114,7 @@ export default {
                 line-height: rem(52);
                 height: rem(52);
                 right: rem(38);
-                bottom: rem(36);
+                bottom: rem(25);
                 background-color: #fff;
                 border-radius: rem(5);
             }
@@ -151,6 +149,7 @@ export default {
         .mu-text-field{
             width: 100%;
             height:rem(105);
+            margin:0;
             .mu-text-field-content{
                 width:rem(750);
                 font-size:rem(30);
@@ -159,21 +158,17 @@ export default {
                 .mu-text-field-input{
                     height: rem(105);
                     margin-top: rem(-50);
-                    font-size:rem(36);
+                    font-size:rem(30);
+                    color:#666;
                 }
             }
             .mu-text-field-line{
                 width:100%;
                 margin-left:rem(45);
-                  margin-top:rem(6);
+                // margin-top:rem(6);
             }
             .mu-text-field-focus-line{
-                width:100%;
-                margin-left:rem(45);
-                margin-top:rem(6);
-                &.focus{
-                    width:100%;
-                }
+              display: none;
             }
             .mu-text-field-hint{
              
