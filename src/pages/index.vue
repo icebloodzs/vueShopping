@@ -6,29 +6,26 @@
         <div class="circle index"  @click="routerClickhome">首页</div>
         <div class="circle personal"  @click="routerClickcenter">个人<br>中心</div>
         <div class="classify">
-            <div class="classify-list list1"><img src="../assets/img/list_03.jpg" >特惠</div>
-            <div class="classify-list list2"><img src="../assets/img/list_03.jpg" >抢购</div>
-            <div class="classify-list list3"><img src="../assets/img/list_03.jpg" >优惠</div>
-            <div class="classify-list list4"><img src="../assets/img/list_03.jpg" >红包</div>
+            <div class="classify-list list1" v-for="(item,index) in classify"><img src="item.icon" >{{item.name}}</div>
         </div>
         <div class="more">
             <span>大牌抢购</span>
             <span  @click="routerClick">更多<i class="iconfont">&#xe62d;</i></span>
         </div>
         <div class="left-icon"></div>
-        <div class="content-item">
-            <img @click="routerClickdetails" class="content-img" src="../assets/img/dwqvas_02.jpg">
+        <div class="content-item" v-for="(item,index) in goodsList">
+            <img @click="routerClickdetails" class="content-img" src="item.thumbnail">
             <div class="content-middle">
-                <span><strong>预装园粥今日大牌抢购</strong></span>
-                <span> <strong>五折优惠</strong></span>
+                <span><strong>{{item.name}}</strong></span>
+                <!-- <span> <strong>五折优惠</strong></span> -->
                 <div class="price">
-                    <span>58</span>
+                    <span>{{item.original_price}}</span>
                     <span>元</span>
-                    <span>108元</span>
+                    <span>{{item.price_spike}}</span>
                 </div>
                 <div class="remain">
-                   <mu-linear-progress :max="50" class="progress" mode="determinate" color="#1e7fea"  :value="value"/>
-                   <span>剩余37份</span>
+                   <mu-linear-progress :max="200" class="progress" mode="determinate" color="#1e7fea"  :value="item.surplus"/>
+                   <span>剩余{{item.surplus}}份</span>
                 </div>
             </div>
             <a class="content-right" @click="routerClickdetails">立即抢购</a>
@@ -39,9 +36,7 @@
 <script>
 import $ from "jquery";
 import Banner from "../components/Banner.vue";
-import a from "../assets/img/banner1.jpg";
-import b from "../assets/img/banner2.jpg";
-import c from "../assets/img/banner3.jpg";
+
 
 import axios from "axios";
 export default {
@@ -50,20 +45,17 @@ export default {
   },
   data() {
     return {
-      value: 37,
-     
-      listImg: [
-        {
-          url: a
-        },
-        {
-          url: b
-        },
-        {
-          url: c
-        }
-      ]
+      listImg: [],
+      items: [],
+      classify:[],
+      goodsList:[]
     };
+  },
+  // 组件创建完后获取数据，
+  created() {
+    this.getImgData()
+    this.getClassifyData()
+    this.getGoodsData()
   },
   methods: {
     routerClick() {
@@ -77,7 +69,32 @@ export default {
     },
     routerClickhome() {
       this.$router.go(0);
+    },
+     // 数据获取
+    getImgData() {
+      let that = this
+      let url="http://7a898255.ngrok.io/h5/gzZxNPwrqR42l0JGMeoV?action=carousel_images"
+      axios.get(url).then(function(response) {
+        that.listImg = response.data.data
+        // console.log(that.listImg)
+      })
+    },
+    getClassifyData(){
+      let that = this
+      let url="http://7a898255.ngrok.io/h5/gzZxNPwrqR42l0JGMeoV?action=classifications"
+      axios.get(url).then(function(response) {
+      that.classify = response.data.data
+      // console.log(that.classify)
+      })
+    },getGoodsData(){
+      let that = this
+      let url="http://7a898255.ngrok.io/h5/gzZxNPwrqR42l0JGMeoV?action=goods_list"
+      axios.get(url).then(function(response) {
+      that.goodsList = response.data.data
+      console.log(that.goodsList)
+      })
     }
+    
   }
 };
 </script>
@@ -115,12 +132,12 @@ export default {
 
   .classify {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     background-color: #fff;
     height: rem(170);
 
     .classify-list {
-      width: 25%;
+      // width: 25%;
       height: rem(170);
       display: flex;
       flex-direction: column;
@@ -176,14 +193,12 @@ export default {
     .content-middle {
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
       margin-top: rem(28);
       span:nth-child(1) {
+        width:rem(300);
         font-size: rem(30);
         line-height: rem(30);
-      }
-      span:nth-child(2) {
-         font-size: rem(30);
-         line-height: rem(50);
       }
       .price {
         span {
