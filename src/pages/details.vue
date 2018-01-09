@@ -5,17 +5,17 @@
    <div class="goback"> <i class="iconfont" @click="routerClickgoback">&#xe600;</i></div>
    <div class="content">
      <div class="content-head">
-     <div class="content-title"><strong>祖元花轴 您的每日营养专家现实秒杀会员56元</strong></div>
+     <div class="content-title"><strong>{{item.name}}</strong></div>
      <div class="content-price">
        <div class="content-price-left">
-         <span class="original-icon">￥</span><span class="original-price">128</span>
-         <div class="content-price-left-con"><span>￥198</span><span>剩余24份</span></div>
+         <span class="original-icon">￥</span><span class="original-price">{{item.price_spike}}</span>
+         <div class="content-price-left-con"><span>￥{{item.original_price}}</span><span>剩余{{item.surplus}}份</span></div>
        </div>
-       <detailsdown :endTime="endTime"></detailsdown>
+       <detailsdown :endTime="item.end_time"></detailsdown>
      </div>
      <div class="content-indate">
        <div class="content-indate-left">此商品有效期至</div>
-       <div class="content-indate-right">2017-06-30 21:00</div>
+       <div class="content-indate-right">{{item.end_time}}</div>
      </div>
      <div class="content-purchase">
        <div class="content-purchase-left"><img src="../assets/img/dwqvas_02.jpg"></div>
@@ -27,8 +27,8 @@
        <div class="content-website-con">
          <div class="content-website-con-left">
             <span>涵斧宫自助餐厅（正大乐城店）</span>
-            <span>管城回族区心怡路与东站交叉口正大乐城2楼</span>
-            <span> <i class="iconfont">&#xe715;</i>4.8km</span>
+            <span>{{item.site[this.zero].detailed_address}}</span>
+            <span> <i class="iconfont">&#xe715;</i>{{item.site[this.zero].distance}}km</span>
          </div>
          <div class="content-website-con-right">
            <i class="iconfont">&#xe676;</i>
@@ -51,33 +51,30 @@
 
 </template>
 <script>
-  import $ from "jquery";
-   import Banner from '../components/Banner.vue'
-   import detailsdown from '../components/detailsdown.vue'
-   import a from '../assets/img/banner1.jpg'
-    import b from '../assets/img/banner2.jpg'
-    import c from '../assets/img/banner3.jpg'
-
-
+import $ from "jquery"
+import Banner from '../components/Banner.vue'
+import detailsdown from '../components/detailsdown.vue'
+import axios from "axios"
    
 export default {
   components: {
       'app-banner': Banner,
       'detailsdown':detailsdown
   },
+  created() {
+    this.getData()
+  },
   data () {
     return {
+      zero:0,
       activeTab: 'tab1',
       value:37,
-      offLine:true,
-      endTime : '2017-12-22 17:30:00',
-      listImg: [{
-                  url: a
-              }, {
-                  url: b
-              }, {
-                  url: c
-              }]
+      offLine:[],
+      listImg: [],
+      item:[],
+      basePath:"http://a729b0ab.ngrok.io",
+      has_id:"w8LO1dXy9zN9lRkjGExn",
+      endTime : []
   }
 },
   methods: {
@@ -91,6 +88,18 @@ export default {
        this.$router.go(-1);
     }, routerClickdetails() {
       this.$router.push("/dist/detail");
+    },
+    getData(){
+      let that = this
+      let goods_id =this.$route.query.id
+      let lng = this.$route.query.lng
+      let lat = this.$route.query.lat
+      let url=`${this.basePath}/h5/${this.has_id}?action=goods_detail&goods_id=${goods_id}&lng=${lng}&lat=${lat}`
+      axios.get(url).then(function(response) {
+      that.item = response.data
+      if(that.item.extract_type===1){that.offLine=false}else{that.offLine=true}
+      console.log(that.item.site[0])
+      })
     }
   }
 }

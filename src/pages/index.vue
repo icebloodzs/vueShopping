@@ -6,7 +6,7 @@
         <div class="circle index"  @click="routerClickhome">首页</div>
         <div class="circle personal"  @click="routerClickcenter">个人<br>中心</div>
         <div class="classify">
-            <div class="classify-list list1" v-for="(item,index) in classify"><img src="item.icon" >{{item.name}}</div>
+            <div class="classify-list list1" v-for="(item,index) in classify"><img :src="item.icon" >{{item.name}}</div>
         </div>
         <div class="more">
             <span>大牌抢购</span>
@@ -14,7 +14,7 @@
         </div>
         <div class="left-icon"></div>
         <div class="content-item" v-for="(item,index) in goodsList">
-            <img @click="routerClickdetails" class="content-img" src="item.thumbnail">
+            <router-link :to="{path:'/dist/details'}" tag="img" class="content-img" :src="item.thumbnail">立即抢购</router-link>
             <div class="content-middle">
                 <span><strong>{{item.name}}</strong></span>
                 <!-- <span> <strong>五折优惠</strong></span> -->
@@ -28,7 +28,7 @@
                    <span>剩余{{item.surplus}}份</span>
                 </div>
             </div>
-            <a class="content-right" @click="routerClickdetails">立即抢购</a>
+             <router-link :to="{path:'/dist/details',query:{id:item.id,lng:116.30387397,lat:39.91481908}}" tag="div" class="content-right">立即抢购</router-link>
         </div>
     </div>
 </template>
@@ -48,14 +48,17 @@ export default {
       listImg: [],
       items: [],
       classify:[],
-      goodsList:[]
+      goodsList:[],
+      basePath:"http://dev.mp.duduapp.net",
+      has_id:"1wxAvPWzQro2G4RXkBrd",
+      config:[]
     };
   },
   // 组件创建完后获取数据，
   created() {
     this.getImgData()
-    this.getClassifyData()
-    this.getGoodsData()
+    // this.getClassifyData()
+    // this.getGoodsData()
   },
   methods: {
     routerClick() {
@@ -64,34 +67,33 @@ export default {
     routerClickcenter() {
       this.$router.push("/dist/mycenter");
     },
-    routerClickdetails() {
-      this.$router.push("/dist/details");
-    },
+  
     routerClickhome() {
       this.$router.go(0);
     },
-     // 数据获取
+     // 轮播图数据获取
     getImgData() {
       let that = this
-      let url="http://7a898255.ngrok.io/h5/gzZxNPwrqR42l0JGMeoV?action=carousel_images"
+      let url=`${this.basePath}/h5/${this.has_id}?action=carousel_images`
+      console.log(url)
       axios.get(url).then(function(response) {
         that.listImg = response.data.data
-        // console.log(that.listImg)
+        // console.log(this.listImg)
       })
     },
     getClassifyData(){
       let that = this
-      let url="http://7a898255.ngrok.io/h5/gzZxNPwrqR42l0JGMeoV?action=classifications"
+      let url=`${this.basePath}/h5/${this.has_id}?action=classifications`
       axios.get(url).then(function(response) {
-      that.classify = response.data.data
+      that.classify = response.data
       // console.log(that.classify)
       })
     },getGoodsData(){
       let that = this
-      let url="http://7a898255.ngrok.io/h5/gzZxNPwrqR42l0JGMeoV?action=goods_list"
+      let url=`${this.basePath}/h5/${this.has_id}?action=goods_list`
       axios.get(url).then(function(response) {
       that.goodsList = response.data.data
-      console.log(that.goodsList)
+      // console.log(that.goodsList)
       })
     }
     
@@ -248,7 +250,6 @@ export default {
     .content-right {
       background-color: #ff9c00;
       margin: auto;
-      display: block;
       width: rem(150);
       height: rem(66);
       font-size: rem(25);

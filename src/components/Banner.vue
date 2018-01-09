@@ -46,8 +46,8 @@ export default {
       },
       loop: true,
       speed: 600,
-      autoplay: this.counter.length === 1 ? false : true,
-     
+      autoplay: this.counter.length === 1 ? false : true
+      // autoplay:true
     });
   }
 };
