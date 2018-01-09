@@ -21,8 +21,8 @@
 
 </template>
 <script>
-  import $ from "jquery";
-   
+import $ from "jquery";
+import axios from "axios"
 export default {
     components: {
         
@@ -35,11 +35,27 @@ export default {
         name:"张中原",
         phone:"17638167198",
         address:"",
+        basePath:"http://dev.mp.duduapp.net",
+        has_id:"1wxAvPWzQro2G4RXkBrd",
         }
   },
   methods: {
     routerClickgoback(){
        this.$router.go(-1);
+    },editprofile(){
+        let that = this
+        let fan_id =this.$route.query.fan_id
+        let id = this.$route.query.id
+        let consignee_name = this.name  
+        let detail_address = this.address  
+        let mobile = this.phone
+        let url=`${this.basePath}/h5/${this.has_id}?action=shipping_address_edit&fan_id=${fan_id}&id=${id}&consignee_name=${consignee_name}&detail_address=${detail_address}&mobile=${mobile}`
+        axios.get(url,{
+            headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
+        }).then(function(response) {
+        that.item = response.data
+        console.log(that.item.message)
+        })
     },
     input(){
          var reg=11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
@@ -57,8 +73,9 @@ export default {
         }
     },
     saveProfile(){
+        let that = this
         var reg=11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
-      
+        let fan_id =this.$route.query.fan_id
         if(this.name==''){
            this.namewarn = "请填写收货人姓名 ~"
         }else if(this.phone==''){
@@ -70,7 +87,10 @@ export default {
         }else if(this.address.length > 50){
           this.addresswarn = "超过啦！！！！"
         }else{
-             this.$router.push("/dist/profile");
+            this.editprofile()
+            setTimeout(()=>{
+              that.$router.push({path:"/dist/profile",query:{fan_id:fan_id}})
+            },1000)
         }
     },
   }

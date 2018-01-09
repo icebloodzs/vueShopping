@@ -8,11 +8,11 @@
       <div class="website-con">
            <div class="content-website">
                
-                <div class="content-website-con">
+                <div class="content-website-con" v-for="(item,index) in items">
                     <div class="content-website-con-left">
-                        <span>涵斧宫自助餐厅（正大乐城店）</span>
-                        <span>管城回族区心怡路与东站交叉口正大乐城2楼</span>
-                        <span> <i class="iconfont">&#xe715;</i>4.8km</span>
+                        <span>{{item.name}}</span>
+                        <span>{{item.detailed_address}}</span>
+                        <span> <i class="iconfont">&#xe715;</i>{{item.distance}}km</span>
                     </div>
                     <div class="content-website-con-right">
                     <i class="iconfont">&#xe676;</i>
@@ -26,21 +26,39 @@
 
 </template>
 <script>
-  import $ from "jquery";
-   
+import $ from "jquery";
+import axios from "axios"
 export default {
-    components: {
+  components: {
         
     },
+  created() {
+    this.getData()
+  },
   data () {
     return {
-     
+      zero:0,
+      items:[],
+      basePath:"http://dev.mp.duduapp.net",
+      has_id:"1wxAvPWzQro2G4RXkBrd",
     }
   },
   methods: {
     routerClickgoback(){
        this.$router.go(-1);
-    },
+    }, getData(){
+      let that = this
+      let goods_id =this.$route.query.id
+      let lng = this.$route.query.lng
+      let lat = this.$route.query.lat
+      let url=`${this.basePath}/h5/${this.has_id}?action=goods_detail&goods_id=${goods_id}&lng=${lng}&lat=${lat}`
+      axios.get(url,{
+         headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
+      }).then(function(response) {
+      that.items = response.data.site
+      // console.log(that.items)
+      })
+    }
   }
 }
 </script>

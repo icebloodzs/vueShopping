@@ -4,8 +4,10 @@
     <div class="header">
        <img src="../assets/img/dwqvas_02.jpg">
        <div class="header-middle">
-           <span>你好哈士奇</span>
-           <span @click="profile">收货地址 &nbsp <i class="iconfont">&#xe62d;</i></span>
+          <span>你好哈士奇</span>
+          <router-link :to="{path:'/dist/profile',query:{fan_id:30}}" tag="div" class="header-profile">
+          收货地址 &nbsp <i class="iconfont">&#xe62d;</i>
+          </router-link>
        </div>
        <div class="header-right">
             <div class="circle index" @click="routerClickhome">首页</div>
@@ -149,32 +151,30 @@ export default {
     },
     routerClickCancel() {
       this.$router.push("/dist/cancel");
-       this.data.used = false;
+      this.data.used = false;
     },tab1Active(){
       this.classObject.tabone = true
-       this.classObject.tabtwo =  false
-        this.classObject.tabthree =  false
-         this.classObject.tabfour =  false
+      this.classObject.tabtwo =  false
+      this.classObject.tabthree =  false
+      this.classObject.tabfour =  false
     },tab2Active(){
-     this.classObject.tabone =  false
-       this.classObject.tabtwo =  true
-        this.classObject.tabthree =  false
-         this.classObject.tabfour =  false
+      this.classObject.tabone =  false
+      this.classObject.tabtwo =  true
+      this.classObject.tabthree =  false
+      this.classObject.tabfour =  false
     },checkPay(){
       this.data.pay = false
     },checkCancel(){
-        this.classObject.tabone =  false
-       this.classObject.tabtwo =  false
-        this.classObject.tabthree =  true
-         this.classObject.tabfour =  false
-        this.data.cancel = false
+      this.classObject.tabone =  false
+      this.classObject.tabtwo =  false
+      this.classObject.tabthree =  true
+      this.classObject.tabfour =  false
+      this.data.cancel = false
     },tab4Active(){
       this.classObject.tabone =  false
-       this.classObject.tabtwo =  false
-        this.classObject.tabthree =  false
-         this.classObject.tabfour =  true
-    },profile(){
-      this.$router.push("/dist/profile");
+      this.classObject.tabtwo =  false
+      this.classObject.tabthree =  false
+      this.classObject.tabfour =  true
     },routerClickPhysical(){
       window.location.href="http://m.kuaidi100.com/index_all.html?postid=885911248753980437#result";
     }
@@ -212,7 +212,7 @@ export default {
         text-align: left;
           opacity: .9;
       }
-      span:nth-child(2) {
+      .header-profile {
         display: block;
         font-size: rem(25);
         color: #fff;

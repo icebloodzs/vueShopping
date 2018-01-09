@@ -32,7 +32,9 @@ export default {
         time:0,
         btntxt:"获取验证码",
         phone:"",
-        code:""
+        code:"",
+        items:[],
+        message:[]
     }
   },
   methods: {
@@ -40,9 +42,22 @@ export default {
        this.$router.go(-1);
     },
     //验证手机号码部分
+    sendCaptcha() {
+      let that = this
+      let mobile = this.phone
+      let fan_id =this.$route.query.fan_id
+      let url=`${this.basePath}/h5/${this.has_id}?action=send_captcha&fan_id=${fan_id}&mobile=${mobile}`
+      axios.get(url,{
+         headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
+      }).then(function(response) {
+        that.items = response.data.data
+        that.time = that.items.seconds
+        that.message = that.items.message
+        console.log(that.items)
+      })
+    },
     sendCode(){
         var reg=11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
-        //var url="/nptOfficialWebsite/apply/sendSms?mobile="+this.ruleForm.phone;
         if(this.phone==''){
             alert("请输入手机号码");
         }else if(!reg.test(this.phone)){
@@ -51,10 +66,7 @@ export default {
             this.time=60;
             this.disabled=true;
             this.timer();
-            /*axios.post(url).then(
-                res=>{
-                this.phonedata=res.data;
-            })*/
+            this.sendCaptcha()
         }
     },
     timer() {
@@ -68,11 +80,21 @@ export default {
                 this.disabled=false;
         }
     },saveCode(){
+        let that = this
+        let mobile = this.phone
+        let fan_id =this.$route.query.fan_id
+        let url=`${this.basePath}/h5/${this.has_id}?action=modify_bind_mobile&fan_id=${fan_id}&mobile=${mobile}`
         if(this.code==''){
             alert("请输入验证码");
         }
         else{
-          this.$router.push("/dist/submit");
+            axios.get(url,{
+                headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
+                }).then(function(response) {
+                that.items = response.data.data
+                that.message = that.items.message
+            })
+            this.$router.push("/dist/submit");
         }
     }
 

@@ -39,9 +39,7 @@
       </div>
       <div class="submit-order"  @click="openBottomSheet">提交订单</div>
       <div class="mu-overlay" v-if="bottomSheet" @click="closeBottomSheet"  style="opacity: 0.4; background-color: rgb(0, 0, 0); position: fixed; z-index:1;"></div>
-      <!-- <mu-bottom-sheet :open="bottomSheet" @close="closeBottomSheet"> -->
           <div class="muz-list" v-if="bottomSheet">
-             
               <div class="mu-list-head"> <strong>支付方式</strong></div>
               <div class="mu-list-item" :class="{ active: isActive}" @click="isActive1">
                   <img src="../assets/img/zhongyuan_logo_02.png" alt="">
@@ -52,17 +50,8 @@
                     微信支付
                     </div>
                  <i class="iconfont" :class="{ iconfontsite: isActive}">&#xe721;</i>
-                <div class="mu-list-button">立即支付</div>
+                <div class="mu-list-button"  @click="payNow">立即支付</div>
           </div>
-    <!-- <mu-list @itemClick="closeBottomSheet">
-      <mu-sub-header>
-       支付方式
-      </mu-sub-header>
-      <mu-list-item title="中原银行卡支付（2366）"/>
-      <mu-list-item title="微信支付"/>
-      
-    </mu-list> -->
-  <!-- </mu-bottom-sheet> -->
   </div>
 </div>
 
@@ -103,6 +92,17 @@ export default {
     },isActive2 () {
       this. isActive = false,
        this.isActives = true
+    },payNow(){
+        let that = this
+        let fan_id =this.$route.query.fan_id
+        let amount = this.counter
+        let url=`${this.basePath}/h5/${this.has_id}?action=create_order&fan_id=${fan_id}&amount=${counter}`
+        axios.get(url,{
+            headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
+            }).then(function(response) {
+            that.items = response.data.data
+            that.message = that.items.message
+        })
     }
         
        

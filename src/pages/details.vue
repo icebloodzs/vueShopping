@@ -26,23 +26,22 @@
        <div class="content-website-title">领取网点</div>
        <div class="content-website-con">
          <div class="content-website-con-left">
-            <span>涵斧宫自助餐厅（正大乐城店）</span>
-            <span>{{item.site[this.zero].detailed_address}}</span>
-            <span> <i class="iconfont">&#xe715;</i>{{item.site[this.zero].distance}}km</span>
+            <span>{{site.name}}</span>
+            <span>{{site.detailed_address}}</span>
+            <span> <i class="iconfont">&#xe715;</i>{{site.distance}}km</span>
          </div>
          <div class="content-website-con-right">
            <i class="iconfont">&#xe676;</i>
           </div>
        </div>
-        <div class="content-website-all"  @click="routerClickwebsite" >
+        <router-link :to="{path:'/dist/website',query:{id:item.id,lng:116.30387397,lat:39.91481908}}" tag="div" class="content-website-all">
           <div class="content-website-all-left">查看全部3家网点</div>
           <div class="content-website-all-right"> <i class="iconfont">&#xe62d;</i></div>
-        </div>
+        </router-link>
      </div>
      <div class="content-detail">
        <div class="content-detail-title">商品详情</div>
        <div class="content-detail-con">
-         
        </div>
      </div>
    </div>
@@ -71,20 +70,19 @@ export default {
       value:37,
       offLine:[],
       listImg: [],
+      site:[],
       item:[],
-      basePath:"http://a729b0ab.ngrok.io",
-      has_id:"w8LO1dXy9zN9lRkjGExn",
+      basePath:"http://dev.mp.duduapp.net",
+      has_id:"1wxAvPWzQro2G4RXkBrd",
       endTime : []
   }
 },
   methods: {
     handleTabChange (val) {
       this.activeTab = val
-    },routerClickwebsite(){
-          this.$router.push("/dist/website");
-      },routerClicksubmit(){
-          this.$router.push("/dist/submit");
-      }, routerClickgoback(){
+    },routerClicksubmit(){
+          this.$router.push({path:"/dist/submit",query:{fan:30}});
+    },routerClickgoback(){
        this.$router.go(-1);
     }, routerClickdetails() {
       this.$router.push("/dist/detail");
@@ -95,10 +93,13 @@ export default {
       let lng = this.$route.query.lng
       let lat = this.$route.query.lat
       let url=`${this.basePath}/h5/${this.has_id}?action=goods_detail&goods_id=${goods_id}&lng=${lng}&lat=${lat}`
-      axios.get(url).then(function(response) {
+      axios.get(url,{
+         headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
+      }).then(function(response) {
       that.item = response.data
       if(that.item.extract_type===1){that.offLine=false}else{that.offLine=true}
-      console.log(that.item.site[0])
+      that.site = that.item.site[0]
+      // console.log(that.item.site[0])
       })
     }
   }

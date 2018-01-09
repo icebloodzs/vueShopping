@@ -57,8 +57,8 @@ export default {
   // 组件创建完后获取数据，
   created() {
     this.getImgData()
-    // this.getClassifyData()
-    // this.getGoodsData()
+    this.getClassifyData()
+    this.getGoodsData()
   },
   methods: {
     routerClick() {
@@ -76,24 +76,30 @@ export default {
       let that = this
       let url=`${this.basePath}/h5/${this.has_id}?action=carousel_images`
       console.log(url)
-      axios.get(url).then(function(response) {
+      axios.get(url,{
+         headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
+      }).then(function(response) {
         that.listImg = response.data.data
-        // console.log(this.listImg)
+        console.log(that.listImg)
       })
     },
     getClassifyData(){
       let that = this
       let url=`${this.basePath}/h5/${this.has_id}?action=classifications`
-      axios.get(url).then(function(response) {
+      axios.get(url,{
+         headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
+      }).then(function(response) {
       that.classify = response.data
-      // console.log(that.classify)
+      console.log(that.classify)
       })
     },getGoodsData(){
       let that = this
       let url=`${this.basePath}/h5/${this.has_id}?action=goods_list`
-      axios.get(url).then(function(response) {
+      axios.get(url,{
+         headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
+      }).then(function(response) {
       that.goodsList = response.data.data
-      // console.log(that.goodsList)
+      console.log(that.goodsList)
       })
     }
     
