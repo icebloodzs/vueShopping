@@ -6,7 +6,10 @@
     <div class="circle index" @click="routerClickhome">首页</div>
     <div class="circle personal" @click="routerClickcenter">个人<br>中心</div>
     <div class="classify">
-      <div class="classify-list list1" v-for="(item,index) in classify"><img :src="item.icon">{{item.name}}</div>
+      <div class="classify-list list1" v-for="(item,index) in classify">
+          <img :src="item.icon" @click="routerClassificationClick(item.id)">
+          {{item.name}}
+      </div>
     </div>
     <div class="more">
       <span>大牌抢购</span>
@@ -40,73 +43,74 @@
   import Banner from "../components/Banner.vue";
 
 
-import axios from "axios";
-export default {
-  components: {
-    "app-banner": Banner
-  },
-  data() {
-    return {
-      listImg: [],
-      items: [],
-      classify:[],
-      goodsList:[],
-      basePath:"http://dev.mp.duduapp.net",
-      has_id:"1wxAvPWzQro2G4RXkBrd",
-      config:[]
-    };
-  },
-  // 组件创建完后获取数据，
-  created() {
-    this.getImgData()
-    this.getClassifyData()
-    this.getGoodsData()
-  },
-  methods: {
-    routerClick() {
-      this.$router.push("/dist/more");
-    },
-    routerClickcenter() {
-      this.$router.push("/dist/mycenter");
-    },
+  import axios from "axios";
 
-    routerClickhome() {
-      this.$router.go(0);
+  export default {
+    components: {
+      "app-banner": Banner
     },
-     // 轮播图数据获取
-    getImgData() {
-      let that = this
-      let url=`${this.basePath}/h5/${this.has_id}?action=carousel_images`
-      console.log(url)
-      axios.get(url,{
-         headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
-      }).then(function(response) {
-        that.listImg = response.data.data
-        console.log(that.listImg)
-      })
+    data() {
+      return {
+        listImg: [],
+        items: [],
+        classify: [],
+        goodsList: [],
+        basePath: "http://dev.mp.duduapp.net",
+        has_id: "1wxAvPWzQro2G4RXkBrd",
+        config: []
+      };
     },
-    getClassifyData(){
-      let that = this
-      let url=`${this.basePath}/h5/${this.has_id}?action=classifications`
-      axios.get(url,{
-         headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
-      }).then(function(response) {
-      that.classify = response.data
-      console.log(that.classify)
-      })
-    },getGoodsData(){
-      let that = this
-      let url=`${this.basePath}/h5/${this.has_id}?action=goods_list`
-      axios.get(url,{
-         headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
-      }).then(function(response) {
-      that.goodsList = response.data.data
-      console.log(that.goodsList)
-      })
+    // 组件创建完后获取数据，
+    created() {
+      this.getImgData()
+      this.getClassifyData()
+      this.getGoodsData()
+    },
+    methods: {
+      routerClick() {
+        this.$router.push("/dist/more");
+      },
+      routerClassificationClick(id) {
+        this.$router.push("/dist/more");
+      },
+      routerClickcenter() {
+        this.$router.push("/dist/mycenter");
+      },
+
+      routerClickhome() {
+        this.$router.go(0);
+      },
+      // 轮播图数据获取
+      getImgData() {
+        let that = this
+        let url = `${this.basePath}/h5/${this.has_id}?action=carousel_images`
+        axios.get(url, {
+          headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
+        }).then(function (response) {
+          that.listImg = response.data.data
+        })
+      },
+      getClassifyData() {
+        let that = this
+        let url = `${this.basePath}/h5/${this.has_id}?action=classifications`
+        axios.get(url, {
+          headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
+        }).then(function (response) {
+          that.classify = response.data.data
+          console.log(that.classify)
+        })
+      }, getGoodsData() {
+        let that = this
+        let url = `${this.basePath}/h5/${this.has_id}?action=goods_list`
+        axios.get(url, {
+          headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
+        }).then(function (response) {
+          that.goodsList = response.data.data
+        })
+      }
+
     }
-
-  }
-};
+  };
 </script>
 
 <style scoped lang="scss">
