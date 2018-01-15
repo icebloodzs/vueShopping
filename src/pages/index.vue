@@ -6,14 +6,14 @@
         <div class="circle index"  @click="routerClickhome">首页</div>
         <div class="circle personal"  @click="routerClickcenter">个人<br>中心</div>
         <div class="classify">
-            <div class="classify-list list1" v-for="(item,index) in classify"><img :src="item.icon" >{{item.name}}</div>
+            <div class="classify-list list1" v-for="item in classify" @click="clickClassify(item.id)"><img :src="item.icon" >{{item.name}}</div>
         </div>
         <div class="more">
             <span>大牌抢购</span>
             <span  @click="routerClick">更多<i class="iconfont">&#xe62d;</i></span>
         </div>
         <div class="left-icon"></div>
-        <div class="content-item" v-for="(item,index) in goodsList">
+        <div class="content-item" v-for="item in goodsList">
             <router-link :to="{path:'/dist/details'}" tag="img" class="content-img" :src="item.thumbnail">立即抢购</router-link>
             <div class="content-middle">
                 <span><strong>{{item.name}}</strong></span>
@@ -36,8 +36,6 @@
 <script>
 import $ from "jquery";
 import Banner from "../components/Banner.vue";
-
-
 import axios from "axios";
 export default {
   components: {
@@ -51,23 +49,29 @@ export default {
       goodsList:[],
       basePath:"http://dev.mp.duduapp.net",
       has_id:"1wxAvPWzQro2G4RXkBrd",
-      config:[]
+      config:[],
+      fan_id:30,
+      
     };
   },
   // 组件创建完后获取数据，
   created() {
+  
+  },
+   mounted(){
     this.getImgData()
     this.getClassifyData()
     this.getGoodsData()
-  },
+   },
   methods: {
     routerClick() {
       this.$router.push("/dist/more");
     },
     routerClickcenter() {
-      this.$router.push("/dist/mycenter");
+      this.$router.push({path:"/dist/mycenter",query:{fan_id:this.fan_id}});
+    },clickClassify(classId){
+      this.$router.push({path:"/dist/more",query:{classId:classId}});
     },
-  
     routerClickhome() {
       this.$router.go(0);
     },
@@ -75,26 +79,40 @@ export default {
     getImgData() {
       let that = this
       let url=`${this.basePath}/h5/${this.has_id}?action=carousel_images`
-      console.log(url)
       axios.get(url,{
          headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
       }).then(function(response) {
         that.listImg = response.data.data
-        console.log(that.listImg)
+        // console.log(that.listImg)
       })
     },
+     // 分类数据获取
     getClassifyData(){
       let that = this
       let url=`${this.basePath}/h5/${this.has_id}?action=classifications`
       axios.get(url,{
          headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
       }).then(function(response) {
-      that.classify = response.data
-      console.log(that.classify)
+      that.classify = response.data.data
+      // console.log(that.classify)
       })
-    },getGoodsData(){
+    },
+     // 商品数据获取
+    // getGoodsData(classId){
+    //   let that = this
+    //   let index = index
+    //   let url=`${this.basePath}/h5/${this.has_id}?action=goods_list&classification_id[]=${classId}&order[]=${index}`
+    //   axios.get(url,{
+    //      headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
+    //   }).then(function(response) {
+    //   that.goodsList = response.data.data
+    //   console.log(that.goodsList)
+    //   })
+    // }
+    getGoodsData(){
       let that = this
-      let url=`${this.basePath}/h5/${this.has_id}?action=goods_list`
+      let index = index
+      let url=`${this.basePath}/h5/${this.has_id}?action=goods_list&order[]=${index}`
       axios.get(url,{
          headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
       }).then(function(response) {
@@ -195,14 +213,16 @@ export default {
     background-color: #fff;
     display: flex;
     flex-direction: row;
+    margin-bottom: rem(15);
     .content-img {
       width: rem(212);
+      margin-right: rem(5);
     }
     .content-middle {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      margin-top: rem(28);
+      margin: rem(30) 0;
       span:nth-child(1) {
         width:rem(300);
         font-size: rem(30);

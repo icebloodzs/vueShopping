@@ -81,7 +81,8 @@ export default {
     handleTabChange (val) {
       this.activeTab = val
     },routerClicksubmit(){
-          this.$router.push({path:"/dist/submit",query:{fan:30}});
+        let id =this.$route.query.id
+        this.$router.push({path:"/dist/submit",query:{fan_id:30,id:id}});
     },routerClickgoback(){
        this.$router.go(-1);
     }, routerClickdetails() {

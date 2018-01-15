@@ -1,7 +1,7 @@
 <template>
     <div class="swiper-container">
         <div class="swiper-wrapper">
-            <div class="swiper-slide" @click="routerClickdetails" v-for="(str,index) in listImg" :style="{ backgroundImage: 'url(' + str.image_url + ')' }" :key="str.id"></div>
+            <div class="swiper-slide" @click="routerClickdetails" v-for="str in listImg" :style="{ backgroundImage: 'url(' + str.image_url + ')' }" :key="str.id"></div>
         </div>
         <div class="swiper-pagination swiper-pagination-white"></div>
     </div>
@@ -13,7 +13,7 @@ import $ from "jquery";
 import "swiper/dist/css/swiper.min.css";
 
 export default {
-  props: ["listImg"],
+  props: ['listImg'],
   data: function() {
     return {
       counter: this.listImg
@@ -24,15 +24,18 @@ export default {
       this.$router.push("/dist/details");
     }
   },
+  created() {
+      //  console.log(this.counter);
+  },
   mounted() {
-    // console.log(this.counter.length);
+    console.log(this.listImg);
     let that = this;
     var swiper = new Swiper(".swiper-container", {
       pagination: {
         el: ".swiper-pagination",
         type: "fraction",
         renderFraction: function(currentClass, totalClass) {
-          if (that.counter.length === 1) return;
+          // if (that.counter.length === 1) return;
           return (
             '<span class="' +
             currentClass +
@@ -44,10 +47,10 @@ export default {
           );
         }
       },
-      loop: true,
-      speed: 600,
-      autoplay: this.counter.length === 1 ? false : true
-      // autoplay:true
+      // loop: true,
+      // speed: 600,
+      // // autoplay: this.counter.length === 1 ? false : true
+      autoplay:true
     });
   }
 };

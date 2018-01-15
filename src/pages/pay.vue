@@ -8,9 +8,9 @@
       <div class="pay-head-con" @click="routerClickdetails">
           <img src="../assets/img/dwqvas_02.jpg" alt="">
           <div class="pay-head-right">
-              <div class="pay-head-title"><strong>幸福里商鼎路店单人下午套餐</strong></div>
+              <div class="pay-head-title"><strong>{{items.goods_name}}</strong></div>
                 <div class="pay-head-down">
-                    <div class="pay-head-down-left">总价:￥658</div>
+                    <div class="pay-head-down-left">总价:{{items.total}}</div>
                     <div class="pay-head-down-right"><i class="iconfont">&#xe62d;</i></div>
                 </div>
           </div>
@@ -27,7 +27,7 @@
                             <span> <i class="iconfont">&#xe715;</i>4.8km</span>
                         </div>
                         <div class="content-pay-con-right">
-                        <i class="iconfont">&#xe676;</i>
+                            <i class="iconfont">&#xe676;</i>
                         </div>
                     </div>
                 </div>
@@ -38,15 +38,14 @@
                  <div class="content-pay-info">
                      <div class="content-pay-info-title">
                           <strong>订单信息</strong>
-                       
                      </div>
                      <div class="content-pay-info-con">
-                         <span>订单总额：&nbsp ￥89</span>
-                         <span>优惠金额：&nbsp ￥24</span>
-                         <span>实付金额：&nbsp ￥65</span>
-                         <span>联系方式：&nbsp 13523518708</span>
-                         <span>订单编号：&nbsp 1731526897</span>
-                         <span>下单时间：&nbsp 2017-10-26 &nbsp 14:15:03</span>
+                         <span>订单总额：&nbsp ￥{{items.total}}</span>
+                         <span>优惠金额：&nbsp ￥{{items.reduced_price}}</span>
+                         <span>实付金额：&nbsp ￥{{items.actual_price}}</span>
+                         <span>联系方式：&nbsp {{items.mobile}}</span>
+                         <span>订单编号：&nbsp {{items.order_id}}</span>
+                         <span>下单时间：&nbsp {{items.created_at}}</span>
                      </div>
                  </div>
             </div>
@@ -56,25 +55,50 @@
 
 </template>
 <script>
-  import $ from "jquery";
-   
+import $ from "jquery";
+import axios from "axios";
 export default {
     components: {
         
     },
   data () {
     return {
-     type:"store"
+        type:"",
+        basePath:"http://dev.mp.duduapp.net",
+        has_id:"1wxAvPWzQro2G4RXkBrd",
+        items:[]
     }
+  },
+  mounted(){
+    this.getPayData() 
   },
   methods: {
     routerClickgoback(){
        this.$router.go(-1);
-    },routerClicksubmit(){
-          this.$router.push("/dist/submit");
-      },routerClickdetails(){
-                this.$router.push("/dist/details");
-            }
+    },
+    routerClicksubmit(){
+        this.$router.push("/dist/submit");
+    },
+    routerClickdetails(){
+        this.$router.push("/dist/details");
+    },
+    getPayData() {
+      let that = this
+      let order_id =this.$route.query.order_id
+      let extract_type = this.$route.query.extract_type
+      let url=`${this.basePath}/h5/${this.has_id}?action=order_detail&order_id=${order_id}`
+        if(extract_type==1){
+            this.type="gain"
+        }else if(extract_type==2){
+            this.type="store"
+        }
+      axios.get(url,{
+         headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
+      }).then(function(response) {
+        that.items = response.data.data
+        console.log(that.items)
+      })
+    }
   }
 }
 </script>

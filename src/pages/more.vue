@@ -7,20 +7,20 @@
   </mu-tabs>
   <div class="main">
   <div v-if="activeTab === 'tab1'">
-    <div class="content">
+    <div class="content" v-for="item in items">
       <img src="../assets/img/banner1.jpg">
         <moredown :endTime="endTime"></moredown>
       <!-- <div class="time">距结束 &nbsp 00：05：56</div> -->
       <div class="focus"><i class="iconfont">&#xe826;</i><span>1236人在关注</span></div>
-      <span class="tilte">组员圆周 您的每日营养专家现实秒杀会员专56元速来抢购</span>
+      <span class="tilte">{{item.name}}</span>
       <div class="content-bottom">
         <div class="price">
            <div class="price-list">
-            <span>￥128</span>
-            <span>￥198.00</span>
+            <span>￥{{item.price_spike}}</span>
+            <span>￥{{item.original_price}}</span>
             </div>
             <div class="remain">
-                <mu-linear-progress class="progress" mode="determinate" color="#1e7fea" :max="50"  :value="value"/><span>剩余37份</span>
+                <mu-linear-progress class="progress" mode="determinate" color="#1e7fea" :max="50"  :value="value"/><span>剩余{{item.surplus}}份</span>
             </div>
         </div>
       
@@ -29,19 +29,19 @@
     </div>
   </div>
   <div v-if="activeTab === 'tab2'">
-    <div class="content">
+    <div class="content" v-for="item in items2">
       <img src="../assets/img/banner1.jpg">
     <!-- <moredown :endTime="endTime"></moredown> -->
       <div class="focus"><i class="iconfont">&#xe826;</i>1236人在关注</div>
-      <span class="tilte">组员圆周 您的每日营养专家现实秒杀会员专56元速来抢购</span>
+      <span class="tilte">{{item.name}}</span>
       <div class="content-bottom">
         <div class="price">
            <div class="price-list">
-            <span>￥128</span>
-            <span>￥198.00</span>
+            <span>￥{{item.price_spike}}</span>
+            <span>￥{{item.original_price}}</span>
             </div>
             <div class="remain">
-                <mu-linear-progress class="progress" mode="determinate" color="#1e7fea" :max="50" :value="value"/><span>剩余37份</span>
+                <mu-linear-progress class="progress" mode="determinate" color="#1e7fea" :max="50" :value="value"/><span>剩余{{item.surplus}}份</span>
             </div>
         </div>
       
@@ -56,6 +56,7 @@
 </template>
 <script>
 import $ from "jquery";
+import axios from "axios";
 import moredown from '../components/moredown.vue'
 export default {
   components: {
@@ -68,7 +69,14 @@ export default {
       activeTab: 'tab1',
       value:37,
       endTime : '2017-12-21 18:00:00',
+      basePath:"http://dev.mp.duduapp.net",
+      has_id:"1wxAvPWzQro2G4RXkBrd",
+      items:[],
+      items2:[]
     }
+  },
+  mounted(){
+    this.getMoreData()
   },
   methods: {
     handleTabChange (val) {
@@ -79,8 +87,31 @@ export default {
       this.$router.go(-1);
     },tab2Active () {
       this.isActive = true
+      this.getMoreData2() 
     },tab1Active () {
       this.isActive = false
+    },getMoreData() {
+      let that = this
+      let classId = this.$route.query.classId
+      let url=`${this.basePath}/h5/${this.has_id}?action=goods_list&classification_id=${classId}`
+      console.log(url)
+      axios.get(url,{
+         headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
+      }).then(function(response) {
+        that.items = response.data.data
+        console.log(that.items)
+      })
+    },getMoreData2() {
+      let that = this
+      let status = 1
+      
+      let url=`${this.basePath}/h5/${this.has_id}?action=goods_list&status=${status}`
+      axios.get(url,{
+         headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
+      }).then(function(response) {
+        that.items2 = response.data.data
+        // console.log(that.items2)
+      })
     }
   }
 }
@@ -90,7 +121,6 @@ export default {
   @import '../assets/sass/_base.scss';
      .wrapper {
       @include wrapper;
-      height: 100vh;
         .iconfont{
             font-family:"iconfont"; font-size:rem(50); font-style:normal;
             position: absolute;

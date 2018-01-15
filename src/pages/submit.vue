@@ -57,8 +57,8 @@
 
 </template>
 <script>
-  import $ from "jquery";
-
+import $ from "jquery";
+import axios from "axios";
 export default {
     components: {
         
@@ -69,7 +69,9 @@ export default {
         unitprice:180.00,
         bottomSheet: false,
         isActive:true,
-        isActives:false
+        isActives:false,
+        basePath:"http://dev.mp.duduapp.net",
+        has_id:"1wxAvPWzQro2G4RXkBrd",
 
     }
   },
@@ -95,8 +97,10 @@ export default {
     },payNow(){
         let that = this
         let fan_id =this.$route.query.fan_id
+        let goods_id =this.$route.query.id
         let amount = this.counter
-        let url=`${this.basePath}/h5/${this.has_id}?action=create_order&fan_id=${fan_id}&amount=${counter}`
+        let url=`${this.basePath}/h5/${this.has_id}?action=create_order&fan_id=${fan_id}&amount=${amount}&goods_id=${goods_id}`
+        console.log(url)
         axios.get(url,{
             headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
             }).then(function(response) {
@@ -113,6 +117,7 @@ export default {
 <style lang="scss" scoped>
   @import '../style/mixin';
   @import '../assets/sass/_base.scss';
+
     .wrapper {
     @include wrapper;
       .confirm{

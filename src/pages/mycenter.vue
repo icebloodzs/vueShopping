@@ -10,8 +10,8 @@
           </router-link>
        </div>
        <div class="header-right">
-            <div class="circle index" @click="routerClickhome">首页</div>
-            <div class="circle personal"  @click="routerClickcenter">个人<br>中心</div>
+          <div class="circle index" @click="routerClickhome">首页</div>
+          <div class="circle personal"  @click="routerClickcenter">个人<br>中心</div>
        </div>
     </div>
     <div class="main">
@@ -23,59 +23,38 @@
         </mu-tabs>
        
         <div v-if="bottomNav === 'tab1'">
-           <div class="content">
+            <div class="content" v-for="item in items" :key="item.id">
                <div class="content-head">
-                   <span>2012-12-12 &nbsp 17:06:24</span><span>支付超时</span>
-               </div>
-             <div class="content-con">
-                <div class="content-con-left">
-                    <img src="../assets/img/dwqvas_02.jpg" alt="">
-                    <div class="content-con-text">
-                        <span>第五空间蔬菜第五空间蔬菜</span>
-                        <span>来自：大牌抢购</span>
-                        <span>￥89.00</span>
-                    </div>
-                </div>
-             </div>
-           </div>
-        </div>
-        <div v-if="bottomNav === 'tab2'">
-           <div class="content">
-               <div class="content-head">
-                   <span>2012-12-12 &nbsp 17:06:24</span><span>待付款</span>
+                   <span>{{item.created_at}}</span><span>待付款</span>
                </div>
              <div class="content-con tab2">
                    <div class="content-con-left">
                         <img src="../assets/img/dwqvas_02.jpg" alt="">
                         <div class="content-con-text">
-                            <span>第五空间蔬菜第五空间蔬菜</span>
+                            <span>{{item.goods_name}}</span>
                             <span>来自：大牌抢购</span>
-                            <span>￥89.00</span>
+                            <span>￥{{item.total}}</span>
                         </div>
                     </div>
-                    <div class="content-con-button"  @click="routerClickPay">支付</div>
+                    <div class="content-con-button"  @click="routerClickPay(item.id,item.extract_type)">支付</div>
              </div>
            </div>
-        </div>
-        <div v-if="bottomNav === 'tab3'">
-            <div class="content"  @click="routerClickCancel">
+           <div class="content"  @click="routerClickCancel(item.id)" v-for="item in items3" :key="item.id">
                <div class="content-head">
-                   <span>2012-12-12 &nbsp 17:06:24</span><span class="use" :class="{befor:data.used}">待使用</span>
+                   <span>{{item.created_at}}</span><span class="use" :class="{befor:data.used}">待使用</span>
                </div>
              <div class="content-con">
                 <div class="content-con-left">
                     <img src="../assets/img/dwqvas_02.jpg" alt="">
                     <div class="content-con-text">
-                        <span>第五空间蔬菜第五空间蔬菜</span>
+                        <span>{{item.goods_name}}</span>
                         <span>来自：大牌抢购</span>
-                        <span>￥89.00</span>
+                        <span>￥{{item.total}}</span>
                     </div>
                 </div>
              </div>
            </div>
-        </div>
-        <div v-if="bottomNav === 'tab4'">
-            <div class="content">
+            <div class="content" v-for="item in items4" :key="item.id">
                <div class="content-head">
                    <span>2012-12-12 &nbsp 17:06:24</span><span>已完成</span>
                </div>
@@ -83,12 +62,65 @@
                 <div class="content-con-left">
                     <img src="../assets/img/dwqvas_02.jpg" alt="">
                     <div class="content-con-text">
-                        <span>第五空间蔬菜第五空间蔬菜</span>
+                        <span>{{item.goods_name}}</span>
                         <span>来自：大牌抢购</span>
-                        <span>￥89.00</span>
+                        <span>￥{{item.total}}</span>
                     </div>
                 </div>
-                <div class="content-physical-button"  @click="routerClickPhysical">查看物流</div>
+                <div class="content-physical-button"  @click="routerClickPhysical(item.id)">查看物流</div>
+             </div>
+           </div>
+        </div>
+        <div v-if="bottomNav === 'tab2'">
+           <div class="content" v-for="item in items2">
+               <div class="content-head">
+                   <span>{{item.created_at}}</span><span>待付款</span>
+               </div>
+             <div class="content-con tab2">
+                   <div class="content-con-left">
+                        <img src="../assets/img/dwqvas_02.jpg" alt="">
+                        <div class="content-con-text">
+                            <span>{{item.goods_name}}</span>
+                            <span>来自：大牌抢购</span>
+                            <span>￥{{item.total}}</span>
+                        </div>
+                    </div>
+                    <div class="content-con-button"  @click="routerClickPay(item.id,item.extract_type)">支付</div>
+             </div>
+           </div>
+        </div>
+        <div v-if="bottomNav === 'tab3'">
+            <div class="content"  @click="routerClickCancel(item.id)" v-for="item in items3">
+               <div class="content-head">
+                   <span>{{item.created_at}}</span><span class="use" :class="{befor:data.used}">待使用</span>
+               </div>
+             <div class="content-con">
+                <div class="content-con-left">
+                    <img src="../assets/img/dwqvas_02.jpg" alt="">
+                    <div class="content-con-text">
+                        <span>{{item.goods_name}}</span>
+                        <span>来自：大牌抢购</span>
+                        <span>￥{{item.total}}</span>
+                    </div>
+                </div>
+             </div>
+           </div>
+        </div>
+        <div v-if="bottomNav === 'tab4'">
+            <div class="content" v-for="item in items4" >
+               <div class="content-head">
+                   <span>2012-12-12 &nbsp 17:06:24</span><span>已完成</span>
+               </div>
+             <div class="content-con tab4">
+                <div class="content-con-left">
+                    <img src="../assets/img/dwqvas_02.jpg" alt="">
+                    <div class="content-con-text">
+                        <span>{{item.goods_name}}</span>
+                        <span>来自：大牌抢购</span>
+                        <span>￥{{item.total}}</span>
+                    </div>
+                </div>
+                <div class="content-physical-button"  @click="routerClickPhysical(item.id)">查看物流</div>
              </div>
            </div>
         </div>
@@ -108,18 +140,27 @@ export default {
       user: {},
       user_msg: {},
       data: null,
+      basePath:"http://dev.mp.duduapp.net",
+      has_id:"1wxAvPWzQro2G4RXkBrd",
       classObject: {
         tabone: true,
         tabtwo: false,
         tabthree:false,
         tabfour:false
-      }
+      },
+      items:[],
+      items2:[],
+      items3:[],
+      items4:[],
+      pay: true,
+      cancel: true,
+      used: true
     };
   },
   created() {
-   
   },
   mounted() {
+    this.getCenterData()
     axios
       .get("https://www.vue-js.com/api/v1/topic/5a39e628f4eae0865305a6eb")
       .then((err, data) => {
@@ -142,12 +183,13 @@ export default {
     },
     routerClickcenter() {
       this.$router.go(0);
+      this.getCenterData()
     },
     routerClickhome() {
       this.$router.push("/");
     },
-    routerClickPay() {
-      this.$router.push("/dist/pay");
+    routerClickPay(order_id,extract_type) {
+      this.$router.push({path:"/dist/pay",query:{order_id:order_id,extract_type:extract_type}});
     },
     routerClickCancel() {
       this.$router.push("/dist/cancel");
@@ -177,6 +219,30 @@ export default {
       this.classObject.tabfour =  true
     },routerClickPhysical(){
       window.location.href="http://m.kuaidi100.com/index_all.html?postid=885911248753980437#result";
+    },getCenterData(){
+      let that = this
+      let fan_id =this.$route.query.fan_id
+      let url=`${this.basePath}/h5/${this.has_id}?action=order_list&fan_id=${fan_id}`
+      axios.get(url,{
+         headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
+      }).then(function(response) {
+         that.items = response.data.data
+          for(let i=0,len=response.data.data.length;i<len;i++){
+            if(response.data.data[i].status==1){
+              that.items2[i]=response.data.data[i]
+            }
+          }
+           for(let i=0,len=response.data.data.length;i<len;i++){
+            if(response.data.data[i].status==4){
+              that.items3[i]=response.data.data[i]
+            }
+          }
+           for(let i=0,len=response.data.data.length;i<len;i++){
+            if(response.data.data[i].status==5){
+              that.items4[i]=response.data.data[i]
+            }
+          }
+      })
     }
   }
 };
@@ -187,7 +253,6 @@ export default {
 @import "../assets/sass/_base.scss";
 .wrapper {
   @include wrapper;
-  height: 100vh; 
   .header {
     display: flex;
     flex-direction: row;
