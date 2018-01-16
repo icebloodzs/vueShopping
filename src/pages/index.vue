@@ -36,6 +36,7 @@
 <script>
 import $ from "jquery";
 import Banner from "../components/Banner.vue";
+import api from '@/api';
 import axios from "axios";
 export default {
   components: {
