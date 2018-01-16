@@ -6,7 +6,7 @@
       <div class="header-middle">
         <span>你好哈士奇</span>
         <router-link :to="{path:'/dist/profile',query:{fan_id:30}}" tag="div" class="header-profile">
-          收货地址 &nbsp
+          收货地址 &nbsp;
           <i class="iconfont">&#xe62d;</i>
         </router-link>
       </div>
@@ -59,7 +59,7 @@
         </div>
         <div class="content" v-for="item in items4" :key="item.id">
           <div class="content-head">
-            <span>2012-12-12 &nbsp 17:06:24</span>
+            <span>2012-12-12 &nbsp; 17:06:24</span>
             <span>已完成</span>
           </div>
           <div class="content-con tab4">
@@ -115,7 +115,7 @@
       <div v-if="bottomNav === 'tab4'">
         <div class="content" v-for="item in items4">
           <div class="content-head">
-            <span>2012-12-12 &nbsp 17:06:24</span>
+            <span>2012-12-12 &nbsp; 17:06:24</span>
             <span>已完成</span>
           </div>
           <div class="content-con tab4">
@@ -136,8 +136,8 @@
 </template>
 
 <script>
-import $ from "jquery";
 import axios from "axios";
+import api from "@/api";
 export default {
   components: {},
   data() {
@@ -147,8 +147,6 @@ export default {
       user: {},
       user_msg: {},
       data: null,
-      basePath: "http://dev.mp.duduapp.net",
-      has_id: "1wxAvPWzQro2G4RXkBrd",
       classObject: {
         tabone: true,
         tabtwo: false,
@@ -236,37 +234,27 @@ export default {
       window.location.href =
         "http://m.kuaidi100.com/index_all.html?postid=885911248753980437#result";
     },
-    getCenterData() {
-      let that = this;
+    async getCenterData() {
       let fan_id = this.$route.query.fan_id;
-      let url = `${this.basePath}/h5/${
-        this.has_id
-      }?action=order_list&fan_id=${fan_id}`;
-      axios
-        .get(url, {
-          headers: {
-            Token:
-              "elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0."
-          }
-        })
-        .then(function(response) {
-          that.items = response.data.data;
-          for (let i = 0, len = response.data.data.length; i < len; i++) {
-            if (response.data.data[i].status == 1) {
-              that.items2[i] = response.data.data[i];
-            }
-          }
-          for (let i = 0, len = response.data.data.length; i < len; i++) {
-            if (response.data.data[i].status == 4) {
-              that.items3[i] = response.data.data[i];
-            }
-          }
-          for (let i = 0, len = response.data.data.length; i < len; i++) {
-            if (response.data.data[i].status == 5) {
-              that.items4[i] = response.data.data[i];
-            }
-          }
-        });
+      const { data } = await api.get("order_list", {
+        fan_id: fan_id
+      });
+      this.items = data.data;
+      for (let i = 0, len = this.items.length; i < len; i++) {
+        if (this.items[i].status == 1) {
+          this.items2[i] = this.items[i];
+        }
+      }
+      for (let i = 0, len = this.items.length; i < len; i++) {
+        if (this.items[i].status == 4) {
+          this.items3[i] = this.items[i];
+        }
+      }
+      for (let i = 0, len = this.items.length; i < len; i++) {
+        if (this.items[i].status == 5) {
+          this.items4[i] = this.items[i];
+        }
+      }
     }
   }
 };
@@ -465,10 +453,6 @@ export default {
     transform: translate3d(rem(600), 0px, 0px) !important;
   }
 }
-// .blue {
-//   background: #1979e7 !important;
-//   height: rem(4);
-// }
 .befor {
   position: relative;
   &:before {

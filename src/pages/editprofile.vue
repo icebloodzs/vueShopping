@@ -25,8 +25,7 @@
 
 </template>
 <script>
-import $ from "jquery";
-import axios from "axios";
+import api from "@/api";
 export default {
   components: {},
   data() {
@@ -37,35 +36,28 @@ export default {
       name: "张中原",
       phone: "17638167198",
       address: "",
-      basePath: "http://dev.mp.duduapp.net",
-      has_id: "1wxAvPWzQro2G4RXkBrd"
+      message: []
     };
   },
   methods: {
     routerClickgoback() {
       this.$router.go(-1);
     },
-    editprofile() {
-      let that = this;
+    async editprofile() {
       let fan_id = this.$route.query.fan_id;
       let id = this.$route.query.id;
       let consignee_name = this.name;
       let detail_address = this.address;
       let mobile = this.phone;
-      let url = `${this.basePath}/h5/${
-        this.has_id
-      }?action=shipping_address_edit&fan_id=${fan_id}&id=${id}&consignee_name=${consignee_name}&detail_address=${detail_address}&mobile=${mobile}`;
-      axios
-        .get(url, {
-          headers: {
-            Token:
-              "elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0."
-          }
-        })
-        .then(function(response) {
-          that.item = response.data;
-          console.log(that.item.message);
-        });
+      const { data } = await api.get("shipping_address_add", {
+        fan_id: fan_id,
+        consignee_name: consignee_name,
+        detail_address: detail_address,
+        mobile: mobile,
+        id: id
+      });
+      this.message = data.message;
+      console.log(this.message);
     },
     input() {
       var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;

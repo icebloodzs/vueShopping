@@ -8,9 +8,8 @@
     <div class="main">
       <div v-if="activeTab === 'tab1'">
         <div class="content" v-for="item in items">
-          <img src="../assets/img/banner1.jpg">
-          <moredown :endTime="endTime"></moredown>
-          <!-- <div class="time">距结束 &nbsp 00：05：56</div> -->
+          <img :src="item.thumbnail">
+          <moredown :endTime="item.end_time"></moredown>
           <div class="focus">
             <i class="iconfont">&#xe826;</i>
             <span>1236人在关注</span>
@@ -27,14 +26,13 @@
                 <span>剩余{{item.surplus}}份</span>
               </div>
             </div>
-
-            <div class="button" @click="routerClickdetails">立即抢购</div>
+            <div class="button" @click="routerClickdetails(item.id)">立即抢购</div>
           </div>
         </div>
       </div>
       <div v-if="activeTab === 'tab2'">
         <div class="content" v-for="item in items2">
-          <img src="../assets/img/banner1.jpg">
+          <img :src="item.thumbnail">
           <!-- <moredown :endTime="endTime"></moredown> -->
           <div class="focus">
             <i class="iconfont">&#xe826;</i>1236人在关注</div>
@@ -50,7 +48,6 @@
                 <span>剩余{{item.surplus}}份</span>
               </div>
             </div>
-
             <div class="button-end">已结束</div>
           </div>
         </div>
@@ -61,8 +58,7 @@
 
 </template>
 <script>
-import $ from "jquery";
-import axios from "axios";
+import api from "@/api";
 import moredown from "../components/moredown.vue";
 export default {
   components: {
@@ -75,8 +71,6 @@ export default {
       activeTab: "tab1",
       value: 37,
       endTime: "2017-12-21 18:00:00",
-      basePath: "http://dev.mp.duduapp.net",
-      has_id: "1wxAvPWzQro2G4RXkBrd",
       items: [],
       items2: []
     };
@@ -88,8 +82,8 @@ export default {
     handleTabChange(val) {
       this.activeTab = val;
     },
-    routerClickdetails() {
-      this.$router.push("/dist/details");
+    routerClickdetails(goodId) {
+      this.$router.push({path:"/dist/details",query:{id:goodId,lng:116.30387397,lat:39.91481908}});
     },
     routerClickgoback() {
       this.$router.go(-1);
@@ -100,44 +94,44 @@ export default {
     },
     tab1Active() {
       this.isActive = false;
+      this.getMoreData();
     },
-    getMoreData() {
-      let that = this;
+    async getData() {
       let classId = this.$route.query.classId;
-      let url = `${this.basePath}/h5/${
-        this.has_id
-      }?action=goods_list&classification_id=${classId}`;
-      console.log(url);
-      axios
-        .get(url, {
-          headers: {
-            Token:
-              "elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0."
-          }
-        })
-        .then(function(response) {
-          that.items = response.data.data;
-          console.log(that.items);
-        });
+      if (classId) {
+      }
     },
-    getMoreData2() {
-      let that = this;
-      let status = 1;
-
-      let url = `${this.basePath}/h5/${
-        this.has_id
-      }?action=goods_list&status=${status}`;
-      axios
-        .get(url, {
-          headers: {
-            Token:
-              "elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0."
-          }
-        })
-        .then(function(response) {
-          that.items2 = response.data.data;
-          // console.log(that.items2)
+    // 进行中分类数据获取
+    async getMoreData() {
+      let classId = this.$route.query.classId;
+      if (classId) {
+        const { data } = await api.get("goods_list", {
+          classification_id: classId
         });
+        this.items = data.data;
+        console.log(this.items);
+      } else {
+        const { data } = await api.get("goods_list");
+        this.items = data.data;
+      }
+    },
+
+    // 已结束分类数据获取
+    async getMoreData2() {
+      let classId = this.$route.query.classId;
+      if (classId) {
+        const { data } = await api.get("goods_list", {
+          'status': "1",
+         ' classification_id': classId
+        });
+        this.items = data.data;
+        // console.log(this.items);
+      } else {
+        const { data } = await api.get("goods_list", {
+          status: "1"
+        });
+        this.items = data.data;
+      }
     }
   }
 };

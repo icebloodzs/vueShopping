@@ -2,13 +2,12 @@
     <div class="wrapper">
         <div class="confirm">
             <div class="confirm-head">
-                <strong>
-                    <i class="iconfont" @click="routerClickgoback">&#xe600;</i> 信息确认</strong>
+                <strong><i class="iconfont" @click="routerClickgoback">&#xe600;</i> 信息确认</strong>
             </div>
             <div class="gain-info">
                 <img src="../assets/img/border.png">
-                <span>收货人：&nbsp孙富贵 &nbsp 13345668899</span>
-                <span>地&nbsp&nbsp&nbsp址：&nbsp北京市劲舞路花园路男300米路东...</span>
+                <span>收货人：&nbsp;孙富贵 &nbsp; 13345668899</span>
+                <span>地&nbsp;&nbsp;&nbsp;址：&nbsp;北京市劲舞路花园路男300米路东...</span>
                 <img src="../assets/img/border.png">
             </div>
             <div class="info-tilte">
@@ -30,7 +29,7 @@
                 <div class="info-subtotal price">
                     <span>小计：</span>
                     <span>
-                        <span>&#65509</span> {{ counter*unitprice | currency }}</span>
+                        <span>&#65509;</span> {{ counter*unitprice | currency }}</span>
                 </div>
             </div>
             <div class="bind-phone" @click="bindPhone">
@@ -48,13 +47,13 @@
                 <div class="mu-list-head">
                     <strong>支付方式</strong>
                 </div>
-                <div class="mu-list-item" :class="{ active: isActive}" @click="isActive1">
+                <div class="mu-list-item" :class="{active: isActive}" @click="isActive1">
                     <img src="../assets/img/zhongyuan_logo_02.png" alt=""> 中原银行卡支付（2366）
                 </div>
-                <div class="mu-list-item" :class="{ actives: isActives}" @click="isActive2">
+                <div class="mu-list-item" :class="{actives: isActives}" @click="isActive2">
                     <img src="../assets/img/weixin_logo_02.png" alt=""> 微信支付
                 </div>
-                <i class="iconfont" :class="{ iconfontsite: isActive}">&#xe721;</i>
+                <i class="iconfont" :class="{iconfontsite: isActive}">&#xe721;</i>
                 <div class="mu-list-button" @click="payNow">立即支付</div>
             </div>
         </div>
@@ -62,8 +61,7 @@
 
 </template>
 <script>
-import $ from "jquery";
-import axios from "axios";
+import api from "@/api";
 export default {
   components: {},
   data() {
@@ -73,8 +71,7 @@ export default {
       bottomSheet: false,
       isActive: true,
       isActives: false,
-      basePath: "http://dev.mp.duduapp.net",
-      has_id: "1wxAvPWzQro2G4RXkBrd"
+      items: []
     };
   },
   methods: {
@@ -82,7 +79,8 @@ export default {
       this.$router.go(-1);
     },
     bindPhone() {
-      this.$router.push("/dist/bindphone");
+         let fan_id = this.$route.query.fan_id;
+      this.$router.push({path:"/dist/bindphone",query:{'fan_id':fan_id}});
     },
     routerClickminus() {
       if (this.counter > 1) this.counter -= 1;
@@ -99,27 +97,16 @@ export default {
     isActive2() {
       (this.isActive = false), (this.isActives = true);
     },
-    payNow() {
-      let that = this;
+    async payNow() {
       let fan_id = this.$route.query.fan_id;
       let goods_id = this.$route.query.id;
       let amount = this.counter;
-      let url = `${this.basePath}/h5/${
-        this.has_id
-      }?action=create_order&fan_id=${fan_id}&amount=${amount}&goods_id=${goods_id}`;
-      console.log(url);
-      axios
-        .get(url, {
-          headers: {
-            Token:
-              "elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0."
-          }
-        })
-        .then(function(response) {
-          that.items = response.data.data;
-          console.log(that.items)
-        //   that.message = that.items.message;
-        });
+      const { data } = await api.get("create_order", {
+        goods_id: goods_id,
+        fan_id: fan_id,
+        amount: amount
+      });
+      //   this.items = data;
     }
   }
 };
@@ -271,7 +258,6 @@ export default {
       width: 100%;
       bottom: 0;
       position: absolute;
-      //   height: rem(400);
       font-size: rem(30);
       line-height: rem(100);
       text-align: center;

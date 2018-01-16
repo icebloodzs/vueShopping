@@ -16,16 +16,15 @@
     </div>
     <div class="left-icon"></div>
     <div class="content-item" v-for="item in goodsList">
-      <router-link :to="{path:'/dist/details'}" tag="img" class="content-img" :src="item.thumbnail">立即抢购</router-link>
+      <router-link :to="{path:'/dist/details',query:{id:item.id,lng:116.30387397,lat:39.91481908}}" tag="img" class="content-img" :src="item.thumbnail">立即抢购</router-link>
       <div class="content-middle">
         <span>
           <strong>{{item.name}}</strong>
         </span>
-        <!-- <span> <strong>五折优惠</strong></span> -->
         <div class="price">
-          <span>{{item.original_price}}</span>
-          <span>元</span>
           <span>{{item.price_spike}}</span>
+          <span>元</span>
+          <span>{{item.original_price}}</span>
         </div>
         <div class="remain">
           <mu-linear-progress :max="200" class="progress" mode="determinate" color="#1e7fea" :value="item.surplus" />
@@ -38,10 +37,8 @@
 </template>
 
 <script>
-import $ from "jquery";
 import Banner from "../components/Banner.vue";
 import api from "@/api";
-import axios from "axios";
 export default {
   components: {
     "app-banner": Banner
@@ -52,13 +49,10 @@ export default {
       items: [],
       classify: [],
       goodsList: [],
-      basePath: "http://dev.mp.duduapp.net",
-      has_id: "1wxAvPWzQro2G4RXkBrd",
       config: [],
       fan_id: 30
     };
   },
-  // 组件创建完后获取数据，
   created() {},
   mounted() {
     this.getImgData();
@@ -72,11 +66,11 @@ export default {
     routerClickcenter() {
       this.$router.push({
         path: "/dist/mycenter",
-        query: { fan_id: this.fan_id }
+        query: { 'fan_id': this.fan_id }
       });
     },
     clickClassify(classId) {
-      this.$router.push({ path: "/dist/more", query: { classId: classId } });
+      this.$router.push({ path: "/dist/more", query: { 'classId': classId } });
     },
     routerClickhome() {
       this.$router.go(0);
@@ -85,28 +79,17 @@ export default {
     async getImgData() {
       const { data } = await api.get("carousel_images");
       this.listImg = data.data;
+      
     },
     // 分类数据获取
     async getClassifyData() {
       const { data } = await api.get("classifications");
       this.classify = data.data;
     },
-    // 商品数据获取
-    // getGoodsData(classId){
-    //   let that = this
-    //   let index = index
-    //   let url=`${this.basePath}/h5/${this.has_id}?action=goods_list&classification_id[]=${classId}&order[]=${index}`
-    //   axios.get(url,{
-    //      headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
-    //   }).then(function(response) {
-    //   that.goodsList = response.data.data
-    //   console.log(that.goodsList)
-    //   })
-    // }
+    //首页商品数据获取
     async getGoodsData() {
-      let index = index;
       const { data } = await api.get("goods_list", {
-        "order[]": index
+        "order": 'index'
       });
       this.goodsList = data.data;
     }
