@@ -35,8 +35,6 @@
       <router-link :to="{path:'/dist/details',query:{id:item.id,lng:116.30387397,lat:39.91481908}}" tag="div" class="content-right">立即抢购</router-link>
     </div>
   </div>
-  <router-link :to="{path:'/dist/details',query:{id:item.id,lng:116.30387397,lat:39.91481908}}" tag="div" class="content-right">立即抢购
-  </router-link>
 </template>
 
 <script>
@@ -166,7 +164,7 @@ export default {
     background-color: #232323;
     color: #fff;
     font-size: rem(22);
-    opacity: 0.8;
+     opacity: .8;
     z-index: 1;
   }
   .index {
@@ -178,30 +176,36 @@ export default {
     top: rem(150);
     left: rem(655);
   }
-}
-.left-icon {
-  width: rem(15);
-  height: rem(45);
-  background-color: #1e7fea;
-  position: absolute;
-  border-radius: 0 rem(6) rem(6) 0;
-  top: rem(504);
-  left: 0;
-}
-.content-item {
-  height: rem(212);
-  background-color: #fff;
-  display: flex;
-  flex-direction: row;
-  margin-bottom: rem(15);
-  .content-img {
-    width: rem(212);
-    margin-right: rem(5);
+
+  .classify {
+    display: flex;
+    justify-content: space-around;
+    background-color: #fff;
+    height: rem(170);
+
+    .classify-list {
+      // width: 25%;
+      height: rem(170);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: rem(27);
+      img {
+        margin-top: rem(35);
+        margin-bottom: rem(20);
+        width: rem(60);
+        height: rem(50);
+      }
+    }
   }
   .more {
     display: flex;
     justify-content: space-between;
-    margin: rem(30) 0;
+    height: rem(90);
+    align-items: center;
+    background-color: #fff;
+    margin-top: rem(20);
+    border-bottom: 1px solid #e9e9e9;
     span:nth-child(1) {
       font-size: rem(33);
       font-weight: 600;
@@ -211,14 +215,12 @@ export default {
       font-size: rem(30);
       color: #17bafb;
       margin-right: rem(35);
-      .iconfont {
-        font-family: "iconfont";
-        font-style: normal;
-        margin-left: rem(13);
-      }
+        .iconfont{
+          font-family:"iconfont"; font-style:normal;margin-left: rem(13);
+          }
     }
   }
-  .left-icon {
+  .left-icon{
     width: rem(15);
     height: rem(45);
     background-color: #1e7fea;
@@ -232,16 +234,18 @@ export default {
     background-color: #fff;
     display: flex;
     flex-direction: row;
+    margin-bottom: rem(15);
     .content-img {
       width: rem(212);
+      margin-right: rem(5);
     }
     .content-middle {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      margin-top: rem(28);
+      margin: rem(30) 0;
       span:nth-child(1) {
-        width: rem(300);
+        width:rem(300);
         font-size: rem(30);
         line-height: rem(30);
       }

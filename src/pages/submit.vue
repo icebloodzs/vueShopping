@@ -117,7 +117,8 @@ export default {
         })
         .then(function(response) {
           that.items = response.data.data;
-          that.message = that.items.message;
+          console.log(that.items)
+        //   that.message = that.items.message;
         });
     }
   }

@@ -98,9 +98,10 @@ export default {
          headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
       }).then(function(response) {
       that.item = response.data
+      //  console.log(that.item)
       if(that.item.extract_type===1){that.offLine=false}else{that.offLine=true}
-      that.site = that.item.site[0]
-      // console.log(that.item.site[0])
+      that.site = that.item.site
+      // console.log(that.item.site)
       })
     }
   }
