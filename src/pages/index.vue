@@ -77,8 +77,18 @@ export default {
     clickClassify(classId) {
       this.$router.push({ path: "/dist/more", query: { classId: classId } });
     },
-    routerClickhome() {
-      this.$router.go(0);
+    data () {
+      return {
+        listImg: [],
+        items: [],
+        classify: [],
+        goodsList: [],
+        basePath: 'http://dev.mp.duduapp.net',
+        has_id: '1wxAvPWzQro2G4RXkBrd',
+        config: [],
+        fan_id: 30
+
+      }
     },
     // 轮播图数据获取
     getImgData() {
@@ -220,7 +230,8 @@ export default {
           }
     }
   }
-  .left-icon{
+
+  .left-icon {
     width: rem(15);
     height: rem(45);
     background-color: #1e7fea;
@@ -229,6 +240,7 @@ export default {
     top: rem(504);
     left: 0;
   }
+
   .content-item {
     height: rem(212);
     background-color: #fff;
