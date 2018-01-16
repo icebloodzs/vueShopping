@@ -103,9 +103,9 @@ export default {
       })
     },getMoreData2() {
       let that = this
-      let status = 1
+      // let status = 1
       
-      let url=`${this.basePath}/h5/${this.has_id}?action=goods_list&status=${status}`
+      let url=`${this.basePath}/h5/${this.has_id}?action=goods_list&status=1`
       axios.get(url,{
          headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
       }).then(function(response) {
