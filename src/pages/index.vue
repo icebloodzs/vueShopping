@@ -39,94 +39,80 @@
 </template>
 
 <script>
-import $ from "jquery";
-import Banner from "../components/Banner.vue";
-import axios from "axios";
-export default {
-  components: {
-    "app-banner": Banner
-  },
-  data() {
-    return {
-      listImg: [],
-      items: [],
-      classify:[],
-      goodsList:[],
-      basePath:"http://dev.mp.duduapp.net",
-      has_id:"1wxAvPWzQro2G4RXkBrd",
-      config:[],
-      fan_id:30,
-      
-    };
-  },
-  // 组件创建完后获取数据，
-  created() {
-  
-  },
-   mounted(){
-    this.getImgData()
-    this.getClassifyData()
-    this.getGoodsData()
-   },
-  methods: {
-    routerClick() {
-      this.$router.push("/dist/more");
+  import Banner from '../components/Banner.vue'
+
+  import api from '@/api'
+
+  export default {
+    components: {
+      'app-banner': Banner
     },
-    routerClickcenter() {
-      this.$router.push({path:"/dist/mycenter",query:{fan_id:this.fan_id}});
-    },clickClassify(classId){
-      this.$router.push({path:"/dist/more",query:{classId:classId}});
+    data () {
+      return {
+        listImg: [],
+        items: [],
+        classify: [],
+        goodsList: [],
+        basePath: 'http://dev.mp.duduapp.net',
+        has_id: '1wxAvPWzQro2G4RXkBrd',
+        config: [],
+        fan_id: 30
+
+      }
     },
-    routerClickhome() {
-      this.$router.go(0);
+    // 组件创建完后获取数据，
+    created () {
+
     },
-     // 轮播图数据获取
-    getImgData() {
-      let that = this
-      let url=`${this.basePath}/h5/${this.has_id}?action=carousel_images`
-      axios.get(url,{
-         headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
-      }).then(function(response) {
-        that.listImg = response.data.data
-        // console.log(that.listImg)
-      })
+    mounted () {
+      this.getImgData()
+      this.getClassifyData()
+      this.getGoodsData()
     },
-     // 分类数据获取
-    getClassifyData(){
-      let that = this
-      let url=`${this.basePath}/h5/${this.has_id}?action=classifications`
-      axios.get(url,{
-         headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
-      }).then(function(response) {
-      that.classify = response.data.data
-      // console.log(that.classify)
-      })
-    },
-     // 商品数据获取
-    // getGoodsData(classId){
-    //   let that = this
-    //   let index = index
-    //   let url=`${this.basePath}/h5/${this.has_id}?action=goods_list&classification_id[]=${classId}&order[]=${index}`
-    //   axios.get(url,{
-    //      headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
-    //   }).then(function(response) {
-    //   that.goodsList = response.data.data
-    //   console.log(that.goodsList)
-    //   })
-    // }
-    getGoodsData(){
-      let that = this
-      let index = index
-      let url=`${this.basePath}/h5/${this.has_id}?action=goods_list&order[]=${index}`
-      axios.get(url,{
-         headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
-      }).then(function(response) {
-      that.goodsList = response.data.data
-      console.log(that.goodsList)
-      })
+    methods: {
+      routerClick () {
+        this.$router.push('/dist/more')
+      },
+      routerClickcenter () {
+        this.$router.push({path: '/dist/mycenter', query: {fan_id: this.fan_id}})
+      }, clickClassify (classId) {
+        this.$router.push({path: '/dist/more', query: {classId: classId}})
+      },
+      routerClickhome () {
+        this.$router.go(0)
+      },
+      // 轮播图数据获取
+      async getImgData () {
+        const {data} = await api.get('carousel_images')
+        this.listImg = data.data
+      },
+      // 分类数据获取
+      async getClassifyData () {
+        const {data} = await api.get('classifications')
+        this.classify = data.data
+      },
+      // 商品数据获取
+      // getGoodsData(classId){
+      //   let that = this
+      //   let index = index
+      //   let url=`${this.basePath}/h5/${this.has_id}?action=goods_list&classification_id[]=${classId}&order[]=${index}`
+      //   axios.get(url,{
+      //      headers: {'Token': 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'},
+      //   }).then(function(response) {
+      //   that.goodsList = response.data.data
+      //   console.log(that.goodsList)
+      //   })
+      // }
+      async getGoodsData () {
+        let index = index
+        const {data} = await api.get('goods_list', {
+          'order[]' : index
+        })
+        this.goodsList = data.data
+
+      }
     }
   }
-}
 </script>
 
 <style scoped lang="scss">
@@ -160,7 +146,8 @@ export default {
       left: rem(655);
     }
   }
-  .left-icon{
+
+  .left-icon {
     width: rem(15);
     height: rem(45);
     background-color: #1e7fea;
@@ -169,6 +156,7 @@ export default {
     top: rem(504);
     left: 0;
   }
+
   .content-item {
     height: rem(212);
     background-color: #fff;

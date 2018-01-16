@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view></router-view>   
+    <router-view></router-view>
   </div>
 </template>
 
@@ -14,8 +14,6 @@ export default {
 <style>
 @import "./style/common.scss";
 @import "./style/mixin.scss";
-
-
 
 #app {
   font-family:"Microsoft Yahei", "Avenir", Helvetica, Arial, sans-serif;
@@ -32,7 +30,7 @@ export default {
 
 ::-webkit-scrollbar-track {
     background: transparent;
-}                                                                                                                                                                                                                                                                                                                                                                                                                                         
+}
 
 ::-webkit-scrollbar-thumb {
     background: rgba(0,0,0,.1);
