@@ -19,6 +19,7 @@
                     保存
                 </div>
             </div>
+             <mu-toast v-if="toast" :message="message" @close="hideToast"/>
         </div>
     </div>
     </div>
@@ -30,8 +31,8 @@ export default {
   components: {},
   data() {
     return {
+      toast: false,
       disabled: false,
-      time: [],
       btntxt: "获取验证码",
       phone: "",
       code: "",
@@ -48,11 +49,10 @@ export default {
       let mobile = this.phone;
       let fan_id = this.$route.query.fan_id;
       const { data } = await api.get("send_captcha", {
-        fan_id: fan_id,
-        mobile: mobile
+        'fan_id': fan_id,
+        'mobile': mobile
       });
       this.items = data;
-      this.time = this.items.seconds;
       this.message = this.items.message;
     },
     //发送验证码验证
@@ -83,18 +83,38 @@ export default {
     //保存手机号
     async saveCode() {
       let mobile = this.phone;
+      let code = this.code;
       let fan_id = this.$route.query.fan_id;
       if (this.code == "") {
         alert("请输入验证码");
       } else {
-        const { data } = await api.get("send_captcha", {
-          fan_id: fan_id,
-          mobile: mobile
+        const { data } = await api.get("modify_bind_mobile", {
+          'fan_id': fan_id,
+          'mobile': mobile,
+          'captcha':code
         });
         this.items = data;
         this.message = this.items.message;
-        this.$router.push("/dist/submit");
+        console.log(this.items)
+        if(this.items.error){
+        this.toast = true
+        if (this.toastTimer) clearTimeout(this.toastTimer)
+        this.toastTimer = setTimeout(() => { this.toast = false }, 1000)
+        } else{
+           this.toast = true
+          if (this.toastTimer) clearTimeout(this.toastTimer)
+          this.toastTimer = setTimeout(() => { this.toast = false }, 1000)
+          setTimeout(()=>{
+            this.$router.go(-1);
+          },2000)
+        }
+        // this.$router.push("/dist/submit");
+        // this.$router.go(-1);
       }
+    },
+     hideToast () {
+      this.toast = false
+      if (this.toastTimer) clearTimeout(this.toastTimer)
     }
   }
 };

@@ -16,7 +16,7 @@
     </div>
     <div class="left-icon"></div>
     <div class="content-item" v-for="item in goodsList">
-      <router-link :to="{path:'/dist/details',query:{id:item.id,lng:116.30387397,lat:39.91481908}}" tag="img" class="content-img" :src="item.thumbnail">立即抢购</router-link>
+      <router-link :to="{path:'/dist/details',query:{id:item.id,lng:116.30387397,lat:39.91481908}}" tag="img" class="content-img" :src="item.thumbnail"></router-link>
       <div class="content-middle">
         <span>
           <strong>{{item.name}}</strong>
@@ -183,6 +183,7 @@ export default {
     left: 0;
   }
   .content-item {
+    position: relative;
     height: rem(212);
     background-color: #fff;
     display: flex;
@@ -248,8 +249,10 @@ export default {
       }
     }
     .content-right {
+      position: absolute;
       background-color: #ff9c00;
-      margin: auto;
+      right:rem(30);
+      top:rem(70);
       width: rem(150);
       height: rem(66);
       font-size: rem(25);

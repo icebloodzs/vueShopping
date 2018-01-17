@@ -17,9 +17,9 @@
               <span>
                 <i class="iconfont">&#xe715;</i>{{item.distance}}km</span>
             </div>
-            <div class="content-website-con-right">
-              <i class="iconfont">&#xe676;</i>
-            </div>
+             <a class="content-website-con-right" :href='`tel:${item.telephone}`'>
+            <i class="iconfont">&#xe676;</i>
+          </a>
           </div>
 
         </div>
@@ -117,6 +117,8 @@ export default {
           }
         }
         .content-website-con-right {
+          display: block;
+          text-decoration: none;
           border-left: 1px solid #e9e9e9;
           width: rem(120);
           height: rem(70);

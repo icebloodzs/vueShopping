@@ -43,7 +43,7 @@
             <span>
               <i class="iconfont">&#xe715;</i>{{site.distance}}km</span>
           </div>
-          <a class="content-website-con-right" :href="site.telephone">
+          <a class="content-website-con-right" :href='`tel:${site.telephone}`'>
             <i class="iconfont">&#xe676;</i>
           </a>
         </div>
@@ -56,8 +56,7 @@
       </div>
       <div class="content-detail">
         <div class="content-detail-title">商品详情</div>
-        <div class="content-detail-con">
-        </div>
+        <div class="content-detail-con" v-html="item.description"></div>
       </div>
     </div>
     <div class="button" @click="routerClicksubmit">立即抢购</div>
@@ -302,6 +301,7 @@ export default {
           height: rem(70);
           padding: rem(10) rem(30);
           margin-right: rem(30);
+          text-decoration: none;
           .iconfont {
             font-family: "iconfont";
             font-size: rem(45);

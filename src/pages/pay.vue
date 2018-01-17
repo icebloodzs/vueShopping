@@ -7,7 +7,7 @@
                 </strong>
                 订单详情
             </div>
-            <div class="pay-head-con" @click="routerClickdetails">
+            <div class="pay-head-con" @click="routerClickdetails(items.goods_id)">
                 <img src="../assets/img/dwqvas_02.jpg" alt="">
                 <div class="pay-head-right">
                     <div class="pay-head-title">
@@ -21,7 +21,7 @@
                     </div>
                 </div>
             </div>
-            <div class="pay-button" @click="routerClicksubmit">立即付款</div>
+            <div class="pay-button" @click="routerClicksubmit(items.goods_id)">立即付款</div>
             <div class="pay-con">
                 <div class="content-pay">
                     <div v-if="type === 'store'" class="content-store">
@@ -30,14 +30,14 @@
                         </div>
                         <div class="content-pay-con">
                             <div class="content-pay-con-left">
-                                <span>涵斧宫自助餐厅（正大乐城店）</span>
-                                <span>管城回族区心怡路与东站交叉口正大乐城2楼</span>
+                                <span>{{site.name}}</span>
+                                <span>{{site.detailed_address}}</span>
                                 <span>
-                                    <i class="iconfont">&#xe715;</i>4.8km</span>
+                                    <i class="iconfont">&#xe715;</i>{{site.distance}}km</span>
                             </div>
-                            <div class="content-pay-con-right">
-                                <i class="iconfont">&#xe676;</i>
-                            </div>
+                             <a class="content-pay-con-right" :href='`tel:${site.telephone}`'>
+                              <i class="iconfont">&#xe676;</i>
+                            </a>
                         </div>
                     </div>
                     <div v-if="type === 'gain'" class="gain-info">
@@ -70,7 +70,8 @@ export default {
   data() {
     return {
       type: "",
-      items: []
+      items: [],
+      site:[],
     };
   },
   mounted() {
@@ -80,11 +81,20 @@ export default {
     routerClickgoback() {
       this.$router.go(-1);
     },
-    routerClicksubmit() {
-      this.$router.push("/dist/submit");
+    routerClicksubmit(goodsId) {
+      // let id = this.$route.query.id;
+      // let lng = this.$route.query.lng;
+      // let lat = this.$route.query.lat;
+      this.$router.push({
+        path: "/dist/submit",
+        query: { 'fan_id': 30, 'id': goodsId,'lng':116.30387397,'lat':39.91481908 }
+      });
     },
-    routerClickdetails() {
-      this.$router.push("/dist/details");
+    routerClickdetails(goodsId) {
+      this.$router.push({
+        path: "/dist/details",
+        query: { 'id': goodsId,'lng':116.30387397,'lat':39.91481908 }
+      });
     },
     async getPayData() {
       let order_id = this.$route.query.order_id;
@@ -98,6 +108,7 @@ export default {
         order_id: order_id
       });
       this.items = data.data;
+      this.site = this.items.sites[0]
       console.log(this.items);
     }
   }
@@ -230,6 +241,8 @@ export default {
           }
         }
         .content-pay-con-right {
+          display: block;
+          text-decoration: none;
           border-left: 1px solid #e9e9e9;
           width: rem(120);
           height: rem(70);

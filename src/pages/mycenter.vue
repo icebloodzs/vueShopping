@@ -18,8 +18,9 @@
     <div class="main">
       <mu-tabs class="centertab" :value="bottomNav" @change="handleTabChange" :lineClass="classObject">
         <mu-tab value="tab1" @active="tab1Active" title="全部" />
-        <mu-tab :titleClass="[data&&data.pay&&'befor']" @active="tab2Active" @click="checkPay" value="tab2" title="待付款" />
-        <mu-tab :titleClass="[data&&data.cancel&&'befor']" @click="checkCancel" value="tab3" title="未核销" />
+        <!-- :titleClass="[data&&data.cancel&&'befor']" -->
+        <mu-tab  @active="tab2Active" @click="checkPay" value="tab2" title="待付款" />
+        <mu-tab  @click="checkCancel" value="tab3" title="未核销" />
         <mu-tab @active="tab4Active" value="tab4" title="已完成" />
       </mu-tabs>
 
@@ -44,7 +45,8 @@
         <div class="content" @click="routerClickCancel(item.id)" v-for="item in items3" :key="item.id">
           <div class="content-head">
             <span>{{item.created_at}}</span>
-            <span class="use" :class="{befor:data.used}">待使用</span>
+            <span class="use">待使用</span>
+            <!-- :class="{befor:data.used}" -->
           </div>
           <div class="content-con">
             <div class="content-con-left">
@@ -98,7 +100,7 @@
         <div class="content" @click="routerClickCancel(item.id)" v-for="item in items3">
           <div class="content-head">
             <span>{{item.created_at}}</span>
-            <span class="use" :class="{befor:data.used}">待使用</span>
+            <span class="use">待使用</span>
           </div>
           <div class="content-con">
             <div class="content-con-left">
@@ -143,10 +145,10 @@ export default {
   data() {
     return {
       bottomNav: "tab1",
-      accesstoken: "",
-      user: {},
-      user_msg: {},
-      data: null,
+      // accesstoken: "",
+      // user: {},
+      // user_msg: {},
+      // data: null,
       classObject: {
         tabone: true,
         tabtwo: false,
@@ -165,21 +167,21 @@ export default {
   created() {},
   mounted() {
     this.getCenterData();
-    axios
-      .get("https://www.vue-js.com/api/v1/topic/5a39e628f4eae0865305a6eb")
-      .then((err, data) => {
-        // if (err) return;
-        data = {
-          pay: true,
-          cancel: true,
-          used: true
-        };
-        this.data = data;
-        console.log(data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    // axios
+    //   .get("https://www.vue-js.com/api/v1/topic/5a39e628f4eae0865305a6eb")
+    //   .then((err, data) => {
+    //     // if (err) return;
+    //     data = {
+    //       pay: true,
+    //       cancel: true,
+    //       used: true
+    //     };
+    //     this.data = data;
+    //     console.log(data);
+    //   })
+    //   .catch(e => {
+    //     console.log(e);
+    //   });
   },
   methods: {
     handleTabChange(val) {
@@ -198,8 +200,11 @@ export default {
         query: { order_id: order_id, extract_type: extract_type }
       });
     },
-    routerClickCancel() {
-      this.$router.push("/dist/cancel");
+    routerClickCancel(order_id, extract_type) {
+      this.$router.push({
+        path: "/dist/cancel",
+        query: { order_id: order_id, extract_type: extract_type }
+      });
       this.data.used = false;
     },
     tab1Active() {

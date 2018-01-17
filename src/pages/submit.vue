@@ -6,13 +6,13 @@
             </div>
             <div class="gain-info">
                 <img src="../assets/img/border.png">
-                <span>收货人：&nbsp;孙富贵 &nbsp; 13345668899</span>
-                <span>地&nbsp;&nbsp;&nbsp;址：&nbsp;北京市劲舞路花园路男300米路东...</span>
+                <span>收货人：&nbsp;{{address.consignee_name}} &nbsp; {{address.mobile}}</span>
+                <span>地&nbsp;&nbsp;&nbsp;址：&nbsp;{{address.detail_address}}</span>
                 <img src="../assets/img/border.png">
             </div>
             <div class="info-tilte">
                 <span>
-                    川锅一号大火锅全豪华套餐
+                    {{goods.name}}
                 </span>
             </div>
             <div class="info-content">
@@ -29,13 +29,13 @@
                 <div class="info-subtotal price">
                     <span>小计：</span>
                     <span>
-                        <span>&#65509;</span> {{ counter*unitprice | currency }}</span>
+                        <span>&#65509;</span> {{ counter*goods.price_spike | currency }}</span>
                 </div>
             </div>
             <div class="bind-phone" @click="bindPhone">
                 <div class="bind-phone-tilte">您绑定的电话</div>
                 <div class="bind-phone-con">
-                    <div class="bind-phone-con-left">150****5158</div>
+                    <div class="bind-phone-con-left">{{tel}}</div>
                     <div class="bind-phone-con-right">绑定新号码
                         <i class="iconfont">&#xe62d;</i>
                     </div>
@@ -67,12 +67,19 @@ export default {
   data() {
     return {
       counter: 1,
-      unitprice: 180.0,
       bottomSheet: false,
       isActive: true,
       isActives: false,
-      items: []
+      items: [],
+      goods:[],
+      tel:[],
+      address:[]
     };
+  },
+  mounted(){
+    this.getGoodsData()
+    this.getTelData()
+    this.getAddressData()
   },
   methods: {
     routerClickgoback() {
@@ -106,7 +113,8 @@ export default {
         fan_id: fan_id,
         amount: amount
       });
-      //   this.items = data;
+        this.items = data;
+        console.log(this.items)
     }, 
     async getGoodsData() {
       let goods_id = this.$route.query.id;
@@ -117,14 +125,29 @@ export default {
         'lng': lng,
         'lat': lat
       });
-      this.item = data;
-      if (this.item.extract_type === 1) {
-        this.offLine = false;
-      } else {
-        this.offLine = true;
-        this.site = this.item.site[0];
+      this.goods = data;
+    },
+    async getTelData() {
+      let fan_id = this.$route.query.fan_id;
+      const { data } = await api.get("get_bind_mobile", {
+        'fan_id': fan_id,
+      });
+      this.tel = data.data.mobile;
+    },
+     async getAddressData() {
+      let fan_id = this.$route.query.fan_id;
+      const { data } = await api.get("shipping_address_list", {
+        'fan_id': fan_id
+      });
+      this.address = data.data;
+      for(let i=0,len=this.address.length;i<len;i++){
+        if(this.address[i].is_default){
+          this.address=this.address[i]
+          }else{
+             this.address=this.address[0]
+          }
       }
-    }
+    },
   }
 };
 </script>
