@@ -107,6 +107,23 @@ export default {
         amount: amount
       });
       //   this.items = data;
+    }, 
+    async getGoodsData() {
+      let goods_id = this.$route.query.id;
+      let lng = this.$route.query.lng;
+      let lat = this.$route.query.lat;
+      const { data } = await api.get("goods_detail", {
+        'goods_id': goods_id,
+        'lng': lng,
+        'lat': lat
+      });
+      this.item = data;
+      if (this.item.extract_type === 1) {
+        this.offLine = false;
+      } else {
+        this.offLine = true;
+        this.site = this.item.site[0];
+      }
     }
   }
 };

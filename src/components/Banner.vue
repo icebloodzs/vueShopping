@@ -24,9 +24,8 @@ export default {
       this.$router.push({path:"/dist/details",query:{id:goods_id,lng:116.30387397,lat:39.91481908}});
     }
   },
-  created() { console.log(this.counter.length)},
+  created() { },
   mounted() {
-    console.log(this.counter.length)
     let that = this;
     var swiper = new Swiper(".swiper-container", {
       pagination: {
@@ -45,10 +44,10 @@ export default {
           );
         }
       },
-      loop: true,
+      // loop: true,
       observer: true, //修改swiper自己或子元素时，自动初始化swiper
       observeParents: true, //修改swiper的父元素时，自动初始化swiper
-      speed: 600,
+      // speed: 600,
       autoplay: this.counter.length === 1 ? false : true
     });
   }

@@ -43,7 +43,7 @@
             <span>
               <i class="iconfont">&#xe715;</i>{{site.distance}}km</span>
           </div>
-          <a class="content-website-con-right">
+          <a class="content-website-con-right" :href="site.telephone">
             <i class="iconfont">&#xe676;</i>
           </a>
         </div>
@@ -89,9 +89,11 @@ export default {
     },
     routerClicksubmit() {
       let id = this.$route.query.id;
+      let lng = this.$route.query.lng;
+      let lat = this.$route.query.lat;
       this.$router.push({
         path: "/dist/submit",
-        query: { fan_id: 30, id: id }
+        query: { 'fan_id': 30, 'id': id,'lng':lng,'lat':lat }
       });
     },
     routerClickgoback() {

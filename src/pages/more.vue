@@ -109,7 +109,6 @@ export default {
           classification_id: classId
         });
         this.items = data.data;
-        console.log(this.items);
       } else {
         const { data } = await api.get("goods_list");
         this.items = data.data;
