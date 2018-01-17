@@ -8,7 +8,7 @@
                 订单详情
             </div>
             <div class="pay-head-con" @click="routerClickdetails(items.goods_id)">
-                <img src="../assets/img/dwqvas_02.jpg" alt="">
+                <img :src="items.goods_thumbnail">
                 <div class="pay-head-right">
                     <div class="pay-head-title">
                         <strong>{{items.goods_name}}</strong>
@@ -105,9 +105,11 @@ export default {
         this.type = "store";
       }
       const { data } = await api.get("order_detail", {
-        order_id: order_id
+        'order_id': order_id,
+        'lng':116.30387397,
+        'lat':39.91481908
       });
-      this.items = data.data;
+      this.items = data;
       this.site = this.items.sites[0]
       console.log(this.items);
     }

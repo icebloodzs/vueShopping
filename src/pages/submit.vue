@@ -109,9 +109,11 @@ export default {
       let goods_id = this.$route.query.id;
       let amount = this.counter;
       const { data } = await api.get("create_order", {
-        goods_id: goods_id,
-        fan_id: fan_id,
-        amount: amount
+        'goods_id': goods_id,
+        'fan_id': fan_id,
+        'amount': amount,
+        'lng':116.30387397,
+        'lat':39.91481908
       });
         this.items = data;
         console.log(this.items)

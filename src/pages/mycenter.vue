@@ -205,7 +205,7 @@ export default {
         path: "/dist/cancel",
         query: { order_id: order_id, extract_type: extract_type }
       });
-      this.data.used = false;
+      // this.data.used = false;
     },
     tab1Active() {
       this.classObject.tabone = true;
@@ -220,14 +220,14 @@ export default {
       this.classObject.tabfour = false;
     },
     checkPay() {
-      this.data.pay = false;
+      // this.data.pay = false;
     },
     checkCancel() {
       this.classObject.tabone = false;
       this.classObject.tabtwo = false;
       this.classObject.tabthree = true;
       this.classObject.tabfour = false;
-      this.data.cancel = false;
+      // this.data.cancel = false;
     },
     tab4Active() {
       this.classObject.tabone = false;
