@@ -33,15 +33,33 @@ export default {
       namewarn: "",
       phonewarn: "",
       addresswarn: "",
-      name: "张中原",
-      phone: "17638167198",
+      name:"",
+      phone:"",
       address: "",
-      message: []
+      message: [],
+      items:[],
+      defaultaddress:[]
     };
+  },
+  mounted(){
+    this.getData()
   },
   methods: {
     routerClickgoback() {
       this.$router.go(-1);
+    },
+    async getData() {
+      let id = this.$route.query.id;
+      let fan_id = this.$route.query.fan_id;
+      const { data } = await api.get("shipping_address_list", {
+        fan_id: fan_id
+      });
+      this.items = data.data;
+     for(let i = 0, len = this.items.length; i < len; i++){
+        if(this.items[i].id==id){this.defaultaddress=this.items[i]}
+     }
+     this.name=this.defaultaddress.consignee_name
+     this.phone=this.defaultaddress.mobile
     },
     async editprofile() {
       let fan_id = this.$route.query.fan_id;
@@ -49,11 +67,11 @@ export default {
       let consignee_name = this.name;
       let detail_address = this.address;
       let mobile = this.phone;
-      const { data } = await api.get("shipping_address_add", {
-        fan_id: fan_id,
-        consignee_name: consignee_name,
-        detail_address: detail_address,
-        mobile: mobile,
+      const { data } = await api.get("shipping_address_edit", {
+        'fan_id': fan_id,
+        'consignee_name': consignee_name,
+        'detail_address': detail_address,
+        'mobile': mobile,
         id: id
       });
       this.message = data.message;
@@ -85,16 +103,13 @@ export default {
       } else if (!reg.test(this.phone)) {
         this.phonewarn = "请正确填写联系电话 ~";
       } else if (this.address == "") {
-        this.addresswarn = "不能一个字都不输入哦 ~";
+        this.addresswarn = "不能什么都不填哦 ~";
       } else if (this.address.length > 50) {
         this.addresswarn = "超过啦！！！！";
       } else {
         this.editprofile();
         setTimeout(() => {
-          that.$router.push({
-            path: "/dist/profile",
-            query: { fan_id: fan_id }
-          });
+         this.$router.go(-1);
         }, 1000);
       }
     }

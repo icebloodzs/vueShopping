@@ -1,66 +1,66 @@
 <template>
-    <div class="wrapper">
-        <div class="pay">
-            <div class="pay-head">
-                <strong>
-                    <i class="iconfont" @click="routerClickgoback">&#xe600;</i>
-                </strong>
-                订单详情
+  <div class="wrapper">
+    <div class="pay">
+      <div class="pay-head">
+        <strong>
+          <i class="iconfont" @click="routerClickgoback">&#xe600;</i>
+        </strong>
+        订单详情
+      </div>
+      <div class="pay-head-con" @click="routerClickdetails(items.goods_id)">
+        <img :src="items.goods_thumbnail">
+        <div class="pay-head-right">
+          <div class="pay-head-title">
+            <strong>{{items.goods_name}}</strong>
+          </div>
+          <div class="pay-head-down">
+            <div class="pay-head-down-left">总价:{{items.total}}</div>
+            <div class="pay-head-down-right">
+              <i class="iconfont">&#xe62d;</i>
             </div>
-            <div class="pay-head-con" @click="routerClickdetails(items.goods_id)">
-                <img :src="items.goods_thumbnail">
-                <div class="pay-head-right">
-                    <div class="pay-head-title">
-                        <strong>{{items.goods_name}}</strong>
-                    </div>
-                    <div class="pay-head-down">
-                        <div class="pay-head-down-left">总价:{{items.total}}</div>
-                        <div class="pay-head-down-right">
-                            <i class="iconfont">&#xe62d;</i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="pay-button" @click="routerClicksubmit(items.goods_id)">立即付款</div>
-            <div class="pay-con">
-                <div class="content-pay">
-                    <div v-if="type === 'store'" class="content-store">
-                        <div class="content-pay-title">
-                            <strong>适用门店</strong>
-                        </div>
-                        <div class="content-pay-con">
-                            <div class="content-pay-con-left">
-                                <span>{{site.name}}</span>
-                                <span>{{site.detailed_address}}</span>
-                                <span>
-                                    <i class="iconfont">&#xe715;</i>{{site.distance}}km</span>
-                            </div>
-                             <a class="content-pay-con-right" :href='`tel:${site.telephone}`'>
-                              <i class="iconfont">&#xe676;</i>
-                            </a>
-                        </div>
-                    </div>
-                    <div v-if="type === 'gain'" class="gain-info">
-                        <span>收货人：&nbsp;{{address.consignee_name}} &nbsp; {{address.mobile}}</span>
-                        <span>地&nbsp;&nbsp;&nbsp;址：&nbsp;{{address.detail_address}}</span>
-                    </div>
-                    <div class="content-pay-info">
-                        <div class="content-pay-info-title">
-                            <strong>订单信息</strong>
-                        </div>
-                        <div class="content-pay-info-con">
-                            <span>订单总额：&nbsp; ￥{{items.total}}</span>
-                            <span>优惠金额：&nbsp; ￥{{items.reduced_price}}</span>
-                            <span>实付金额：&nbsp; ￥{{items.actual_price}}</span>
-                            <span>联系方式：&nbsp; {{items.mobile}}</span>
-                            <span>订单编号：&nbsp; {{items.order_id}}</span>
-                            <span>下单时间：&nbsp; {{items.created_at}}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
+      <div class="pay-button" @click="routerClicksubmit(items.goods_id)">立即付款</div>
+      <div class="pay-con">
+        <div class="content-pay">
+          <div v-if="type === 'store'" class="content-store">
+            <div class="content-pay-title">
+              <strong>适用门店</strong>
+            </div>
+            <div class="content-pay-con">
+              <div class="content-pay-con-left">
+                <span>{{site.name}}</span>
+                <span>{{site.detailed_address}}</span>
+                <span>
+                  <i class="iconfont">&#xe715;</i>{{site.distance}}km</span>
+              </div>
+              <a class="content-pay-con-right" :href='`tel:${site.telephone}`'>
+                <i class="iconfont">&#xe676;</i>
+              </a>
+            </div>
+          </div>
+          <div v-if="type === 'gain'" class="gain-info">
+            <span>收货人：&nbsp;{{address.consignee_name}} &nbsp; {{address.mobile}}</span>
+            <span>地&nbsp;&nbsp;&nbsp;址：&nbsp;{{address.detail_address}}</span>
+          </div>
+          <div class="content-pay-info">
+            <div class="content-pay-info-title">
+              <strong>订单信息</strong>
+            </div>
+            <div class="content-pay-info-con">
+              <span>订单总额：&nbsp; ￥{{items.total}}</span>
+              <span>优惠金额：&nbsp; ￥{{items.reduced_price}}</span>
+              <span>实付金额：&nbsp; ￥{{items.actual_price}}</span>
+              <span>联系方式：&nbsp; {{items.mobile}}</span>
+              <span>订单编号：&nbsp; {{items.order_id}}</span>
+              <span>下单时间：&nbsp; {{items.created_at}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 
 </template>
 <script>
@@ -72,15 +72,16 @@ export default {
     return {
       type: "",
       items: [],
-       lng: [],
+      lng: [],
       lat: [],
-      site:[],
-      address:[]
+      site: [],
+      address: [],
+      alladdress: []
     };
   },
   mounted() {
     this.getPayData();
-    this.getAddressData()
+    this.getAddressData();
   },
   methods: {
     routerClickgoback() {
@@ -92,13 +93,13 @@ export default {
       // let lat = this.$route.query.lat;
       this.$router.push({
         path: "/dist/submit",
-        query: { 'fan_id': 30, 'id': goodsId,'lng':this.lng,'lat':this.lat }
+        query: { fan_id: 30, id: goodsId, lng: this.lng, lat: this.lat }
       });
     },
     routerClickdetails(goodsId) {
       this.$router.push({
         path: "/dist/details",
-        query: { 'id': goodsId}
+        query: { id: goodsId }
       });
     },
     async getPayData() {
@@ -114,27 +115,28 @@ export default {
       this.lng = _data.longitude;
       this.lat = _data.latitude;
       const { data } = await api.get("order_detail", {
-        'order_id': order_id,
-        'lng':this.lng,
-        'lat':this.lat
+        order_id: order_id,
+        lng: this.lng,
+        lat: this.lat
       });
       this.items = data;
-      this.site = this.items.sites[0]
+      this.site = this.items.sites[0];
     },
-     async getAddressData() {
-      let fan_id = this.$route.query.fan_id;
+    async getAddressData() {
+      let fan_id = 30;
+      let that = this;
       const { data } = await api.get("shipping_address_list", {
-        'fan_id': fan_id
+        fan_id: fan_id
       });
-      this.address = data.data;
-      for(let i=0,len=this.address.length;i<len;i++){
-        if(this.address[i].is_default){
-          this.address=this.address[i]
-          }else{
-             this.address=this.address[0]
-          }
+      this.alladdress = data.data;
+      for (let i = 0, len = this.alladdress.length; i < len; i++) {
+        if (that.alladdress[i].is_default == 1) {
+          that.address = that.alladdress[i];
+        } else {
+          this.address = this.alladdress[0];
+        }
       }
-    },
+    }
   }
 };
 </script>

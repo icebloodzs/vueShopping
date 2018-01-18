@@ -380,6 +380,7 @@ export default {
     position: fixed;
     bottom: 0;
     background-color: #1f80eb;
+    font-size: rem(30);
   }
 }
 </style>

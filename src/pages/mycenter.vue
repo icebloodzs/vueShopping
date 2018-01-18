@@ -25,6 +25,7 @@
       </mu-tabs>
 
       <div v-if="bottomNav === 'tab1'">
+        <div class="hint" v-if='allhint'>无数据</div>
         <div class="content" v-for="item in items" :key="item.id">
           <div class="content-head">
             <span>{{item.created_at}}</span>
@@ -113,6 +114,7 @@
         </div>
       </div>
       <div v-if="bottomNav === 'tab3'">
+        <div class="hint" v-if='cancelhint'>无数据</div>
         <div class="content" @click="routerClickCancel(item.id)" v-for="item in items3">
           <div class="content-head">
             <span>{{item.created_at}}</span>
@@ -177,10 +179,6 @@ export default {
   data() {
     return {
       bottomNav: "tab1",
-      // accesstoken: "",
-      // user: {},
-      // user_msg: {},
-      // data: null,
       classObject: {
         tabone: true,
         tabtwo: false,
@@ -195,28 +193,15 @@ export default {
       pay: true,
       cancel: true,
       used: true,
-      user:[]
+      user:[],
+      allhint:false,
+      cancelhint:false
     };
   },
   created() {},
   mounted() {
     this.getCenterData();
     this.getUserData();
-    // axios
-    //   .get("https://www.vue-js.com/api/v1/topic/5a39e628f4eae0865305a6eb")
-    //   .then((err, data) => {
-    //     // if (err) return;
-    //     data = {
-    //       pay: true,
-    //       cancel: true,
-    //       used: true
-    //     };
-    //     this.data = data;
-    //     console.log(data);
-    //   })
-    //   .catch(e => {
-    //     console.log(e);
-    //   });
   },
   methods: {
     handleTabChange(val) {
@@ -280,7 +265,6 @@ export default {
         'fan_id': fan_id
       });
       this.user = data.data[0];
-      console.log(this.user)
     },
     async getCenterData() {
       let fan_id = this.$route.query.fan_id;
@@ -308,6 +292,7 @@ export default {
           this.items5[i] = this.items[i];
         }
       }
+      if(!this.items3.length){this.cancelhint=true}
     }
   }
 };

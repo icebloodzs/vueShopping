@@ -1,39 +1,44 @@
 <template>
-    <div class="wrapper">
-        <div class="profile">
-            <div class="profile-head">
-                <strong>
-                    <i class="iconfont" @click="routerClickgoback">&#xe600;</i>收获地址</strong>
+  <div class="wrapper">
+    <div class="profile">
+      <div class="profile-head">
+        <strong>
+          <i class="iconfont" @click="routerClickgoback">&#xe600;</i>收获地址</strong>
 
+      </div>
+      <div class="profile-con">
+        <div class="profile-list">
+          <div class="profile-item" v-for="(item,index) in items" :key="item.id">
+            <div class="profile-item-head">
+              <span>{{item.consignee_name}}</span>
+              <span>{{item.mobile}}</span>
             </div>
-            <div class="profile-con">
-                <div class="profile-list">
-                    <div class="profile-item" v-for="(item,index) in items" :key="item.id">
-                        <div class="profile-item-head">
-                            <span>{{item.consignee_name}}</span>
-                            <span>{{item.mobile}}</span>
-                        </div>
-                        <div class="profile-item-con">
-                            <span>{{item.detail_address}}</span>
-                        </div>
-                        <div class="radio" @click="defaultAdtress(item.id)">
-                            <label class="demo--label">
-                                <input class="demo--radio" type="radio" name="demo-checkbox2" value="设为默认">
-                                <span class="demo--checkbox demo--radioInput"></span>设为默认
-                            </label>
-                        </div>
-                        <div class="profile-item-btn">
-                            <div @click="edit(item.id)" class="edit btn">编辑</div>
-                            <div class="del btn" @click="del(item.id)">删除</div>
-                        </div>
-                    </div>
-                </div>
+            <div class="profile-item-con">
+              <span>{{item.detail_address}}</span>
             </div>
-            <div @click="add" class="add-profile">
-                添加新地址
+            <div class="radio" @click="defaultAdtress(item.id)">
+              <label class="demo--label">
+                <input class="demo--radio" type="radio" name="demo-checkbox2" value="设为默认">
+                <span class="demo--checkbox demo--radioInput"></span>设为默认
+              </label>
             </div>
+            <div class="profile-item-btn">
+              <div @click="edit(item.id)" class="edit btn">编辑</div>
+              <div class="del btn" @click="open">删除</div>
+            </div>
+             <mu-dialog :open="dialog" title="提示" @close="close">
+                确认删除这个收获地址吗
+            <mu-flat-button slot="actions" @click="close" primary label="取消" />
+            <mu-flat-button slot="actions" primary @click="del(item.id)" label="确定" />
+          </mu-dialog>
+          </div>
         </div>
+      </div>
+      <div @click="add" class="add-profile">
+        添加新地址
+      </div>
     </div>
+  </div>
 
 </template>
 <script>
@@ -53,7 +58,8 @@ export default {
       checked: "",
       defaultaddress: "",
       items: [],
-      message: []
+      message: [],
+       dialog: false
     };
   },
   check() {
@@ -79,17 +85,17 @@ export default {
     async getData() {
       let fan_id = this.$route.query.fan_id;
       const { data } = await api.get("shipping_address_list", {
-        'fan_id': fan_id
+        fan_id: fan_id
       });
       this.items = data.data;
-      console.log(this.items)
+      console.log(this.items);
     },
     async defaultAdtress(profile_id) {
       let fan_id = this.$route.query.fan_id;
       let id = profile_id;
       const { data } = await api.get("shipping_address_default", {
-        'fan_id': fan_id,
-        'id': id
+        fan_id: fan_id,
+        id: id
       });
       this.message = data.message;
     },
@@ -97,11 +103,17 @@ export default {
       let fan_id = this.$route.query.fan_id;
       let id = profile_id;
       const { data } = await api.get("shipping_address_del", {
-        'fan_id': fan_id,
-        'id': id
+        fan_id: fan_id,
+        id: id
       });
       this.message = data.message;
       this.getData();
+    }, 
+    open () {
+      this.dialog = true
+    },
+    close () {
+      this.dialog = false
     }
   }
 };
@@ -222,6 +234,26 @@ export default {
 </style>
 <style lang="scss" >
 @import "../style/mixin";
+.mu-dialog{
+  // height: rem(200);
+  padding:rem(30)rem(20)!important;
+  .mu-dialog-title{
+    font-size:rem(35);
+  }
+  .mu-dialog-body {
+     font-size:rem(30);
+     margin:rem(15) 0;
+  }
+  .mu-dialog-actions{
+    .mu-flat-button-label{
+      font-size:rem(30);
+    }
+  }
+  .mu-flat-button{
+    overflow: visible;
+  }
+}
+
 </style>
 
 

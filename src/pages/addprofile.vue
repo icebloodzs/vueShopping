@@ -172,14 +172,15 @@ export default {
         margin-left: rem(150);
       }
       .mu-text-field-help {
-        margin-top: rem(-30);
-        margin-left: rem(350);
-        font-size: rem(30);
+        margin-top: rem(-20);
+        margin-left: rem(200);
+        font-size: rem(28);
         width: rem(500);
+        line-height:1.1;
         display: flex;
         justify-content: space-between;
         div:nth-child(1) {
-          margin-left: rem(45);
+          margin-left: rem(200);
         }
       }
     }
@@ -199,10 +200,6 @@ export default {
       }
       .mu-text-field-line {
         display: none;
-      }
-      .mu-text-field-help {
-        margin-top: rem(-11);
-        margin-left: rem(200);
       }
     }
   }

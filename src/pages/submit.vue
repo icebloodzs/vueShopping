@@ -1,63 +1,64 @@
 <template>
-    <div class="wrapper">
-        <div class="confirm">
-            <div class="confirm-head">
-                <strong><i class="iconfont" @click="routerClickgoback">&#xe600;</i> 信息确认</strong>
+  <div class="wrapper">
+    <div class="confirm">
+      <div class="confirm-head">
+        <strong>
+          <i class="iconfont" @click="routerClickgoback">&#xe600;</i> 信息确认</strong>
+      </div>
+      <div class="gain-info" @click="routerClickedit(address.id)">
+        <img src="../assets/img/border.png">
+        <span>收货人：&nbsp;{{address.consignee_name}} &nbsp; {{address.mobile}}</span>
+        <span>地&nbsp;&nbsp;&nbsp;址：&nbsp;{{address.detail_address}}</span>
+        <img src="../assets/img/border.png">
+      </div>
+      <div class="info-tilte">
+        <span>
+          {{goods.name}}
+        </span>
+      </div>
+      <div class="info-content">
+        <div class="info-amount price">
+          <span> 数量：</span>
+          <span class="info-amount-right">
+            <div class="minus operation" @click="routerClickminus">一</div>
+            <span>{{ counter }}</span>
+            <div class="plus operation" v-on:click="counter += 1">
+              <i class="iconfont">&#xe6b9;</i>
             </div>
-            <div class="gain-info">
-                <img src="../assets/img/border.png">
-                <span>收货人：&nbsp;{{address.consignee_name}} &nbsp; {{address.mobile}}</span>
-                <span>地&nbsp;&nbsp;&nbsp;址：&nbsp;{{address.detail_address}}</span>
-                <img src="../assets/img/border.png">
-            </div>
-            <div class="info-tilte">
-                <span>
-                    {{goods.name}}
-                </span>
-            </div>
-            <div class="info-content">
-                <div class="info-amount price">
-                    <span> 数量：</span>
-                    <span class="info-amount-right">
-                        <div class="minus operation" @click="routerClickminus">一</div>
-                        <span>{{ counter }}</span>
-                        <div class="plus operation" v-on:click="counter += 1">
-                            <i class="iconfont">&#xe6b9;</i>
-                        </div>
-                    </span>
-                </div>
-                <div class="info-subtotal price">
-                    <span>小计：</span>
-                    <span>
-                        <span>&#65509;</span> {{ counter*goods.price_spike | currency }}</span>
-                </div>
-            </div>
-            <div class="bind-phone" @click="bindPhone">
-                <div class="bind-phone-tilte">您绑定的电话</div>
-                <div class="bind-phone-con">
-                    <div class="bind-phone-con-left">{{tel}}</div>
-                    <div class="bind-phone-con-right">绑定新号码
-                        <i class="iconfont">&#xe62d;</i>
-                    </div>
-                </div>
-            </div>
-            <div class="submit-order" @click="openBottomSheet">提交订单</div>
-            <div class="mu-overlay" v-if="bottomSheet" @click="closeBottomSheet" style="opacity: 0.4; background-color: rgb(0, 0, 0); position: fixed; z-index:1;"></div>
-            <div class="muz-list" v-if="bottomSheet">
-                <div class="mu-list-head">
-                    <strong>支付方式</strong>
-                </div>
-                <div class="mu-list-item" :class="{active: isActive}" @click="isActive1">
-                    <img src="../assets/img/zhongyuan_logo_02.png" alt=""> 中原银行卡支付（2366）
-                </div>
-                <div class="mu-list-item" :class="{actives: isActives}" @click="isActive2">
-                    <img src="../assets/img/weixin_logo_02.png" alt=""> 微信支付
-                </div>
-                <i class="iconfont" :class="{iconfontsite: isActive}">&#xe721;</i>
-                <div class="mu-list-button" @click="payNow">立即支付</div>
-            </div>
+          </span>
         </div>
+        <div class="info-subtotal price">
+          <span>小计：</span>
+          <span>
+            <span>&#65509;</span> {{ counter*goods.price_spike | currency }}</span>
+        </div>
+      </div>
+      <div class="bind-phone" @click="bindPhone">
+        <div class="bind-phone-tilte">您绑定的电话</div>
+        <div class="bind-phone-con">
+          <div class="bind-phone-con-left">{{tel}}</div>
+          <div class="bind-phone-con-right">绑定新号码
+            <i class="iconfont">&#xe62d;</i>
+          </div>
+        </div>
+      </div>
+      <div class="submit-order" @click="openBottomSheet">提交订单</div>
+      <div class="mu-overlay" v-if="bottomSheet" @click="closeBottomSheet" style="opacity: 0.4; background-color: rgb(0, 0, 0); position: fixed; z-index:1;"></div>
+      <div class="muz-list" v-if="bottomSheet">
+        <div class="mu-list-head">
+          <strong>支付方式</strong>
+        </div>
+        <div class="mu-list-item" :class="{active: isActive}" @click="isActive1">
+          <img src="../assets/img/zhongyuan_logo_02.png" alt=""> 中原银行卡支付（2366）
+        </div>
+        <div class="mu-list-item" :class="{actives: isActives}" @click="isActive2">
+          <img src="../assets/img/weixin_logo_02.png" alt=""> 微信支付
+        </div>
+        <i class="iconfont" :class="{iconfontsite: isActive}">&#xe721;</i>
+        <div class="mu-list-button" @click="payNow">立即支付</div>
+      </div>
     </div>
+  </div>
 
 </template>
 <script>
@@ -71,23 +72,24 @@ export default {
       isActive: true,
       isActives: false,
       items: [],
-      goods:[],
-      tel:[],
-      address:[]
+      goods: [],
+      tel: [],
+      address: [],
+      alladdress: []
     };
   },
-  mounted(){
-    this.getGoodsData()
-    this.getTelData()
-    this.getAddressData()
+  mounted() {
+    this.getGoodsData();
+    this.getTelData();
+    this.getAddressData();
   },
   methods: {
     routerClickgoback() {
       this.$router.go(-1);
     },
     bindPhone() {
-         let fan_id = this.$route.query.fan_id;
-      this.$router.push({path:"/dist/bindphone",query:{'fan_id':fan_id}});
+      let fan_id = this.$route.query.fan_id;
+      this.$router.push({ path: "/dist/bindphone", query: { fan_id: fan_id } });
     },
     routerClickminus() {
       if (this.counter > 1) this.counter -= 1;
@@ -111,47 +113,55 @@ export default {
       let lng = this.$route.query.lng;
       let lat = this.$route.query.lat;
       const { data } = await api.get("create_order", {
-        'goods_id': goods_id,
-        'fan_id': fan_id,
-        'amount': amount,
-        'lng':lng,
-        'lat':lat
+        goods_id: goods_id,
+        fan_id: fan_id,
+        amount: amount,
+        lng: lng,
+        lat: lat
       });
-        this.items = data;
-        console.log(this.items)
-    }, 
+      this.items = data;
+      console.log(this.items);
+    },
     async getGoodsData() {
       let goods_id = this.$route.query.id;
       let lng = this.$route.query.lng;
       let lat = this.$route.query.lat;
       const { data } = await api.get("goods_detail", {
-        'goods_id': goods_id,
-        'lng': lng,
-        'lat': lat
+        goods_id: goods_id,
+        lng: lng,
+        lat: lat
       });
       this.goods = data;
     },
     async getTelData() {
       let fan_id = this.$route.query.fan_id;
       const { data } = await api.get("get_bind_mobile", {
-        'fan_id': fan_id,
+        fan_id: fan_id
       });
       this.tel = data.data.mobile;
     },
-     async getAddressData() {
+    async getAddressData() {
+      let that = this;
       let fan_id = this.$route.query.fan_id;
       const { data } = await api.get("shipping_address_list", {
-        'fan_id': fan_id
+        fan_id: fan_id
       });
-      this.address = data.data;
-      for(let i=0,len=this.address.length;i<len;i++){
-        if(this.address[i].is_default){
-          this.address=this.address[i]
-          }else{
-             this.address=this.address[0]
-          }
+      this.alladdress = data.data;
+      for (let i = 0, len = this.alladdress.length; i < len; i++) {
+        if (that.alladdress[i].is_default == 1) {
+          that.address = that.alladdress[i];
+        } else {
+          this.address = this.alladdress[0];
+        }
       }
     },
+    routerClickedit(profile_id) {
+      let id = profile_id;
+      this.$router.push({
+        path: "/dist/editprofile",
+        query: { fan_id: 30, id: id }
+      });
+    }
   }
 };
 </script>
@@ -292,9 +302,9 @@ export default {
       position: fixed;
       bottom: 0;
       background-color: #29a1f7;
-      height: rem(106);
+      height: rem(100);
       color: #fff;
-      font-size: rem(35);
+      font-size: rem(30);
       line-height: rem(106);
       text-align: center;
     }

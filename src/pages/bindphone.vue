@@ -214,11 +214,6 @@ export default {
       line-height: rem(100);
       margin-top: rem(-50);
     }
-    .mu-text-field-help {
-      margin-left: 1.27rem;
-      font-size: rem(30);
-      width: 100%;
-    }
     .mu-text-field-label {
       width: 100%;
       color: #000;
