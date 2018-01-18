@@ -41,8 +41,8 @@
                         </div>
                     </div>
                     <div v-if="type === 'gain'" class="gain-info">
-                        <span>收货人：&nbsp;孙富贵 &nbsp; 13345668899</span>
-                        <span>地&nbsp;&nbsp;&nbsp;址：&nbsp;北京市劲舞路花园路男300米路东...</span>
+                        <span>收货人：&nbsp;{{address.consignee_name}} &nbsp; {{address.mobile}}</span>
+                        <span>地&nbsp;&nbsp;&nbsp;址：&nbsp;{{address.detail_address}}</span>
                     </div>
                     <div class="content-pay-info">
                         <div class="content-pay-info-title">
@@ -75,10 +75,12 @@ export default {
        lng: [],
       lat: [],
       site:[],
+      address:[]
     };
   },
   mounted() {
     this.getPayData();
+    this.getAddressData()
   },
   methods: {
     routerClickgoback() {
@@ -118,7 +120,21 @@ export default {
       });
       this.items = data;
       this.site = this.items.sites[0]
-    }
+    },
+     async getAddressData() {
+      let fan_id = this.$route.query.fan_id;
+      const { data } = await api.get("shipping_address_list", {
+        'fan_id': fan_id
+      });
+      this.address = data.data;
+      for(let i=0,len=this.address.length;i<len;i++){
+        if(this.address[i].is_default){
+          this.address=this.address[i]
+          }else{
+             this.address=this.address[0]
+          }
+      }
+    },
   }
 };
 </script>
