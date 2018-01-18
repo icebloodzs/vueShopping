@@ -28,10 +28,10 @@
           <div class="content-indate-left">此商品有效期至</div>
           <div class="content-indate-right">{{item.end_time}}</div>
         </div>
-        <div class="content-purchase">
-          <div class="content-purchase-left"><img src="../assets/img/dwqvas_02.jpg"></div>
+        <div class="content-purchase"v-if="purchase">
+          <div class="content-purchase-left"><div v-for="item in purnum"><img :src="item.fan_head_image" ></div></div>
           <div class="content-purchase-right">已有
-            <span>67</span>人抢购</div>
+            <span>{{pur_num}}</span>人抢购</div>
         </div>
       </div>
       <div v-if="offLine" class="content-website">
@@ -47,8 +47,8 @@
             <i class="iconfont">&#xe676;</i>
           </a>
         </div>
-        <router-link :to="{path:'/dist/website',query:{id:item.id,lng:116.30387397,lat:39.91481908}}" tag="div" class="content-website-all">
-          <div class="content-website-all-left">查看全部3家网点</div>
+        <router-link :to="{path:'/dist/website',query:{id:item.id}}" tag="div" class="content-website-all">
+          <div class="content-website-all-left">查看全部{{count}}家网点</div>
           <div class="content-website-all-right">
             <i class="iconfont">&#xe62d;</i>
           </div>
@@ -65,13 +65,15 @@
 </template>
 <script>
 import api from "@/api";
+import { getLocation, setConfig } from "@/utils/wx";
 import detailsdown from "../components/detailsdown.vue";
 export default {
   components: {
-    'detailsdown': detailsdown
+    detailsdown: detailsdown
   },
   created() {
     this.getData();
+    this.getNumData()
   },
   data() {
     return {
@@ -79,7 +81,13 @@ export default {
       offLine: [],
       listImg: [],
       site: [],
-      item: []
+      item: [],
+      count: [],
+      lng: [],
+      lat: [],
+      purnum: [],
+      pur_num:[],
+      purchase:true
     };
   },
   methods: {
@@ -88,11 +96,10 @@ export default {
     },
     routerClicksubmit() {
       let id = this.$route.query.id;
-      let lng = this.$route.query.lng;
-      let lat = this.$route.query.lat;
+      // let fan_id =  Window.AppConfig.uid
       this.$router.push({
         path: "/dist/submit",
-        query: { 'fan_id': 30, 'id': id,'lng':lng,'lat':lat }
+        query: { fan_id: 30, id: id, lng: this.lng, lat: this.lat }
       });
     },
     routerClickgoback() {
@@ -101,23 +108,42 @@ export default {
     routerClickdetails() {
       this.$router.push("/dist/detail");
     },
+    //商品详情获取
     async getData() {
       let goods_id = this.$route.query.id;
-      let lng = this.$route.query.lng;
-      let lat = this.$route.query.lat;
+      await setConfig(Window.AppConfig);
+      let _data = await getLocation();
+      this.lng = _data.longitude;
+      this.lat = _data.latitude;
       const { data } = await api.get("goods_detail", {
         'goods_id': goods_id,
-        'lng': lng,
-        'lat': lat
+        'lng': this.lng,
+        'lat': this.lat
       });
       this.item = data;
       if (this.item.extract_type === 1) {
         this.offLine = false;
       } else {
         this.offLine = true;
+        this.count = this.item.site.length;
         this.site = this.item.site[0];
       }
-    }
+    },
+    //商品已购人数及头像获取
+     async getNumData() {
+        let goods_id = this.$route.query.id;
+      const { data } = await api.get("bought_list",{
+         'goods_id': goods_id,
+      });
+      this.purnum = data.data;
+      this.pur_num = this.purnum.length
+      if(!this.pur_num){this.purchase=false}
+      if(this.pur_num>6){
+        for(let i = 0, len = this.pur_num.length; i < 6; i++){
+          this.purnum[i] = data.data[i]
+        }
+      }
+    },
   }
 };
 </script>

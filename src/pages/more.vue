@@ -22,7 +22,7 @@
                 <span>￥{{item.original_price}}</span>
               </div>
               <div class="remain">
-                <mu-linear-progress class="progress" mode="determinate" color="#1e7fea" :max="50" :value="value" />
+                <mu-linear-progress class="progress" mode="determinate" color="#1e7fea" :max="item.total" :value="item.surplus" />
                 <span>剩余{{item.surplus}}份</span>
               </div>
             </div>
@@ -44,7 +44,7 @@
                 <span>￥{{item.original_price}}</span>
               </div>
               <div class="remain">
-                <mu-linear-progress class="progress" mode="determinate" color="#1e7fea" :max="50" :value="value" />
+                <mu-linear-progress class="progress" mode="determinate" color="#1e7fea" :max="item.total" :value="item.surplus" />
                 <span>剩余{{item.surplus}}份</span>
               </div>
             </div>

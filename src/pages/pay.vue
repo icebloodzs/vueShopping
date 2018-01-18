@@ -65,12 +65,15 @@
 </template>
 <script>
 import api from "@/api";
+import { getLocation, setConfig } from "@/utils/wx";
 export default {
   components: {},
   data() {
     return {
       type: "",
       items: [],
+       lng: [],
+      lat: [],
       site:[],
     };
   },
@@ -87,13 +90,13 @@ export default {
       // let lat = this.$route.query.lat;
       this.$router.push({
         path: "/dist/submit",
-        query: { 'fan_id': 30, 'id': goodsId,'lng':116.30387397,'lat':39.91481908 }
+        query: { 'fan_id': 30, 'id': goodsId,'lng':this.lng,'lat':this.lat }
       });
     },
     routerClickdetails(goodsId) {
       this.$router.push({
         path: "/dist/details",
-        query: { 'id': goodsId,'lng':116.30387397,'lat':39.91481908 }
+        query: { 'id': goodsId}
       });
     },
     async getPayData() {
@@ -104,14 +107,17 @@ export default {
       } else if (extract_type == 2) {
         this.type = "store";
       }
+      await setConfig(Window.AppConfig);
+      let _data = await getLocation();
+      this.lng = _data.longitude;
+      this.lat = _data.latitude;
       const { data } = await api.get("order_detail", {
         'order_id': order_id,
-        'lng':116.30387397,
-        'lat':39.91481908
+        'lng':this.lng,
+        'lat':this.lat
       });
       this.items = data;
       this.site = this.items.sites[0]
-      console.log(this.items);
     }
   }
 };

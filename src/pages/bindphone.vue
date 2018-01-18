@@ -95,7 +95,6 @@ export default {
         });
         this.items = data;
         this.message = this.items.message;
-        console.log(this.items)
         if(this.items.error){
         this.toast = true
         if (this.toastTimer) clearTimeout(this.toastTimer)

@@ -16,7 +16,7 @@
     </div>
     <div class="left-icon"></div>
     <div class="content-item" v-for="item in goodsList">
-      <router-link :to="{path:'/dist/details',query:{id:item.id,lng:116.30387397,lat:39.91481908}}" tag="img" class="content-img" :src="item.thumbnail"></router-link>
+      <router-link :to="{path:'/dist/details',query:{id:item.id}}" tag="img" class="content-img" :src="item.thumbnail"></router-link>
       <div class="content-middle">
         <span>
           <strong>{{item.name}}</strong>
@@ -27,11 +27,11 @@
           <span>{{item.original_price}}</span>
         </div>
         <div class="remain">
-          <mu-linear-progress :max="200" class="progress" mode="determinate" color="#1e7fea" :value="item.surplus" />
+          <mu-linear-progress :max="item.total" class="progress" mode="determinate" color="#1e7fea" :value="item.surplus" />
           <span>剩余{{item.surplus}}份</span>
         </div>
       </div>
-      <router-link :to="{path:'/dist/details',query:{id:item.id,lng:116.30387397,lat:39.91481908}}" tag="div" class="content-right">立即抢购</router-link>
+      <router-link :to="{path:'/dist/details',query:{id:item.id}}" tag="div" class="content-right">立即抢购</router-link>
     </div>
   </div>
 </template>
@@ -50,7 +50,8 @@ export default {
       classify: [],
       goodsList: [],
       config: [],
-      fan_id: 30
+      fan_id: 30,
+      config:[]
     };
   },
   created() {},
@@ -58,6 +59,7 @@ export default {
     this.getImgData();
     this.getClassifyData();
     this.getGoodsData();
+    this. getConfigData()
   },
   methods: {
     routerClick() {
@@ -75,11 +77,17 @@ export default {
     routerClickhome() {
       this.$router.go(0);
     },
+    //配置获取
+     async getConfigData() {
+      const { data } = await api.get("app_config");
+      this.config = data;
+      Window.AppConfig.uid = this.config.uid
+      // console.log(this.config)
+    },
     // 轮播图数据获取
     async getImgData() {
       const { data } = await api.get("carousel_images");
       this.listImg = data.data;
-      
     },
     // 分类数据获取
     async getClassifyData() {

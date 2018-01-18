@@ -2,9 +2,9 @@
   <!--个人中心-->
   <div class="wrapper">
     <div class="header">
-      <img src="../assets/img/dwqvas_02.jpg">
+      <img :src="user.headimgurl">
       <div class="header-middle">
-        <span>你好哈士奇</span>
+        <span>{{user.nickname}}</span>
         <router-link :to="{path:'/dist/profile',query:{fan_id:30}}" tag="div" class="header-profile">
           收货地址 &nbsp;
           <i class="iconfont">&#xe62d;</i>
@@ -32,10 +32,10 @@
           </div>
           <div class="content-con tab2">
             <div class="content-con-left">
-              <img src="../assets/img/dwqvas_02.jpg" alt="">
+              <img :src="item.thumbnail" alt="">
               <div class="content-con-text">
                 <span>{{item.goods_name}}</span>
-                <span>来自：大牌抢购</span>
+                <!-- <span>来自：大牌抢购</span> -->
                 <span>￥{{item.total}}</span>
               </div>
             </div>
@@ -50,10 +50,10 @@
           </div>
           <div class="content-con">
             <div class="content-con-left">
-              <img src="../assets/img/dwqvas_02.jpg" alt="">
+              <img :src="item.thumbnail" alt="">
               <div class="content-con-text">
                 <span>{{item.goods_name}}</span>
-                <span>来自：大牌抢购</span>
+                <!-- <span>来自：大牌抢购</span> -->
                 <span>￥{{item.total}}</span>
               </div>
             </div>
@@ -66,14 +66,30 @@
           </div>
           <div class="content-con tab4">
             <div class="content-con-left">
-              <img src="../assets/img/dwqvas_02.jpg" alt="">
+              <img :src="item.thumbnail" alt="">
               <div class="content-con-text">
                 <span>{{item.goods_name}}</span>
-                <span>来自：大牌抢购</span>
+                <!-- <span>来自：大牌抢购</span> -->
                 <span>￥{{item.total}}</span>
               </div>
             </div>
             <div class="content-physical-button" @click="routerClickPhysical(item.id)">查看物流</div>
+          </div>
+        </div>
+        <div class="content" v-for="item in items5">
+          <div class="content-head">
+            <span>2012-12-12 &nbsp; 17:06:24</span>
+            <span>已核销</span>
+          </div>
+          <div class="content-con tab4">
+            <div class="content-con-left">
+              <img :src="item.thumbnail" alt="">
+              <div class="content-con-text">
+                <span>{{item.goods_name}}</span>
+                <!-- <span>来自：大牌抢购</span> -->
+                <span>￥{{item.total}}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -85,10 +101,10 @@
           </div>
           <div class="content-con tab2">
             <div class="content-con-left">
-              <img src="../assets/img/dwqvas_02.jpg" alt="">
+              <img :src="item.thumbnail" alt="">
               <div class="content-con-text">
                 <span>{{item.goods_name}}</span>
-                <span>来自：大牌抢购</span>
+                <!-- <span>来自：大牌抢购</span> -->
                 <span>￥{{item.total}}</span>
               </div>
             </div>
@@ -104,10 +120,10 @@
           </div>
           <div class="content-con">
             <div class="content-con-left">
-              <img src="../assets/img/dwqvas_02.jpg" alt="">
+              <img :src="item.thumbnail" alt="">
               <div class="content-con-text">
                 <span>{{item.goods_name}}</span>
-                <span>来自：大牌抢购</span>
+                <!-- <span>来自：大牌抢购</span> -->
                 <span>￥{{item.total}}</span>
               </div>
             </div>
@@ -122,14 +138,30 @@
           </div>
           <div class="content-con tab4">
             <div class="content-con-left">
-              <img src="../assets/img/dwqvas_02.jpg" alt="">
+              <img :src="item.thumbnail" alt="">
               <div class="content-con-text">
                 <span>{{item.goods_name}}</span>
-                <span>来自：大牌抢购</span>
+                <!-- <span>来自：大牌抢购</span> -->
                 <span>￥{{item.total}}</span>
               </div>
             </div>
             <div class="content-physical-button" @click="routerClickPhysical(item.id)">查看物流</div>
+          </div>
+        </div>
+         <div class="content" v-for="item in items5">
+          <div class="content-head">
+            <span>2012-12-12 &nbsp; 17:06:24</span>
+            <span>已核销</span>
+          </div>
+          <div class="content-con tab4"  @click="routerClickCancel(item.id)">
+            <div class="content-con-left">
+              <img :src="item.thumbnail" alt="">
+              <div class="content-con-text">
+                <span>{{item.goods_name}}</span>
+                <!-- <span>来自：大牌抢购</span> -->
+                <span>￥{{item.total}}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -159,14 +191,17 @@ export default {
       items2: [],
       items3: [],
       items4: [],
+      items5:[],
       pay: true,
       cancel: true,
-      used: true
+      used: true,
+      user:[]
     };
   },
   created() {},
   mounted() {
     this.getCenterData();
+    this.getUserData();
     // axios
     //   .get("https://www.vue-js.com/api/v1/topic/5a39e628f4eae0865305a6eb")
     //   .then((err, data) => {
@@ -235,14 +270,22 @@ export default {
       this.classObject.tabthree = false;
       this.classObject.tabfour = true;
     },
-    routerClickPhysical() {
+    routerClickPhysical(orderId) {
       window.location.href =
-        "http://m.kuaidi100.com/index_all.html?postid=885911248753980437#result";
+        `http://m.kuaidi100.com/index_all.html?postid=${orderId}#result`;
+    },
+     async getUserData() {
+       let fan_id = this.$route.query.fan_id;
+      const { data } = await api.get("user_info",{
+        'fan_id': fan_id
+      });
+      this.user = data.data[0];
+      console.log(this.user)
     },
     async getCenterData() {
       let fan_id = this.$route.query.fan_id;
       const { data } = await api.get("order_list", {
-        fan_id: fan_id
+        'fan_id': fan_id
       });
       this.items = data.data;
       for (let i = 0, len = this.items.length; i < len; i++) {
@@ -256,8 +299,13 @@ export default {
         }
       }
       for (let i = 0, len = this.items.length; i < len; i++) {
-        if (this.items[i].status == 5) {
+        if (this.items[i].status == 5 && this.items[i].extract_type == 1 ) {
           this.items4[i] = this.items[i];
+        }
+      }
+      for (let i = 0, len = this.items.length; i < len; i++) {
+        if (this.items[i].status == 5 && this.items[i].extract_type == 2 ) {
+          this.items5[i] = this.items[i];
         }
       }
     }
@@ -395,15 +443,16 @@ export default {
               font-size: rem(25);
               line-height: rem(35);
             }
+            // span:nth-child(2) {
+            //   color: #989898;
+            //   font-size: rem(25);
+            //   line-height: rem(44);
+            // }
             span:nth-child(2) {
-              color: #989898;
-              font-size: rem(25);
-              line-height: rem(44);
-            }
-            span:nth-child(3) {
               color: #1d80e8;
               font-size: rem(25);
               line-height: rem(44);
+              margin-top:rem(30);
             }
           }
         }

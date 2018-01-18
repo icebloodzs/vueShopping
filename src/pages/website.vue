@@ -17,9 +17,9 @@
               <span>
                 <i class="iconfont">&#xe715;</i>{{item.distance}}km</span>
             </div>
-             <a class="content-website-con-right" :href='`tel:${item.telephone}`'>
-            <i class="iconfont">&#xe676;</i>
-          </a>
+            <a class="content-website-con-right" :href='`tel:${item.telephone}`'>
+              <i class="iconfont">&#xe676;</i>
+            </a>
           </div>
 
         </div>
@@ -30,6 +30,7 @@
 </template>
 <script>
 import api from "@/api";
+import { getLocation, setConfig } from "@/utils/wx";
 export default {
   components: {},
   created() {
@@ -37,7 +38,9 @@ export default {
   },
   data() {
     return {
-      items: []
+      items: [],
+      lng: [],
+      lat: []
     };
   },
   methods: {
@@ -46,12 +49,14 @@ export default {
     },
     async getData() {
       let goods_id = this.$route.query.id;
-      let lng = this.$route.query.lng;
-      let lat = this.$route.query.lat;
+      await setConfig(Window.AppConfig);
+      let _data = await getLocation();
+      this.lng = _data.longitude;
+      this.lat = _data.latitude;
       const { data } = await api.get("goods_detail", {
         goods_id: goods_id,
-        lng: lng,
-        lat: lat
+        lng: this.lng,
+        lat: this.lat
       });
       this.items = data.site;
     }
