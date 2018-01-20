@@ -16,7 +16,7 @@ import editprofile from '../pages/editprofile'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  mode: 'hash',
   routes: [
     {
       path: '',
@@ -26,17 +26,17 @@ export default new Router({
       path: '/',
       name: 'index',
       component: index
-    }, 
+    },
     {
       path: '/dist/mycenter',
       name: 'center',
       component: mycenter
-    }, 
+    },
     {
       path: '/dist/details',
       name: 'details',
       component: details
-    }, 
+    },
     {
       path: '/dist/more',
       name: 'more',
