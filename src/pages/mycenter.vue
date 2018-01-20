@@ -19,13 +19,13 @@
       <mu-tabs class="centertab" :value="bottomNav" @change="handleTabChange" :lineClass="classObject">
         <mu-tab value="tab1" @active="tab1Active" title="全部" />
         <!-- :titleClass="[data&&data.cancel&&'befor']" -->
-        <mu-tab  @active="tab2Active" @click="checkPay" value="tab2" title="待付款" />
-        <mu-tab  @click="checkCancel" value="tab3" title="未核销" />
+        <mu-tab @active="tab2Active" @click="checkPay" value="tab2" title="待付款" />
+        <mu-tab @click="checkCancel" value="tab3" title="未核销" />
         <mu-tab @active="tab4Active" value="tab4" title="已完成" />
       </mu-tabs>
 
       <div v-if="bottomNav === 'tab1'">
-        <div class="hint" v-if='allhint'>无数据</div>
+        <div class="hint" v-if='allhint'><img src="../assets/img/vn2l_fw658.png"></div>
         <div class="content" v-for="item in items" :key="item.id">
           <div class="content-head">
             <span>{{item.created_at}}</span>
@@ -95,6 +95,7 @@
         </div>
       </div>
       <div v-if="bottomNav === 'tab2'">
+        <div class="hint" v-if='payhint'><img src="../assets/img/vn2l_fw658.png"></div>
         <div class="content" v-for="item in items2">
           <div class="content-head">
             <span>{{item.created_at}}</span>
@@ -114,7 +115,7 @@
         </div>
       </div>
       <div v-if="bottomNav === 'tab3'">
-        <div class="hint" v-if='cancelhint'>无数据</div>
+        <div class="hint" v-if='cancelhint'><img src="../assets/img/vn2l_fw658.png"></div>
         <div class="content" @click="routerClickCancel(item.id)" v-for="item in items3">
           <div class="content-head">
             <span>{{item.created_at}}</span>
@@ -133,6 +134,7 @@
         </div>
       </div>
       <div v-if="bottomNav === 'tab4'">
+        <div class="hint" v-if='donehint'><img src="../assets/img/vn2l_fw658.png"></div>
         <div class="content" v-for="item in items4">
           <div class="content-head">
             <span>2012-12-12 &nbsp; 17:06:24</span>
@@ -150,12 +152,12 @@
             <div class="content-physical-button" @click="routerClickPhysical(item.id)">查看物流</div>
           </div>
         </div>
-         <div class="content" v-for="item in items5">
+        <div class="content" v-for="item in items5">
           <div class="content-head">
             <span>2012-12-12 &nbsp; 17:06:24</span>
             <span>已核销</span>
           </div>
-          <div class="content-con tab4"  @click="routerClickCancel(item.id)">
+          <div class="content-con tab4" @click="routerClickCancel(item.id)">
             <div class="content-con-left">
               <img :src="item.thumbnail" alt="">
               <div class="content-con-text">
@@ -189,13 +191,15 @@ export default {
       items2: [],
       items3: [],
       items4: [],
-      items5:[],
+      items5: [],
       pay: true,
       cancel: true,
       used: true,
-      user:[],
-      allhint:false,
-      cancelhint:false
+      user: [],
+      allhint: false,
+      cancelhint: false,
+      payhint: false,
+      donehint: false
     };
   },
   created() {},
@@ -256,20 +260,19 @@ export default {
       this.classObject.tabfour = true;
     },
     routerClickPhysical(orderId) {
-      window.location.href =
-        `http://m.kuaidi100.com/index_all.html?postid=${orderId}#result`;
+      window.location.href = `http://m.kuaidi100.com/index_all.html?postid=${orderId}#result`;
     },
-     async getUserData() {
-       let fan_id = this.$route.query.fan_id;
-      const { data } = await api.get("user_info",{
-        'fan_id': fan_id
+    async getUserData() {
+      let fan_id = this.$route.query.fan_id;
+      const { data } = await api.get("user_info", {
+        fan_id: fan_id
       });
       this.user = data.data[0];
     },
     async getCenterData() {
       let fan_id = this.$route.query.fan_id;
       const { data } = await api.get("order_list", {
-        'fan_id': fan_id
+        fan_id: fan_id
       });
       this.items = data.data;
       for (let i = 0, len = this.items.length; i < len; i++) {
@@ -283,16 +286,27 @@ export default {
         }
       }
       for (let i = 0, len = this.items.length; i < len; i++) {
-        if (this.items[i].status == 5 && this.items[i].extract_type == 1 ) {
+        if (this.items[i].status == 5 && this.items[i].extract_type == 1) {
           this.items4[i] = this.items[i];
         }
       }
       for (let i = 0, len = this.items.length; i < len; i++) {
-        if (this.items[i].status == 5 && this.items[i].extract_type == 2 ) {
+        if (this.items[i].status == 5 && this.items[i].extract_type == 2) {
           this.items5[i] = this.items[i];
         }
       }
-      if(!this.items3.length){this.cancelhint=true}
+      if (!this.items.length) {
+        this.allhint = true;
+      }
+      if (!this.items2.length) {
+        this.payhint = true;
+      }
+      if (!this.items3.length) {
+        this.cancelhint = true;
+      }
+      if (!this.items4.length && !this.items5.length) {
+        this.donehint = true;
+      }
     }
   }
 };
@@ -370,6 +384,17 @@ export default {
     }
   }
   .main {
+    .hint {
+      padding-top: rem(88);
+      background-color: #fff;
+      width: 100%;
+      img {
+        display: block;
+        margin: 0 auto;
+        width: rem(197);
+        height: rem(287);
+      }
+    }
     .mu-tab-link {
       font-size: rem(30);
       background-color: #fff;
@@ -437,7 +462,7 @@ export default {
               color: #1d80e8;
               font-size: rem(25);
               line-height: rem(44);
-              margin-top:rem(30);
+              margin-top: rem(30);
             }
           }
         }

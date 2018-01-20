@@ -1,29 +1,29 @@
 <template>
-    <div class="wrapper">
-        <div class="addprofile">
-            <div class="addprofile-head">
-                <strong>
-                    <i class="iconfont" @click="routerClickgoback">&#xe600;</i>
-                </strong>
-                添加收获地址
-            </div>
-            <div class="addprofile-con">
-                <label>收货人</label>
-                <mu-text-field :errorText="namewarn" v-model="name" @input="input" /><br/>
-                <label>联系电话</label>
-                <mu-text-field :errorText="phonewarn" v-model="phone" @input="input" /><br/>
-                <label>详细地址</label>
-                <mu-text-field class="address" v-model="address" multiLine :rows="3" :rowsMax="6" :errorText="addresswarn" @input="input" :maxLength="50" />
-            </div>
-            <div class="container">
-                <!-- <router-link :to="{path:'/dist/details',query:{id:item.id,lng:116.30387397,lat:39.91481908}}" tag="div" class="button">保存</router-link> -->
-                <div @click="saveProfile" class="button">
-                    保存
-                </div>
-            </div>
+  <div class="wrapper">
+    <div class="addprofile">
+      <div class="addprofile-head">
+        <strong>
+          <i class="iconfont" @click="routerClickgoback">&#xe600;</i>
+        </strong>
+        添加收获地址
+      </div>
+      <div class="addprofile-con">
+        <label>收货人</label>
+        <mu-text-field :errorText="namewarn" v-model="name" @input="input" /><br/>
+        <label>联系电话</label>
+        <mu-text-field :errorText="phonewarn" v-model="phone" @input="input" /><br/>
+        <label>详细地址</label>
+        <mu-text-field class="address" v-model="address" multiLine :rows="3" :rowsMax="6" :errorText="addresswarn" @input="input" :maxLength="50" />
+      </div>
+      <div class="container">
+        <!-- <router-link :to="{path:'/dist/details',query:{id:item.id,lng:116.30387397,lat:39.91481908}}" tag="div" class="button">保存</router-link> -->
+        <div @click="saveProfile" class="button">
+          保存
         </div>
+      </div>
     </div>
-    </div>
+  </div>
+  </div>
 
 </template>
 <script>
@@ -51,12 +51,13 @@ export default {
       let detail_address = this.address;
       let mobile = this.phone;
       const { data } = await api.get("shipping_address_add", {
-        'fan_id': fan_id,
-        'consignee_name': consignee_name,
-        'detail_address': detail_address,
-        'mobile': mobile
+        fan_id: fan_id,
+        consignee_name: consignee_name,
+        detail_address: detail_address,
+        mobile: mobile
       });
       this.message = data.message;
+      console.log(data);
     },
     input() {
       var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
@@ -78,6 +79,7 @@ export default {
       let fan_id = this.$route.query.fan_id;
       let reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
       let mobile = this.$route.query.fan_id;
+      let action = this.$route.query.action;
       if (this.name == "") {
         this.namewarn = "请填写收货人姓名 ~";
       } else if (this.phone == "") {
@@ -89,13 +91,28 @@ export default {
       } else if (this.address.length > 50) {
         this.addresswarn = "超过啦！！！！";
       } else {
+        console.log(1);
         this.addprofile();
-        setTimeout(() => {
+        let fan_id = this.$route.query.fan_id;
+        let id = this.$route.query.id;
+        let lng = this.$route.query.lng;
+        let lat = this.$route.query.lat;
+        if (!id&&lng&&lat) {
+          setTimeout(() => {
+            that.$router.push({
+              path: "/dist/profile",
+              query: { fan_id: fan_id }
+            });
+          }, 1000);
+        }
+        if (id&&lng&&lat) {
+           setTimeout(() => {
           that.$router.push({
             path: "/dist/profile",
-            query: { 'fan_id': fan_id }
+            query: { fan_id: 30, id: id, lng: lng, lat: lat }
           });
-        }, 1000);
+            }, 1000);
+        }
       }
     }
   }
@@ -165,6 +182,7 @@ export default {
       margin: 0;
       padding-top: rem(50);
       .mu-text-field-input {
+        width: rem(300);
         height: rem(90);
         margin-top: rem(-45);
         font-size: rem(32);
@@ -176,7 +194,7 @@ export default {
         margin-left: rem(200);
         font-size: rem(28);
         width: rem(500);
-        line-height:1.1;
+        line-height: 1.1;
         display: flex;
         justify-content: space-between;
         div:nth-child(1) {

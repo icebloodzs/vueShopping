@@ -8,7 +8,7 @@
       </div>
       <div class="profile-con">
         <div class="profile-list">
-          <div class="profile-item" v-for="(item,index) in items" :key="item.id">
+          <div class="profile-item" v-for="(item,index) in items" :key="item.id" @click="select(item.id)">
             <div class="profile-item-head">
               <span>{{item.consignee_name}}</span>
               <span>{{item.mobile}}</span>
@@ -16,21 +16,15 @@
             <div class="profile-item-con">
               <span>{{item.detail_address}}</span>
             </div>
-            <div class="radio" @click="defaultAdtress(item.id)">
-              <label class="demo--label">
-                <input class="demo--radio" type="radio" name="demo-checkbox2" value="设为默认">
-                <span class="demo--checkbox demo--radioInput"></span>设为默认
-              </label>
-            </div>
             <div class="profile-item-btn">
-              <div @click="edit(item.id)" class="edit btn">编辑</div>
-              <div class="del btn" @click="open">删除</div>
+              <div @click.stop="edit(item.id)" class="edit btn">编辑</div>
+              <div class="del btn" @click.stop="open">删除</div>
             </div>
-             <mu-dialog :open="dialog" title="提示" @close="close">
-                确认删除这个收获地址吗
-            <mu-flat-button slot="actions" @click="close" primary label="取消" />
-            <mu-flat-button slot="actions" primary @click="del(item.id)" label="确定" />
-          </mu-dialog>
+            <mu-dialog :open="dialog" title="提示" @close="close">
+              确认删除这个收获地址吗
+              <mu-flat-button slot="actions" @click="close" primary label="取消" />
+              <mu-flat-button slot="actions" primary @click="del(item.id)" label="确定" />
+            </mu-dialog>
           </div>
         </div>
       </div>
@@ -59,7 +53,7 @@ export default {
       defaultaddress: "",
       items: [],
       message: [],
-       dialog: false
+      dialog: false
     };
   },
   check() {
@@ -69,11 +63,20 @@ export default {
   },
   methods: {
     routerClickgoback() {
-      this.$router.go(-1);
+      this.$router.push({
+        path: "/dist/mycenter",
+        query: { fan_id: 30 }
+      });
     },
     add() {
+      let id = this.$route.query.id;
+      let lng = this.$route.query.lng;
+      let lat = this.$route.query.lat;
       let fan_id = this.$route.query.fan_id;
-      this.$router.push({ path: "/dist/addprofile", query: { fan_id: 30 } });
+      this.$router.push({
+        path: "/dist/addprofile",
+        query: { fan_id: 30, id: id, lng: lng, lat: lat }
+      });
     },
     edit(profile_id) {
       let id = profile_id;
@@ -90,15 +93,6 @@ export default {
       this.items = data.data;
       console.log(this.items);
     },
-    async defaultAdtress(profile_id) {
-      let fan_id = this.$route.query.fan_id;
-      let id = profile_id;
-      const { data } = await api.get("shipping_address_default", {
-        fan_id: fan_id,
-        id: id
-      });
-      this.message = data.message;
-    },
     async del(profile_id) {
       let fan_id = this.$route.query.fan_id;
       let id = profile_id;
@@ -107,13 +101,32 @@ export default {
         id: id
       });
       this.message = data.message;
+      this.dialog = false;
       this.getData();
-    }, 
-    open () {
-      this.dialog = true
     },
-    close () {
-      this.dialog = false
+    open() {
+      this.dialog = true;
+    },
+    close() {
+      this.dialog = false;
+    },
+    select(addtressId) {
+      let fan_id = this.$route.query.fan_id;
+      let id = this.$route.query.id;
+      let lng = this.$route.query.lng;
+      let lat = this.$route.query.lat;
+      if(id&&lng&&lat){
+      this.$router.push({
+        path: "/dist/submit",
+        query: {
+          fan_id: 30,
+          id: id,
+          lng: lng,
+          lat: lat,
+          addtressid: addtressId
+        }
+      });
+    }else{return false}
     }
   }
 };
@@ -143,6 +156,7 @@ export default {
     }
     .profile-con {
       .profile-list {
+        padding-bottom: rem(100);
         .profile-item {
           display: flex;
           position: relative;
@@ -159,43 +173,6 @@ export default {
             font-size: rem(30);
             line-height: rem(66);
           }
-          .radio {
-            position: absolute;
-            top: rem(110);
-            font-size: rem(30);
-            .demo--label {
-              margin: rem(20) rem(20) 0 0;
-              display: inline-block;
-            }
-            .demo--radio {
-              display: none;
-            }
-            .demo--radioInput {
-              background-color: #fff;
-              border: 1px solid rgba(0, 0, 0, 0.5);
-              border-radius: 100%;
-              display: inline-block;
-              height: rem(30);
-              margin-right: rem(10);
-              margin-top: -1px;
-              vertical-align: middle;
-              width: rem(30);
-              line-height: 1;
-            }
-            .demo--radio:checked + .demo--radioInput:after {
-              background-color: #57ad68;
-              border-radius: 100%;
-              content: "";
-              display: inline-block;
-              height: rem(20);
-              margin: rem(5);
-              width: rem(20);
-            }
-            .demo--checkbox.demo--radioInput,
-            .demo--radio:checked + .demo--checkbox.demo--radioInput:after {
-              border-radius: 0;
-            }
-          }
           .profile-item-con {
             font-size: rem(24);
             line-height: rem(40);
@@ -208,6 +185,7 @@ export default {
             font-size: rem(25);
             align-items: center;
             padding-left: rem(474);
+            z-index: 88;
             .btn {
               width: rem(72);
               height: rem(46);
@@ -234,26 +212,25 @@ export default {
 </style>
 <style lang="scss" >
 @import "../style/mixin";
-.mu-dialog{
+.mu-dialog {
   // height: rem(200);
-  padding:rem(30)rem(20)!important;
-  .mu-dialog-title{
-    font-size:rem(35);
+  padding: rem(30)rem(20) !important;
+  .mu-dialog-title {
+    font-size: rem(35);
   }
   .mu-dialog-body {
-     font-size:rem(30);
-     margin:rem(15) 0;
+    font-size: rem(30);
+    margin: rem(15) 0;
   }
-  .mu-dialog-actions{
-    .mu-flat-button-label{
-      font-size:rem(30);
+  .mu-dialog-actions {
+    .mu-flat-button-label {
+      font-size: rem(30);
     }
   }
-  .mu-flat-button{
+  .mu-flat-button {
     overflow: visible;
   }
 }
-
 </style>
 
 

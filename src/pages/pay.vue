@@ -120,7 +120,8 @@ export default {
         lat: this.lat
       });
       this.items = data;
-      this.site = this.items.sites[0];
+      console.log(this.items)
+      // this.site = this.items.sites[0];
     },
     async getAddressData() {
       let fan_id = 30;
@@ -129,6 +130,7 @@ export default {
         fan_id: fan_id
       });
       this.alladdress = data.data;
+      
       for (let i = 0, len = this.alladdress.length; i < len; i++) {
         if (that.alladdress[i].is_default == 1) {
           that.address = that.alladdress[i];

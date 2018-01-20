@@ -56,7 +56,7 @@
       </div>
       <div class="content-detail">
         <div class="content-detail-title">商品详情</div>
-        <div class="content-detail-con" v-html="item.description"></div>
+        <div class="content-detail-con" v-html="item.description" :style="detailconstyle"></div>
       </div>
     </div>
     <div class="button" @click="routerClicksubmit">立即抢购</div>
@@ -87,7 +87,11 @@ export default {
       lat: [],
       purnum: [],
       pur_num:[],
-      purchase:true
+      purchase:true,
+      gaintype:[],
+      detailconstyle:{
+        fontSize:'0.4rem!important'
+      }
     };
   },
   methods: {
@@ -99,7 +103,7 @@ export default {
       // let fan_id =  Window.AppConfig.uid
       this.$router.push({
         path: "/dist/submit",
-        query: { fan_id: 30, id: id, lng: this.lng, lat: this.lat }
+        query: { fan_id: 30, id: id, lng: this.lng, lat: this.lat,gaintype:this.gaintype }
       });
     },
     routerClickgoback() {
@@ -121,6 +125,7 @@ export default {
         'lat': this.lat
       });
       this.item = data;
+      this.gaintype = this.item.extract_type
       if (this.item.extract_type === 1) {
         this.offLine = false;
       } else {
@@ -267,7 +272,6 @@ export default {
 
         align-items: center;
         img {
-          width: rem(66);
           height: rem(66);
           border-radius: rem(33);
           margin-right: rem(25);
@@ -366,8 +370,11 @@ export default {
         border-bottom: 1px solid #e9e9e9;
       }
       .content-detail-con {
-        height: rem(300);
+        height: 100%;
         background-color: #fff;
+        font-size: rem(30)!important;
+        line-height: 1.5;
+        padding-bottom: rem(100);
       }
     }
   }

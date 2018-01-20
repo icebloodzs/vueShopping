@@ -7,6 +7,7 @@
     </mu-tabs>
     <div class="main">
       <div v-if="activeTab === 'tab1'">
+        <div class="hint" v-if='onhint'><img src="../assets/img/vn2l_fw658.png"></div>
         <div class="content" v-for="item in items">
           <img :src="item.thumbnail">
           <moredown :endTime="item.end_time"></moredown>
@@ -31,6 +32,7 @@
         </div>
       </div>
       <div v-if="activeTab === 'tab2'">
+        <div class="hint" v-if='endhint'><img src="../assets/img/vn2l_fw658.png"></div>
         <div class="content" v-for="item in items2">
           <img :src="item.thumbnail">
           <!-- <moredown :endTime="endTime"></moredown> -->
@@ -70,9 +72,11 @@ export default {
       isActive: false,
       activeTab: "tab1",
       value: 37,
-      endTime: "2017-12-21 18:00:00",
+      endTime: "",
       items: [],
-      items2: []
+      items2: [],
+      endhint: false,
+      onhint: false
     };
   },
   mounted() {
@@ -83,7 +87,10 @@ export default {
       this.activeTab = val;
     },
     routerClickdetails(goodId) {
-      this.$router.push({path:"/dist/details",query:{id:goodId,lng:116.30387397,lat:39.91481908}});
+      this.$router.push({
+        path: "/dist/details",
+        query: { id: goodId, lng: 116.30387397, lat: 39.91481908 }
+      });
     },
     routerClickgoback() {
       this.$router.go(-1);
@@ -113,6 +120,9 @@ export default {
         const { data } = await api.get("goods_list");
         this.items = data.data;
       }
+      if (!this.items.length) {
+        this.onhint = true;
+      }
     },
 
     // 已结束分类数据获取
@@ -120,16 +130,19 @@ export default {
       let classId = this.$route.query.classId;
       if (classId) {
         const { data } = await api.get("goods_list", {
-          'status': "1",
-         ' classification_id': classId
+          status: "1",
+          classification_id: classId
         });
-        this.items = data.data;
+        this.items2 = data.data;
         // console.log(this.items);
       } else {
         const { data } = await api.get("goods_list", {
           status: "1"
         });
-        this.items = data.data;
+        this.items2 = data.data;
+      }
+      if (!this.items2.length) {
+        this.endhint = true;
       }
     }
   }
@@ -140,6 +153,17 @@ export default {
 @import "../assets/sass/_base.scss";
 .wrapper {
   @include wrapper;
+  .hint {
+    padding-top: rem(88);
+    background-color: #fff;
+    width: 100%;
+    img {
+      display: block;
+      margin: 0 auto;
+      width: rem(197);
+      height: rem(287);
+    }
+  }
   .iconfont {
     font-family: "iconfont";
     font-size: rem(50);
@@ -198,6 +222,7 @@ export default {
     }
     margin-bottom: rem(40);
     img {
+      width: 100%;
       height: rem(320);
     }
     .tilte {

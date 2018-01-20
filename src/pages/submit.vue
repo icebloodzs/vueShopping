@@ -5,10 +5,18 @@
         <strong>
           <i class="iconfont" @click="routerClickgoback">&#xe600;</i> 信息确认</strong>
       </div>
-      <div class="gain-info" @click="routerClickedit(address.id)">
+      <mu-popup position="top" :overlay="false" popupClass="demo-popup-top" :open="topPopup">
+        {{message}}
+      </mu-popup>
+      <div class="gain-info" @click="routerClickselect" v-if="addressok">
         <img src="../assets/img/border.png">
         <span>收货人：&nbsp;{{address.consignee_name}} &nbsp; {{address.mobile}}</span>
         <span>地&nbsp;&nbsp;&nbsp;址：&nbsp;{{address.detail_address}}</span>
+        <img src="../assets/img/border.png">
+      </div>
+      <div class="gain-info" @click="routerClickadd()" v-if="addressno">
+        <img src="../assets/img/border.png">
+        <p>您尚未选择收获地址，请选择添加收获地址</p>
         <img src="../assets/img/border.png">
       </div>
       <div class="info-tilte">
@@ -71,17 +79,32 @@ export default {
       bottomSheet: false,
       isActive: true,
       isActives: false,
-      items: [],
+      order_id: [],
       goods: [],
-      tel: [],
+      tel: "",
       address: [],
-      alladdress: []
+      alladdress: [],
+      addressok: false,
+      addressno: false,
+      message: "",
+      topPopup: false,
+      order_id :[],
+      addressid:[]
     };
   },
   mounted() {
     this.getGoodsData();
     this.getTelData();
-    this.getAddressData();
+    this.addresstype();
+  },
+  watch: {
+    topPopup(val) {
+      if (val) {
+        setTimeout(() => {
+          this.topPopup = false;
+        }, 2000);
+      }
+    }
   },
   methods: {
     routerClickgoback() {
@@ -97,8 +120,39 @@ export default {
     closeBottomSheet() {
       this.bottomSheet = false;
     },
-    openBottomSheet() {
-      this.bottomSheet = true;
+    addresstype(){
+      let gaintype = this.$route.query.gaintype;
+      if(gaintype==2){
+        this.addressok = false
+        this.addressno = false
+      }
+      if(gaintype==1){
+        this.getAddressData()
+      }
+    },
+    async openBottomSheet() {
+      if (this.alladdress.length == 0) {
+        this.message = "您还没有填写收获地址呢";
+        this.topPopup = true;
+      } else if (!this.tel) {
+        this.message = "您还没有绑定手机号呢";
+        this.topPopup = true;
+      } else {
+        this.bottomSheet = true;
+      }
+      let fan_id = this.$route.query.fan_id;
+      let goods_id = this.$route.query.id;
+      let amount = this.counter;
+      // let lng = this.$route.query.lng;
+      // let lat = this.$route.query.lat;
+      const { data } = await api.get("create_order", {
+        goods_id: goods_id,
+        fan_id: fan_id,
+        amount: amount,
+        address_id:this.addressid
+      });
+      this.order_id = data.order_id;
+      console.log(this.order_id)
     },
     isActive1() {
       (this.isActive = true), (this.isActives = false);
@@ -106,24 +160,32 @@ export default {
     isActive2() {
       (this.isActive = false), (this.isActives = true);
     },
-    async payNow() {
+    routerClickadd() {
       let fan_id = this.$route.query.fan_id;
-      let goods_id = this.$route.query.id;
-      let amount = this.counter;
+      let id = this.$route.query.id;
       let lng = this.$route.query.lng;
       let lat = this.$route.query.lat;
-      const { data } = await api.get("create_order", {
-        goods_id: goods_id,
-        fan_id: fan_id,
-        amount: amount,
-        lng: lng,
-        lat: lat
+      this.$router.push({
+        path: "/dist/addprofile",
+        query: {
+          fan_id: fan_id,
+          id: id,
+          lng: lng,
+          lat: lat,
+          action: "addfirstprofile"
+        }
       });
-      this.items = data;
-      console.log(this.items);
+    },
+    async payNow() {
+      let  order_id = this.order_id
+        const { data } = await api.get("pay", {
+        order_id: order_id,
+      });
+      console.log(data)
     },
     async getGoodsData() {
       let goods_id = this.$route.query.id;
+      let gaintype = this.$route.query.gaintype;
       let lng = this.$route.query.lng;
       let lat = this.$route.query.lat;
       const { data } = await api.get("goods_detail", {
@@ -138,28 +200,51 @@ export default {
       const { data } = await api.get("get_bind_mobile", {
         fan_id: fan_id
       });
-      this.tel = data.data.mobile;
+      if (data.data) {
+        this.tel = data.data.mobile;
+      }
     },
     async getAddressData() {
       let that = this;
       let fan_id = this.$route.query.fan_id;
+      let addtressid = this.$route.query.addtressid;
       const { data } = await api.get("shipping_address_list", {
         fan_id: fan_id
       });
       this.alladdress = data.data;
-      for (let i = 0, len = this.alladdress.length; i < len; i++) {
-        if (that.alladdress[i].is_default == 1) {
-          that.address = that.alladdress[i];
-        } else {
-          this.address = this.alladdress[0];
+      if (this.alladdress.length == 0) {
+        this.addressok = false;
+        this.addressno = true;
+      }
+      if (!this.alladdress.length == 0) {
+        this.addressok = true;
+        this.addressno = false;
+        for (let i = 0, len = this.alladdress.length; i < len; i++) {
+          if (addtressid&&that.alladdress[i].id == addtressid) {
+            that.address = that.alladdress[i];
+            this.addressid=that.address.id
+           
+          } else if(!addtressid) {
+           that.address = this.alladdress[0];
+           this.addressid=that.address.id
+          }
+          this.addressid=that.address.id
         }
       }
     },
-    routerClickedit(profile_id) {
-      let id = profile_id;
+    routerClickselect() {
+      let fan_id = this.$route.query.fan_id;
+      let id = this.$route.query.id;
+      let lng = this.$route.query.lng;
+      let lat = this.$route.query.lat;
       this.$router.push({
-        path: "/dist/editprofile",
-        query: { fan_id: 30, id: id }
+        path: "/dist/profile",
+        query: {
+          fan_id: fan_id,
+          id: id,
+          lng: lng,
+          lat: lat
+        }
       });
     }
   }
@@ -171,6 +256,7 @@ export default {
 
 .wrapper {
   @include wrapper;
+
   .confirm {
     height: 100vh;
     background-color: #f2f2f2;
@@ -194,6 +280,11 @@ export default {
       display: flex;
       flex-direction: column;
       background-color: #fff;
+      p {
+        font-size: rem(30);
+        line-height: rem(60);
+        text-align: center;
+      }
       span {
         padding-left: rem(20);
         font-size: rem(30);
@@ -355,5 +446,22 @@ export default {
       }
     }
   }
+}
+</style>
+<style lang="scss">
+@import "../style/mixin";
+.demo-popup-top {
+  width: 100%;
+  opacity: 0.7;
+  height: rem(66);
+  line-height: rem(66);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: rem(375);
+  font-size: rem(30);
+  color: #fff;
+  background-color: #000 !important;
+  margin-top: rem(750);
 }
 </style>

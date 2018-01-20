@@ -58,8 +58,9 @@ export default {
      for(let i = 0, len = this.items.length; i < len; i++){
         if(this.items[i].id==id){this.defaultaddress=this.items[i]}
      }
-     this.name=this.defaultaddress.consignee_name
-     this.phone=this.defaultaddress.mobile
+    this.name=this.defaultaddress.consignee_name
+    this.phone=this.defaultaddress.mobile
+    this.address=this.defaultaddress.detail_address
     },
     async editprofile() {
       let fan_id = this.$route.query.fan_id;
