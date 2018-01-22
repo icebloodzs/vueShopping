@@ -16,6 +16,7 @@
     "muse-ui": "^2.0.3",
     "vue": "^2.2.6",
     "vue-awesome-swiper": "^3.0.6",
+    "vue-infinite-loading": "^2.2.3",
     "vue-infinite-scroll": "^2.0.1",
     "vue-router": "^2.3.1"
   },

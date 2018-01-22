@@ -36,6 +36,7 @@
       </div>
       <p class="nomore" v-show="nomore">内容到底啦</p>
       <!--下拉加载更多的组件-->
+      <infinite-loading :on-infinite="onInfinite" ref="infiniteLoading"></infinite-loading>
     </div>
   </div>
 </template>
@@ -43,10 +44,12 @@
 <script>
 import Banner from "../components/Banner.vue";
 import api from "@/api";
+import InfiniteLoading from 'vue-infinite-loading';
 
 export default {
   components: {
     "app-banner": Banner,
+    InfiniteLoading
   },
   data() {
     return {
@@ -61,7 +64,8 @@ export default {
       total: [],
       current: [],
       nomore: false,
-      scroller: null
+      scroller: null,
+      pagination: null,
     };
   },
   created() {},
@@ -69,7 +73,7 @@ export default {
     this.scroller = this.$el;
     this.getImgData();
     this.getClassifyData();
-    this.getGoodsData();
+    this.onInfinite();
     this.getConfigData();
   },
   methods: {
@@ -109,12 +113,9 @@ export default {
     },
     //首页商品数据获取
     async getGoodsData() {
-      const { data } = await api.get("goods_list", {
+      return await api.get("goods_list", {
         order: "index"
-      });
-      this.goodsList = data.data;
-      this.current = data.meta.pagination.current_page;
-      console.log(this.current);
+      })
     },
     //获取更多商品数据获取
     async getMoreData() {
@@ -144,6 +145,23 @@ export default {
           this.getMoreData();
         }, 1000);
       }
+    },
+
+    async onInfinite() {
+
+      this.nomore=true
+
+
+        let { data } = await this.getGoodsData(this.pagination)
+        // this.goodsList = data.data;
+        // this.current = data.meta.pagination.current_page;
+        this.nomore=false
+        console.log(data,111);
+        this.pagination = data.meta.pagination;
+
+        this.goodsList = this.goodsList.concat(data.data);
+        this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
+   
     }
   }
 };
