@@ -131,14 +131,25 @@ export default {
       }
     },
     async openBottomSheet() {
-      if (this.alladdress.length == 0) {
-        this.message = "您还没有填写收获地址呢";
-        this.topPopup = true;
-      } else if (!this.tel) {
-        this.message = "您还没有绑定手机号呢";
-        this.topPopup = true;
-      } else {
-        this.bottomSheet = true;
+        let gaintype = this.$route.query.gaintype;
+      if(gaintype==1){
+        if (this.alladdress.length == 0) {
+          this.message = "您还没有填写收获地址呢";
+          this.topPopup = true;
+        } else if (!this.tel) {
+          this.message = "您还没有绑定手机号呢";
+          this.topPopup = true;
+        } else {
+          this.bottomSheet = true;
+        }
+      }
+      if(gaintype==2){
+        if (!this.tel) {
+          this.message = "您还没有绑定手机号呢";
+          this.topPopup = true;
+        } else {
+          this.bottomSheet = true;
+        }
       }
       let fan_id = this.$route.query.fan_id;
       let goods_id = this.$route.query.id;

@@ -11,10 +11,9 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 @import "./style/common.scss";
 @import "./style/mixin.scss";
-
 #app {
   font-family: "Microsoft Yahei", "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -24,8 +23,8 @@ export default {
   margin-top: 60px;*/
 }
 ::-webkit-scrollbar {
-    width: 2px;
-    height: 2px;
+    width: rem(2);
+    height: rem(2);
 }
 
 ::-webkit-scrollbar-track {

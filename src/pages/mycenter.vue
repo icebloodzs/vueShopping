@@ -169,6 +169,9 @@
           </div>
         </div>
       </div>
+       <!-- <p class="nomore" v-show="nomore">--------我是有底线的--------</p> -->
+      <!--上拉加载更多的组件-->
+      <!-- <mu-infinite-scroll :scroller="scroller" :loading="loading" @load="loadMore" /> -->
     </div>
   </div>
 </template>
@@ -199,11 +202,16 @@ export default {
       allhint: false,
       cancelhint: false,
       payhint: false,
-      donehint: false
+      donehint: false,
+      // nomore: false,
+      // scroller: null,
+      // page: 1,
+      // loading: false,
     };
   },
   created() {},
   mounted() {
+      //  this.scroller = this.$el;
     this.getCenterData();
     this.getUserData();
   },
@@ -275,6 +283,7 @@ export default {
         fan_id: fan_id
       });
       this.items = data.data;
+      console.log(data)
       for (let i = 0, len = this.items.length; i < len; i++) {
         if (this.items[i].status == 1) {
           this.items2[i] = this.items[i];
@@ -307,7 +316,35 @@ export default {
       if (!this.items4.length && !this.items5.length) {
         this.donehint = true;
       }
-    }
+    },
+    //更多待付款商品数据获取
+    // async getMoreData2() {
+    //   let arr = [];
+    //   let that = this;
+    //   const { data } = await api.get("order_list", {
+    //     order: "index",
+    //     page: this.page
+    //   });
+    //   arr = data.data;
+    //   if (arr.length === 0) {
+    //     that.loading = false;
+    //     that.nomore = true;
+    //     return;
+    //   }
+    //   that.goodsList = [...that.goodsList, ...arr];
+    //   arr = [];
+    //   that.loading = false;
+    // },
+    // //  上拉加载
+    // async loadMore() {
+    //   if (!this.nomore) {
+    //     this.loading = true;
+    //     this.page += 1;
+    //     setTimeout(() => {
+    //       this.getMoreData2();
+    //     }, 1000);
+    //   }
+    // }
   }
 };
 </script>
@@ -317,6 +354,12 @@ export default {
 @import "../assets/sass/_base.scss";
 .wrapper {
   @include wrapper;
+   .nomore {
+    color: #666;
+    text-align: center;
+    line-height: 2;
+    font-size: rem(30);
+  }
   .header {
     display: flex;
     flex-direction: row;

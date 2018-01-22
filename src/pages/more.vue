@@ -30,6 +30,9 @@
             <div class="button" @click="routerClickdetails(item.id)">立即抢购</div>
           </div>
         </div>
+         <p class="nomore" v-show="nomore">--------我是有底线的--------</p>
+      <!--上拉加载更多的组件-->
+        <mu-infinite-scroll :scroller="scroller" :loading="loading" @load="loadMore" />
       </div>
       <div v-if="activeTab === 'tab2'">
         <div class="hint" v-if='endhint'><img src="../assets/img/vn2l_fw658.png"></div>
@@ -53,6 +56,9 @@
             <div class="button-end">已结束</div>
           </div>
         </div>
+        <p class="nomore" v-show="nomore2">--------我是有底线的--------</p>
+      <!--上拉加载更多的组件-->
+        <mu-infinite-scroll :scroller="scroller" :loading="loading2" @load="loadMore2" />
       </div>
 
     </div>
@@ -76,10 +82,17 @@ export default {
       items: [],
       items2: [],
       endhint: false,
-      onhint: false
+      onhint: false,
+      nomore: false,
+      nomore2: false,
+      scroller: null,
+      page: 1,
+      loading: false,
+      loading2: false,
     };
   },
   mounted() {
+    this.scroller = this.$el;
     this.getMoreData();
   },
   methods: {
@@ -103,16 +116,11 @@ export default {
       this.isActive = false;
       this.getMoreData();
     },
-    async getData() {
-      let classId = this.$route.query.classId;
-      if (classId) {
-      }
-    },
     // 进行中分类数据获取
     async getMoreData() {
       let classId = this.$route.query.classId;
       if (classId) {
-        const { data } = await api.get("goods_list", {
+        const { data } = await api.get("goods_list", {  
           classification_id: classId
         });
         this.items = data.data;
@@ -123,8 +131,44 @@ export default {
       if (!this.items.length) {
         this.onhint = true;
       }
+     
     },
-
+     //进行中更多商品数据获取
+    async getMoreDatas() {
+      let arr = [];
+      let that = this;
+       let classId = this.$route.query.classId;
+          if (classId) {
+        const { data } = await api.get("goods_list", {  
+          classification_id: classId,
+          page: this.page
+        });
+         arr = data.data;
+      } else {
+        const { data } = await api.get("goods_list",{
+          page: this.page
+        });
+         arr = data.data;
+      }
+      if (arr.length === 0) {
+        that.loading = false;
+        that.nomore = true;
+        return;
+      }
+      that.items = [...that.items, ...arr];
+      arr = [];
+      that.loading = false;
+    },
+    //  进行中上拉加载
+    async loadMore() {
+      if (!this.nomore) {
+        this.loading = true;
+        this.page += 1;
+        setTimeout(() => {
+          this.getMoreDatas();
+        }, 1000);
+      }
+    },
     // 已结束分类数据获取
     async getMoreData2() {
       let classId = this.$route.query.classId;
@@ -134,17 +178,54 @@ export default {
           classification_id: classId
         });
         this.items2 = data.data;
-        // console.log(this.items);
       } else {
         const { data } = await api.get("goods_list", {
-          status: "1"
+          status: "1",
         });
         this.items2 = data.data;
       }
       if (!this.items2.length) {
         this.endhint = true;
       }
-    }
+    },
+      //已结束更多商品数据获取
+    async getMoreDatas2() {
+      let arr = [];
+      let that = this;
+       let classId = this.$route.query.classId;
+          if (classId) {
+        const { data } = await api.get("goods_list", {  
+           status: "1",
+          classification_id: classId,
+          page: this.page
+        });
+         arr = data.data;
+      } else {
+        const { data } = await api.get("goods_list",{
+          status: "1",
+          page: this.page
+        });
+         arr = data.data;
+      }
+      if (arr.length === 0) {
+        that.loading = false;
+        that.nomore = true;
+        return;
+      }
+      that.items2 = [...that.items2, ...arr];
+      arr = [];
+      that.loading = false;
+    },
+    //  已结束上拉加载
+    async loadMore2() {
+      if (!this.nomore2) {
+        this.loading2 = true;
+        this.page += 1;
+        setTimeout(() => {
+          this.getMoreDatas2();
+        }, 1000);
+      }
+    },
   }
 };
 </script>
@@ -153,6 +234,13 @@ export default {
 @import "../assets/sass/_base.scss";
 .wrapper {
   @include wrapper;
+  // height: 100vh;
+  .nomore {
+    color: #666;
+    text-align: center;
+    line-height: 1.5;
+    font-size: rem(30);
+  }
   .hint {
     padding-top: rem(88);
     background-color: #fff;

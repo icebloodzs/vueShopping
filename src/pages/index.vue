@@ -32,11 +32,12 @@
             <span>剩余{{item.surplus}}份</span>
           </div>
         </div>
-        <router-link :to="{path:'/dist/details',query:{id:item.id}}" tag="div" class="content-right">立即抢购</router-link>
+         <span v-if="!item.surplus" class="content-right" :style="{backgroundColor:notenoughcolor}">已抢光</span>
+          <span v-else class="content-right" @click="routerDetail(item.id)">立即抢购</span>
       </div>
-      <p class="nomore" v-show="nomore">内容到底啦</p>
-      <!--下拉加载更多的组件-->
-      <infinite-loading :on-infinite="onInfinite" ref="infiniteLoading"></infinite-loading>
+      <p class="nomore" v-show="nomore">--------我是有底线的--------</p>
+      <!--上拉加载更多的组件-->
+      <mu-infinite-scroll :scroller="scroller" :loading="loading" @load="loadMore" />
     </div>
   </div>
 </template>
@@ -44,16 +45,15 @@
 <script>
 import Banner from "../components/Banner.vue";
 import api from "@/api";
-import InfiniteLoading from 'vue-infinite-loading';
+import InfiniteLoading from "vue-infinite-loading";
 
 export default {
   components: {
-    "app-banner": Banner,
-    InfiniteLoading
+    "app-banner": Banner
+    // InfiniteLoading
   },
   data() {
     return {
-      loading: false,
       listImg: [],
       items: [],
       classify: [],
@@ -62,10 +62,12 @@ export default {
       fan_id: 30,
       config: [],
       total: [],
-      current: [],
+      total_pages: [],
       nomore: false,
       scroller: null,
-      pagination: null,
+      page: 1,
+      loading: false,
+      notenoughcolor:'#ccc'
     };
   },
   created() {},
@@ -73,15 +75,19 @@ export default {
     this.scroller = this.$el;
     this.getImgData();
     this.getClassifyData();
-    this.onInfinite();
+    this.getGoodsData();
     this.getConfigData();
   },
   methods: {
-     
+    routerDetail(goodsid){
+      this.$router.push({
+        path: "/dist/details",
+        query: {id:goodsid}
+      });
+    },
     routerClick() {
       this.$router.push("/dist/more");
     },
-    handleClick(newIndex) {},
     routerClickcenter() {
       this.$router.push({
         path: "/dist/mycenter",
@@ -113,17 +119,18 @@ export default {
     },
     //首页商品数据获取
     async getGoodsData() {
-      return await api.get("goods_list", {
+      const { data } = await api.get("goods_list", {
         order: "index"
-      })
+      });
+      this.goodsList = data.data;
     },
-    //获取更多商品数据获取
+    //更多商品数据获取
     async getMoreData() {
       let arr = [];
       let that = this;
       const { data } = await api.get("goods_list", {
-        // order: "index",
-        page: this.current
+        order: "index",
+        page: this.page
       });
       arr = data.data;
       if (arr.length === 0) {
@@ -135,33 +142,15 @@ export default {
       arr = [];
       that.loading = false;
     },
-    //  下拉刷新
-    loadMore() {
+    //  上拉加载
+    async loadMore() {
       if (!this.nomore) {
         this.loading = true;
-        this.current += 1;
-        // let arr = []
+        this.page += 1;
         setTimeout(() => {
           this.getMoreData();
         }, 1000);
       }
-    },
-
-    async onInfinite() {
-
-      this.nomore=true
-
-
-        let { data } = await this.getGoodsData(this.pagination)
-        // this.goodsList = data.data;
-        // this.current = data.meta.pagination.current_page;
-        this.nomore=false
-        console.log(data,111);
-        this.pagination = data.meta.pagination;
-
-        this.goodsList = this.goodsList.concat(data.data);
-        this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
-   
     }
   }
 };
@@ -173,6 +162,12 @@ export default {
   position: relative;
   background-color: #fbfcfe;
   height: 100%;
+   .nomore {
+    color: #666;
+    text-align: center;
+    line-height: 2;
+    font-size: rem(30);
+  }
   .circles {
     position: absolute;
     display: flex;
@@ -210,6 +205,7 @@ export default {
       align-items: center;
       font-size: rem(27);
       img {
+        height: rem(66);
         margin-top: rem(35);
         margin-bottom: rem(20);
       }
@@ -249,7 +245,7 @@ export default {
     left: 0;
   }
   .content {
-    margin-bottom: rem(66);
+    // margin-bottom: rem(23);
     .content-item {
       position: relative;
       height: rem(212);
@@ -325,6 +321,7 @@ export default {
         height: rem(66);
         font-size: rem(25);
         color: #fff;
+//  background-color: rgb(254, 254, 254);
         text-align: center;
         line-height: rem(66);
         border-radius: rem(5);
@@ -333,12 +330,15 @@ export default {
   }
 }
 </style>
-<style lang="css">
-.demo-infinite-container {
-  width: 256px;
-  height: 300px;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-  border: 1px solid #d9d9d9;
+<style lang="scss">
+@import "../style/mixin";
+.mu-infinite-scroll {
+  background-color: rgb(254, 254, 255);
+   overflow: auto;
+   -webkit-overflow-scrolling: touch;
+  .mu-infinite-scroll-text {
+    font-size: rem(30);
+    line-height:2;
+  }
 }
 </style>

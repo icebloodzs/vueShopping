@@ -96,15 +96,13 @@ export default {
         border-bottom: 1px solid #e9e9e9;
         justify-content: space-between;
         align-items: center;
-        height: rem(170);
-        // padding-bottom: rem();
         .content-website-con-left {
           display: flex;
           flex-direction: column;
-          // line-height: rem(48);
+          line-height: rem(48);
+          padding: rem(15) rem(15) rem(15) 0;
           span:nth-child(1) {
             font-size: rem(28);
-            line-height: rem(48);
           }
           span:nth-child(2) {
             font-size: rem(25);

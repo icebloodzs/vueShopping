@@ -76,24 +76,26 @@ export default {
       lat: [],
       site: [],
       address: [],
-      alladdress: []
+      gaintype: []
     };
   },
   mounted() {
     this.getPayData();
-    this.getAddressData();
   },
   methods: {
     routerClickgoback() {
       this.$router.go(-1);
     },
     routerClicksubmit(goodsId) {
-      // let id = this.$route.query.id;
-      // let lng = this.$route.query.lng;
-      // let lat = this.$route.query.lat;
       this.$router.push({
         path: "/dist/submit",
-        query: { fan_id: 30, id: goodsId, lng: this.lng, lat: this.lat }
+        query: {
+          fan_id: 30,
+          id: goodsId,
+          lng: this.lng,
+          lat: this.lat,
+          gaintype: this.gaintype
+        }
       });
     },
     routerClickdetails(goodsId) {
@@ -107,8 +109,10 @@ export default {
       let extract_type = this.$route.query.extract_type;
       if (extract_type == 1) {
         this.type = "gain";
+        this.gaintype = 1;
       } else if (extract_type == 2) {
         this.type = "store";
+        this.gaintype = 2;
       }
       await setConfig(Window.AppConfig);
       let _data = await getLocation();
@@ -120,23 +124,9 @@ export default {
         lat: this.lat
       });
       this.items = data;
-      console.log(this.items)
-      // this.site = this.items.sites[0];
-    },
-    async getAddressData() {
-      let fan_id = 30;
-      let that = this;
-      const { data } = await api.get("shipping_address_list", {
-        fan_id: fan_id
-      });
-      this.alladdress = data.data;
-      
-      for (let i = 0, len = this.alladdress.length; i < len; i++) {
-        if (that.alladdress[i].is_default == 1) {
-          that.address = that.alladdress[i];
-        } else {
-          this.address = this.alladdress[0];
-        }
+      this.address = data.address;
+      if (extract_type == 2) {
+        this.site = data.sites[0];
       }
     }
   }
@@ -246,11 +236,11 @@ export default {
         border-bottom: 2px dashed #e9e9e9;
         justify-content: space-between;
         align-items: center;
-        height: rem(170);
         .content-pay-con-left {
           display: flex;
           flex-direction: column;
           line-height: rem(48);
+          padding: rem(15) rem(15) rem(15) 0;
           span:nth-child(1) {
             font-size: rem(27);
           }
