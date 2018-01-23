@@ -8,7 +8,7 @@
                 订单详情
             </div>
             <div class="cancel-head-con" @click="routerClickdetails(items.goods_id)">
-                <img src="../assets/img/dwqvas_02.jpg" alt="">
+                <img :src="items.goods_thumbnail" alt="">
                 <div class="cancel-head-right">
                     <div class="cancel-head-title">{{items.goods_name}}</div>
                     <div class="cancel-head-down">
@@ -28,7 +28,7 @@
                     <div class="cancel-code-icon right"></div>
                     <div class="cancel-code-up">
                         <span>有效期至{{ticket.ticket_code_deadline}}</span>
-                        <span:style="stateStyle">{{state}}核销</span>
+                        <span :style="stateStyle">{{state}}核销</span>
                     </div>
                     <div class="cancel-code-down">
                         核销码:&nbsp;
@@ -75,6 +75,7 @@
 </template>
 <script>
 import api from "@/api";
+import { getLocation, setConfig } from "@/utils/wx";
 export default {
   components: {},
   data() {
@@ -83,8 +84,12 @@ export default {
       site: [],
       ticket: [],
       codeStyle: [],
-      stateStyle: [],
-      state: ""
+      stateStyle: {
+
+      },
+      state: "",
+        lng: [],
+      lat: [],
     };
   },
   mounted() {
@@ -97,23 +102,30 @@ export default {
     routerClickdetails() {
       this.$router.push({
         path: "/dist/details",
-        query: { id: goodsId, lng: 116.30387397, lat: 39.91481908 }
+        query: { id: goodsId, lng: this.lng, lat: this.lat }
       });
     },
     async getPayData() {
       let order_id = this.$route.query.order_id;
+      await setConfig(Window.AppConfig);
+      let _data = await getLocation();
+      this.lng = _data.longitude;
+      this.lat = _data.latitude;
       const { data } = await api.get("order_detail", {
-        order_id: order_id
+        order_id: order_id,
+        lng: this.lng,
+        lat: this.lat
       });
-      this.items = data.data;
+      this.items = data;
+      // console.log(this.items)
       this.site = this.items.sites[0];
       this.ticket = this.items.ticket;
-      console.log(this.items);
-      if (this.ticketticket_code_status == 1) {
+      console.log(this.ticket);
+      if (this.ticket.ticket_code_status == 1) {
         this.state = "未";
         this.codeStyle = "color:#1c7ee9";
       }
-      if (this.ticketticket_code_status == 2) {
+      if (this.ticket.ticket_code_status == 2) {
         this.state = "已";
         this.stateStyle = "color: #1c7ee9;";
         this.codeStyle = "color: #c8c8c8";
@@ -250,11 +262,11 @@ export default {
         border-bottom: rem(4) dashed #f4f4f4;
         justify-content: space-between;
         align-items: center;
-        height: rem(170);
         .content-cancel-con-left {
           display: flex;
           flex-direction: column;
           line-height: rem(48);
+          padding: rem(15) rem(35) rem(15) 0;
           span:nth-child(1) {
             font-size: rem(27);
           }
