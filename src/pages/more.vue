@@ -1,10 +1,13 @@
 <template>
   <div class="wrapper">
     <i class="iconfont" @click="routerClickgoback">&#xe600;</i>
+
     <mu-tabs class="tabs" :value="activeTab" @change="handleTabChange" :lineClass="{ blue:isActive,actleft:actleft }">
       <mu-tab value="tab1" @active="tab1Active" title="进行中" />
       <mu-tab value="tab2" @active="tab2Active" title="已结束" />
     </mu-tabs>
+
+
     <div class="main">
       <div v-if="activeTab === 'tab1'">
         <div class="hint" v-if='onhint'><img src="../assets/img/vn2l_fw658.png"></div>
@@ -123,7 +126,7 @@ export default {
     async getMoreData() {
       let classId = this.$route.query.classId;
       if (classId) {
-        const { data } = await api.get("goods_list", {  
+        const { data } = await api.get("goods_list", {
           classification_id: classId
         });
         this.items = data.data;
@@ -134,7 +137,7 @@ export default {
       if (!this.items.length) {
         this.onhint = true;
       }
-     
+
     },
      //进行中更多商品数据获取
     async getMoreDatas() {
@@ -142,7 +145,7 @@ export default {
       let that = this;
        let classId = this.$route.query.classId;
           if (classId) {
-        const { data } = await api.get("goods_list", {  
+        const { data } = await api.get("goods_list", {
           classification_id: classId,
           page: this.page
         });
@@ -197,7 +200,7 @@ export default {
       let that = this;
        let classId = this.$route.query.classId;
           if (classId) {
-        const { data } = await api.get("goods_list", {  
+        const { data } = await api.get("goods_list", {
            status: "1",
           classification_id: classId,
           page: this.page2

@@ -22,8 +22,6 @@
              <mu-toast v-if="toast" :message="message" @close="hideToast"/>
         </div>
     </div>
-    </div>
-
 </template>
 <script>
 import api from "@/api";
