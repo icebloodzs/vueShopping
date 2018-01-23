@@ -91,7 +91,6 @@ export default {
         fan_id: fan_id
       });
       this.items = data.data;
-      console.log(this.items);
     },
     async del(profile_id) {
       let fan_id = this.$route.query.fan_id;

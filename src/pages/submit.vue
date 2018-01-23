@@ -163,7 +163,6 @@ export default {
         address_id:this.addressid
       });
       this.order_id = data.order_id;
-      console.log(this.order_id)
     },
     isActive1() {
       (this.isActive = true), (this.isActives = false);
@@ -192,7 +191,6 @@ export default {
         const { data } = await api.get("pay", {
         order_id: order_id,
       });
-      console.log(data)
     },
     async getGoodsData() {
       let goods_id = this.$route.query.id;

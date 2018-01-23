@@ -117,10 +117,8 @@ export default {
         lat: this.lat
       });
       this.items = data;
-      // console.log(this.items)
       this.site = this.items.sites[0];
       this.ticket = this.items.ticket;
-      console.log(this.ticket);
       if (this.ticket.ticket_code_status == 1) {
         this.state = "未";
         this.codeStyle = "color:#1c7ee9";

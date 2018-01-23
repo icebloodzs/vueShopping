@@ -105,7 +105,6 @@ export default {
       const { data } = await api.get("app_config");
       this.config = data;
       Window.AppConfig.uid = this.config.uid;
-      // console.log(this.config)
     },
     // 轮播图数据获取
     async getImgData() {

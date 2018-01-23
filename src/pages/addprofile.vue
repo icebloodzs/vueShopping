@@ -57,7 +57,6 @@ export default {
         mobile: mobile
       });
       this.message = data.message;
-      console.log(data);
     },
     input() {
       var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
@@ -91,7 +90,6 @@ export default {
       } else if (this.address.length > 50) {
         this.addresswarn = "超过啦！！！！";
       } else {
-        console.log(1);
         this.addprofile();
         let fan_id = this.$route.query.fan_id;
         let id = this.$route.query.id;

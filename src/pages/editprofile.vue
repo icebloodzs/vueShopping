@@ -76,7 +76,6 @@ export default {
         id: id
       });
       this.message = data.message;
-      console.log(this.message);
     },
     input() {
       var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;

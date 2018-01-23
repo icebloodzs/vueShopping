@@ -34,7 +34,7 @@
               <img :src="item.thumbnail" alt="">
               <div class="content-con-text">
                 <span>{{item.goods_name}}</span>
-                <span>￥{{item.total}}</span>
+                <span>￥{{item.actual_price}}</span>
               </div>
             </div>
             <div class="content-con-button" @click="routerClickPay(item.id,item.extract_type)">支付</div>
@@ -50,7 +50,7 @@
               <img :src="item.thumbnail" alt="">
               <div class="content-con-text">
                 <span>{{item.goods_name}}</span>
-                <span>￥{{item.total}}</span>
+                <span>￥{{item.actual_price}}</span>
               </div>
             </div>
           </div>
@@ -65,7 +65,7 @@
               <img :src="item.thumbnail" alt="">
               <div class="content-con-text">
                 <span>{{item.goods_name}}</span>
-                <span>￥{{item.total}}</span>
+                <span>￥{{item.actual_price}}</span>
               </div>
             </div>
             <div class="content-physical-button" @click="routerClickPhysical(item.id)">查看物流</div>
@@ -81,7 +81,7 @@
               <img :src="item.thumbnail" alt="">
               <div class="content-con-text">
                 <span>{{item.goods_name}}</span>
-                <span>￥{{item.total}}</span>
+                <span>￥{{item.actual_price}}</span>
               </div>
             </div>
           </div>
@@ -102,7 +102,7 @@
               <img :src="item.thumbnail" alt="">
               <div class="content-con-text">
                 <span>{{item.goods_name}}</span>
-                <span>￥{{item.total}}</span>
+                <span>￥{{item.actual_price}}</span>
               </div>
             </div>
             <div class="content-con-button" @click="routerClickPay(item.id,item.extract_type)">支付</div>
@@ -124,7 +124,7 @@
               <img :src="item.thumbnail" alt="">
               <div class="content-con-text">
                 <span>{{item.goods_name}}</span>
-                <span>￥{{item.total}}</span>
+                <span>￥{{item.actual_price}}</span>
               </div>
             </div>
           </div>
@@ -145,7 +145,7 @@
               <img :src="item.thumbnail" alt="">
               <div class="content-con-text">
                 <span>{{item.goods_name}}</span>
-                <span>￥{{item.total}}</span>
+                <span>￥{{item.actual_price}}</span>
               </div>
             </div>
             <div class="content-physical-button" @click="routerClickPhysical(item.id)">查看物流</div>
@@ -161,7 +161,7 @@
               <img :src="item.thumbnail" alt="">
               <div class="content-con-text">
                 <span>{{item.goods_name}}</span>
-                <span>￥{{item.total}}</span>
+                <span>￥{{item.actual_price}}</span>
               </div>
             </div>
           </div>
