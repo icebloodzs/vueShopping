@@ -124,7 +124,9 @@ export default {
         lat: this.lat
       });
       this.items = data;
-      this.address = data.address;
+      if(data.address){
+         this.address = data.address;
+      }
       if (extract_type == 2) {
         this.site = data.sites[0];
       }
@@ -176,9 +178,11 @@ export default {
       padding-right: rem(27);
       height: rem(180);
       background-color: #fff;
+     
       img {
         width: rem(225);
         height: rem(180);
+         margin-right: rem(10);
       }
       .pay-head-right {
         display: flex;

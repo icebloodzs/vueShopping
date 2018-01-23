@@ -17,16 +17,14 @@
     </div>
     <div class="main">
       <mu-tabs class="centertab" :value="bottomNav" @change="handleTabChange" :lineClass="classObject">
-        <mu-tab value="tab1" @active="tab1Active" title="全部" />
-        <!-- :titleClass="[data&&data.cancel&&'befor']" -->
-        <mu-tab @active="tab2Active" @click="checkPay" value="tab2" title="待付款" />
-        <mu-tab @click="checkCancel" value="tab3" title="未核销" />
-        <mu-tab @active="tab4Active" value="tab4" title="已完成" />
+        <mu-tab value="" @active="tab1Active" title="全部" />
+        <mu-tab @active="tab2Active" @click="checkPay" value="1" title="待付款" />
+        <mu-tab @click="checkCancel" value="4" title="已完成" />
+        <mu-tab @active="tab4Active" value="5" title="已完成" />
       </mu-tabs>
-
-      <div v-if="bottomNav === 'tab1'">
-        <div class="hint" v-if='allhint'><img src="../assets/img/vn2l_fw658.png"></div>
-        <div class="content" v-for="item in items" >
+      <div v-if="bottomNav === ''">
+        <div class="hint" v-if='!allitems.length'><img src="../assets/img/vn2l_fw658.png"></div>
+        <div class="content" v-for="item in items2">
           <div class="content-head">
             <span>{{item.created_at}}</span>
             <span>待付款</span>
@@ -36,7 +34,6 @@
               <img :src="item.thumbnail" alt="">
               <div class="content-con-text">
                 <span>{{item.goods_name}}</span>
-                <!-- <span>来自：大牌抢购</span> -->
                 <span>￥{{item.total}}</span>
               </div>
             </div>
@@ -47,20 +44,18 @@
           <div class="content-head">
             <span>{{item.created_at}}</span>
             <span class="use">待使用</span>
-            <!-- :class="{befor:data.used}" -->
           </div>
           <div class="content-con">
             <div class="content-con-left">
               <img :src="item.thumbnail" alt="">
               <div class="content-con-text">
                 <span>{{item.goods_name}}</span>
-                <!-- <span>来自：大牌抢购</span> -->
                 <span>￥{{item.total}}</span>
               </div>
             </div>
           </div>
         </div>
-        <div class="content" v-for="item in items4" >
+        <div class="content" v-for="item in items4">
           <div class="content-head">
             <span>2012-12-12 &nbsp; 17:06:24</span>
             <span>已完成</span>
@@ -70,7 +65,6 @@
               <img :src="item.thumbnail" alt="">
               <div class="content-con-text">
                 <span>{{item.goods_name}}</span>
-                <!-- <span>来自：大牌抢购</span> -->
                 <span>￥{{item.total}}</span>
               </div>
             </div>
@@ -87,16 +81,18 @@
               <img :src="item.thumbnail" alt="">
               <div class="content-con-text">
                 <span>{{item.goods_name}}</span>
-                <!-- <span>来自：大牌抢购</span> -->
                 <span>￥{{item.total}}</span>
               </div>
             </div>
           </div>
         </div>
+        <p class="nomore" v-show="nomore">--------我是有底线的--------</p>
+        <!--上拉加载更多的组件-->
+        <mu-infinite-scroll :scroller="scroller" :loading="loading" @load="loadMore" />
       </div>
-      <div v-if="bottomNav === 'tab2'">
-        <div class="hint" v-if='payhint'><img src="../assets/img/vn2l_fw658.png"></div>
-        <div class="content" v-for="item in items2">
+      <div v-if="bottomNav === '1'">
+        <div class="hint" v-if='!items.length'><img src="../assets/img/vn2l_fw658.png"></div>
+        <div class="content" v-for="item in items">
           <div class="content-head">
             <span>{{item.created_at}}</span>
             <span>待付款</span>
@@ -106,17 +102,19 @@
               <img :src="item.thumbnail" alt="">
               <div class="content-con-text">
                 <span>{{item.goods_name}}</span>
-                <!-- <span>来自：大牌抢购</span> -->
                 <span>￥{{item.total}}</span>
               </div>
             </div>
             <div class="content-con-button" @click="routerClickPay(item.id,item.extract_type)">支付</div>
           </div>
         </div>
+        <p class="nomore" v-show="nomore2">--------我是有底线的--------</p>
+        <!--上拉加载更多的组件-->
+        <mu-infinite-scroll :scroller="scroller" :loading="loading2" @load="loadMore2" />
       </div>
-      <div v-if="bottomNav === 'tab3'">
-        <div class="hint" v-if='cancelhint'><img src="../assets/img/vn2l_fw658.png"></div>
-        <div class="content" @click="routerClickCancel(item.id,item.extract_type)" v-for="item in items3">
+      <div v-if="bottomNav === '4'">
+        <div class="hint" v-if='!items.length'><img src="../assets/img/vn2l_fw658.png"></div>
+        <div class="content" @click="routerClickCancel(item.id,item.extract_type)" v-for="item in items">
           <div class="content-head">
             <span>{{item.created_at}}</span>
             <span class="use">待使用</span>
@@ -126,15 +124,17 @@
               <img :src="item.thumbnail" alt="">
               <div class="content-con-text">
                 <span>{{item.goods_name}}</span>
-                <!-- <span>来自：大牌抢购</span> -->
                 <span>￥{{item.total}}</span>
               </div>
             </div>
           </div>
         </div>
+        <p class="nomore" v-show="nomore3">--------我是有底线的--------</p>
+        <!--上拉加载更多的组件-->
+        <mu-infinite-scroll :scroller="scroller" :loading="loading3" @load="loadMore3" />
       </div>
-      <div v-if="bottomNav === 'tab4'">
-        <div class="hint" v-if='donehint'><img src="../assets/img/vn2l_fw658.png"></div>
+      <div v-if="bottomNav === '5'">
+        <div class="hint" v-if='!items.length'><img src="../assets/img/vn2l_fw658.png"></div>
         <div class="content" v-for="item in items4">
           <div class="content-head">
             <span>2012-12-12 &nbsp; 17:06:24</span>
@@ -145,7 +145,6 @@
               <img :src="item.thumbnail" alt="">
               <div class="content-con-text">
                 <span>{{item.goods_name}}</span>
-                <!-- <span>来自：大牌抢购</span> -->
                 <span>￥{{item.total}}</span>
               </div>
             </div>
@@ -162,16 +161,15 @@
               <img :src="item.thumbnail" alt="">
               <div class="content-con-text">
                 <span>{{item.goods_name}}</span>
-                <!-- <span>来自：大牌抢购</span> -->
                 <span>￥{{item.total}}</span>
               </div>
             </div>
           </div>
         </div>
+        <p class="nomore" v-show="nomore4">--------我是有底线的--------</p>
+        <!--上拉加载更多的组件-->
+        <mu-infinite-scroll :scroller="scroller" :loading="loading4" @load="loadMore4" />
       </div>
-      <p class="nomore" v-show="nomore">--------我是有底线的--------</p>
-      <!--上拉加载更多的组件-->
-      <mu-infinite-scroll :scroller="scroller" :loading="loading" @load="loadMore" />
     </div>
   </div>
 </template>
@@ -183,13 +181,14 @@ export default {
   components: {},
   data() {
     return {
-      bottomNav: "tab1",
+      bottomNav: "",
       classObject: {
         tabone: true,
         tabtwo: false,
         tabthree: false,
         tabfour: false
       },
+      allitems: [],
       items: [],
       items2: [],
       items3: [],
@@ -199,25 +198,31 @@ export default {
       cancel: true,
       used: true,
       user: [],
-      allhint: false,
-      cancelhint: false,
-      payhint: false,
-      donehint: false,
       nomore: false,
+      nomore2: false,
+      nomore3: false,
+      nomore4: false,
       scroller: null,
       page: 1,
+      page2: 1,
+      page3: 1,
+      page4: 1,
       loading: false,
+      loading2: false,
+      loading3: false,
+      loading4: false
     };
   },
   created() {},
   mounted() {
-       this.scroller = this.$el;
-    this.getCenterData();
+    this.scroller = this.$el;
+    this.getAllCenterData();
     this.getUserData();
   },
   methods: {
     handleTabChange(val) {
       this.bottomNav = val;
+      this.getCenterData(val);
     },
     routerClickcenter() {
       this.$router.go(0);
@@ -237,7 +242,6 @@ export default {
         path: "/dist/cancel",
         query: { order_id: order_id, extract_type: extract_type }
       });
-      // this.data.used = false;
     },
     tab1Active() {
       this.classObject.tabone = true;
@@ -251,15 +255,12 @@ export default {
       this.classObject.tabthree = false;
       this.classObject.tabfour = false;
     },
-    checkPay() {
-      // this.data.pay = false;
-    },
+    checkPay() {},
     checkCancel() {
       this.classObject.tabone = false;
       this.classObject.tabtwo = false;
       this.classObject.tabthree = true;
       this.classObject.tabfour = false;
-      // this.data.cancel = false;
     },
     tab4Active() {
       this.classObject.tabone = false;
@@ -277,62 +278,83 @@ export default {
       });
       this.user = data.data[0];
     },
-    async getCenterData() {
+    //后三列数据获取
+    async getCenterData(val) {
+      let fan_id = this.$route.query.fan_id;
+      const { data } = await api.get("order_list", {
+        fan_id: fan_id,
+        status: val
+      });
+      this.items = data.data;
+      //已完成数据分类
+      if (val == 5) {
+        for (let i = 0, len = this.items.length; i < len; i++) {
+          if (this.items[i].status == 5 && this.items[i].extract_type == 1) {
+            this.items4[i] = this.items[i];
+          }
+        }
+        for (let i = 0, len = this.items.length; i < len; i++) {
+          if (this.items[i].status == 5 && this.items[i].extract_type == 2) {
+            this.items5[i] = this.items[i];
+          }
+        }
+      }
+    },
+    //全部订单获取
+    async getAllCenterData() {
       let fan_id = this.$route.query.fan_id;
       const { data } = await api.get("order_list", {
         fan_id: fan_id
       });
-      this.items = data.data;
-      console.log(data)
-      for (let i = 0, len = this.items.length; i < len; i++) {
-        if (this.items[i].status == 1) {
-          this.items2[i] = this.items[i];
+      this.allitems = data.data;
+      for (let i = 0, len = this.allitems.length; i < len; i++) {
+        if (this.allitems[i].status == 1) {
+          this.items2[i] = this.allitems[i];
         }
       }
-      for (let i = 0, len = this.items.length; i < len; i++) {
-        if (this.items[i].status == 4) {
-          this.items3[i] = this.items[i];
+      for (let i = 0, len = this.allitems.length; i < len; i++) {
+        if (this.allitems[i].status == 4) {
+          this.items3[i] = this.allitems[i];
         }
       }
-      for (let i = 0, len = this.items.length; i < len; i++) {
-        if (this.items[i].status == 5 && this.items[i].extract_type == 1) {
-          this.items4[i] = this.items[i];
+      for (let i = 0, len = this.allitems.length; i < len; i++) {
+        if (
+          this.allitems[i].status == 5 &&
+          this.allitems[i].extract_type == 1
+        ) {
+          this.items4[i] = this.allitems[i];
         }
       }
-      for (let i = 0, len = this.items.length; i < len; i++) {
-        if (this.items[i].status == 5 && this.items[i].extract_type == 2) {
-          this.items5[i] = this.items[i];
+      for (let i = 0, len = this.allitems.length; i < len; i++) {
+        if (
+          this.allitems[i].status == 5 &&
+          this.allitems[i].extract_type == 2
+        ) {
+          this.items5[i] = this.allitems[i];
         }
-      }
-      if (!this.items.length) {
-        this.allhint = true;
-      }
-      if (!this.items2.length) {
-        this.payhint = true;
-      }
-      if (!this.items3.length) {
-        this.cancelhint = true;
-      }
-      if (!this.items4.length && !this.items5.length) {
-        this.donehint = true;
       }
     },
-    //更多订单数据获取
-    async getMoreData2() {
+    //全部更多订单数据获取
+    async getMoreData() {
       let fan_id = this.$route.query.fan_id;
       let arr = [];
       let arr2 = [];
       let arr3 = [];
       let arr4 = [];
       let arr5 = [];
-      let arr6 = [];
       let that = this;
+      let len = arr.length;
       const { data } = await api.get("order_list", {
-       fan_id: fan_id,
-      page: this.page
+        fan_id: fan_id,
+        page: this.page
       });
       arr = data.data;
-       for (let i = 0, len = arr.length; i < len; i++) {
+      if (len == 0) {
+        that.loading = false;
+        that.nomore = true;
+        return false;
+      }
+      for (let i = 0, len = arr.length; i < len; i++) {
         if (arr[i].status == 1) {
           arr2[i] = arr[i];
         }
@@ -352,15 +374,10 @@ export default {
           arr5[i] = arr[i];
         }
       }
-      if (arr.length === 0) {
-        that.loading = false;
-        that.nomore = true;
-        return;
-      }
       that.items2 = [...that.items2, ...arr2];
-      that.items3 = [...that.items2, ...arr3];
-      that.items4 = [...that.items2, ...arr4];
-      that.items5 = [...that.items2, ...arr5];
+      that.items3 = [...that.items3, ...arr3];
+      that.items4 = [...that.items4, ...arr4];
+      that.items5 = [...that.items5, ...arr5];
       arr = [];
       arr2 = [];
       arr3 = [];
@@ -368,14 +385,120 @@ export default {
       arr5 = [];
       that.loading = false;
     },
-    //  上拉加载
+    //  全部上拉加载
     async loadMore() {
       if (!this.nomore) {
         this.loading = true;
         this.page += 1;
         setTimeout(() => {
-          this.getMoreData2();
-        }, 1000);
+          this.getMoreData();
+        }, 2000);
+      }
+    },
+    //待付款更多订单数据获取
+    async getMorePayData() {
+      let that = this;
+      let fan_id = this.$route.query.fan_id;
+      let arr = [];
+      const { data } = await api.get("order_list", {
+        fan_id: fan_id,
+        status: 1,
+        page: this.page2
+      });
+      arr = data.data;
+      if (arr.length === 0) {
+        that.loading2 = false;
+        that.nomore2 = true;
+        return;
+      }
+      that.items = [...that.items, ...arr];
+      arr = [];
+      that.loading2 = false;
+    },
+    //  待付款上拉加载
+    async loadMore2() {
+      if (!this.nomore2) {
+        this.loading2 = true;
+        this.page2 += 1;
+        setTimeout(() => {
+          this.getMorePayData();
+        }, 2000);
+      }
+    },
+    //未核销更多订单数据获取
+    async getMoreCancelData() {
+      let that = this;
+      let fan_id = this.$route.query.fan_id;
+      let arr = [];
+      const { data } = await api.get("order_list", {
+        fan_id: fan_id,
+        status: 4,
+        page: this.page3
+      });
+      arr = data.data;
+      if (arr.length === 0) {
+        that.loading3 = false;
+        that.nomore3 = true;
+        return;
+      }
+      that.items = [...that.items, ...arr];
+      arr = [];
+      that.loading3 = false;
+    },
+    //  未核销上拉加载
+    async loadMore3() {
+      if (!this.nomore3) {
+        this.loading3 = true;
+        this.page3 += 1;
+        setTimeout(() => {
+          this.getMoreCancelData();
+        }, 2000);
+      }
+    },
+    //已完成更多订单数据获取
+    async getMoreDoneData() {
+      let that = this;
+
+      let fan_id = this.$route.query.fan_id;
+      let arr = [];
+      let arr4 = [];
+      let arr5 = [];
+      const { data } = await api.get("order_list", {
+        fan_id: fan_id,
+        status: 5,
+        page: this.page4
+      });
+      arr = data.data;
+      if (arr.length === 0) {
+        that.loading4 = false;
+        that.nomore4 = true;
+        return;
+      }
+      for (let i = 0, len = arr.length; i < len; i++) {
+        if (arr[i].status == 5 && arr[i].extract_type == 1) {
+          arr4[i] = arr[i];
+        }
+      }
+      for (let i = 0, len = arr.length; i < len; i++) {
+        if (arr[i].status == 5 && arr[i].extract_type == 2) {
+          arr5[i] = arr[i];
+        }
+      }
+      that.items4 = [...that.items4, ...arr4];
+      that.items5 = [...that.items5, ...arr5];
+      arr = [];
+      arr4 = [];
+      arr5 = [];
+      that.loading4 = false;
+    },
+    //  已完成上拉加载
+    async loadMore4() {
+      if (!this.nomore4) {
+        this.loading4 = true;
+        this.page4 += 1;
+        setTimeout(() => {
+          this.getMoreDonelData();
+        }, 2000);
       }
     }
   }
@@ -387,7 +510,7 @@ export default {
 @import "../assets/sass/_base.scss";
 .wrapper {
   @include wrapper;
-   .nomore {
+  .nomore {
     color: #666;
     text-align: center;
     line-height: 2;

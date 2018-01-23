@@ -27,7 +27,8 @@
                 <span>剩余{{item.surplus}}份</span>
               </div>
             </div>
-            <div class="button" @click="routerClickdetails(item.id)">立即抢购</div>
+             <span v-if="!item.surplus" class="button" :style="{backgroundColor:notenoughcolor}">已抢光</span>
+          <span v-else class="button" @click="routerClickdetails(item.id)">立即抢购</span>
           </div>
         </div>
          <p class="nomore" v-show="nomore">--------我是有底线的--------</p>
@@ -87,8 +88,10 @@ export default {
       nomore2: false,
       scroller: null,
       page: 1,
+      page2:1,
       loading: false,
       loading2: false,
+      notenoughcolor:'#ccc'
     };
   },
   mounted() {
@@ -197,30 +200,30 @@ export default {
         const { data } = await api.get("goods_list", {  
            status: "1",
           classification_id: classId,
-          page: this.page
+          page: this.page2
         });
          arr = data.data;
       } else {
         const { data } = await api.get("goods_list",{
           status: "1",
-          page: this.page
+          page: this.page2
         });
          arr = data.data;
       }
       if (arr.length === 0) {
-        that.loading = false;
-        that.nomore = true;
+        that.loading2 = false;
+        that.nomore2 = true;
         return;
       }
       that.items2 = [...that.items2, ...arr];
       arr = [];
-      that.loading = false;
+      that.loading2 = false;
     },
     //  已结束上拉加载
     async loadMore2() {
       if (!this.nomore2) {
         this.loading2 = true;
-        this.page += 1;
+        this.page2 += 1;
         setTimeout(() => {
           this.getMoreDatas2();
         }, 1000);
