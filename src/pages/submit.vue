@@ -88,8 +88,8 @@ export default {
       addressno: false,
       message: "",
       topPopup: false,
-      order_id :[],
-      addressid:[]
+      order_id: [],
+      addressid: []
     };
   },
   mounted() {
@@ -120,19 +120,19 @@ export default {
     closeBottomSheet() {
       this.bottomSheet = false;
     },
-    addresstype(){
+    addresstype() {
       let gaintype = this.$route.query.gaintype;
-      if(gaintype==2){
-        this.addressok = false
-        this.addressno = false
+      if (gaintype == 2) {
+        this.addressok = false;
+        this.addressno = false;
       }
-      if(gaintype==1){
-        this.getAddressData()
+      if (gaintype == 1) {
+        this.getAddressData();
       }
     },
     async openBottomSheet() {
-        let gaintype = this.$route.query.gaintype;
-      if(gaintype==1){
+      let gaintype = this.$route.query.gaintype;
+      if (gaintype == 1) {
         if (this.alladdress.length == 0) {
           this.message = "您还没有填写收获地址呢";
           this.topPopup = true;
@@ -143,7 +143,7 @@ export default {
           this.bottomSheet = true;
         }
       }
-      if(gaintype==2){
+      if (gaintype == 2) {
         if (!this.tel) {
           this.message = "您还没有绑定手机号呢";
           this.topPopup = true;
@@ -160,7 +160,7 @@ export default {
         goods_id: goods_id,
         fan_id: fan_id,
         amount: amount,
-        address_id:this.addressid
+        address_id: this.addressid
       });
       this.order_id = data.order_id;
     },
@@ -187,9 +187,9 @@ export default {
       });
     },
     async payNow() {
-      let  order_id = this.order_id
-        const { data } = await api.get("pay", {
-        order_id: order_id,
+      let order_id = this.order_id;
+      const { data } = await api.get("pay", {
+        order_id: order_id
       });
     },
     async getGoodsData() {
@@ -229,15 +229,20 @@ export default {
         this.addressok = true;
         this.addressno = false;
         for (let i = 0, len = this.alladdress.length; i < len; i++) {
-          if (addtressid&&that.alladdress[i].id == addtressid) {
+          if (addtressid && that.alladdress[i].id == addtressid) {
             that.address = that.alladdress[i];
-            this.addressid=that.address.id
-           
-          } else if(!addtressid) {
-           that.address = this.alladdress[0];
-           this.addressid=that.address.id
+            this.addressid = that.address.id;
+          } else if (!addtressid) {
+            that.address = this.alladdress[0];
+            this.addressid = that.address.id;
           }
-          this.addressid=that.address.id
+          this.addressid = that.address.id;
+        }
+        if (this.address.detail_address) {
+          this.address.detail_address = `${this.address.detail_address.substring(
+            0,
+            15
+          )}...`;
         }
       }
     },
@@ -246,13 +251,15 @@ export default {
       let id = this.$route.query.id;
       let lng = this.$route.query.lng;
       let lat = this.$route.query.lat;
+      let gaintype = this.$route.query.gaintype;
       this.$router.push({
         path: "/dist/profile",
         query: {
           fan_id: fan_id,
           id: id,
           lng: lng,
-          lat: lat
+          lat: lat,
+          gaintype:gaintype
         }
       });
     }

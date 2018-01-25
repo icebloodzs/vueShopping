@@ -19,7 +19,7 @@
       <mu-tabs class="centertab" :value="bottomNav" @change="handleTabChange" :lineClass="classObject">
         <mu-tab value="" @active="tab1Active" title="全部" />
         <mu-tab @active="tab2Active" @click="checkPay" value="1" title="待付款" />
-        <mu-tab @click="checkCancel" value="4" title="已完成" />
+        <mu-tab @click="checkCancel" value="4" title="未核销" />
         <mu-tab @active="tab4Active" value="5" title="已完成" />
       </mu-tabs>
       <div v-if="bottomNav === ''">
@@ -520,8 +520,9 @@ export default {
     display: flex;
     flex-direction: row;
     align-items: center;
-    height: rem(220);
+    height: rem(219);
     background-color: #1979e7;
+    position: relative;
     img {
       width: rem(120);
       height: rem(120);
@@ -529,25 +530,24 @@ export default {
       margin-left: rem(24);
     }
     .header-middle {
-      margin-left: rem(30);
-      width: rem(175);
+      margin-left: rem(31);
+      width: rem(174);
       span:nth-child(1) {
         display: block;
-        font-size: rem(35);
+        font-size: rem(34);
         color: #fff;
-        line-height: 1.5;
-        margin-bottom: rem(15);
+        line-height: 1;
+        margin-bottom: rem(20);
         text-align: left;
-        opacity: 0.9;
       }
       .header-profile {
         display: block;
-        font-size: rem(25);
+        font-size: rem(22);
         color: #fff;
-        line-height: rem(45);
+        line-height: rem(41);
         background-color: #1772b8;
         text-align: center;
-        opacity: 0.8;
+        opacity: 0.9;
         border-radius: rem(8);
         .iconfont {
           font-family: "iconfont";
@@ -561,23 +561,20 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: rem(80);
-        height: rem(82);
+        width: rem(76);
+        height: rem(76);
         border-radius: rem(40);
         background-color: rgba(0, 0, 0, 0.3);
-
         color: #dde4ea;
         font-size: rem(20);
         z-index: 1;
       }
       .index {
-        line-height: rem(80);
-        top: rem(23);
+        top: rem(31);
         right: rem(24);
-        font-size: rem(24);
       }
       .personal {
-        top: rem(123);
+        bottom:rem(21);
         right: rem(24);
       }
     }
@@ -611,7 +608,7 @@ export default {
     }
     .content {
       width: 100%;
-      padding: rem(28) rem(24) 0 rem(24);
+      padding: rem(27) rem(24) 0 rem(24);
       background-color: #fff;
       margin: rem(15) auto;
       .content-head {
@@ -619,11 +616,11 @@ export default {
         justify-content: space-between;
         span:nth-child(1) {
           color: #656565;
-          font-size: rem(22);
+          font-size: rem(24);
         }
         span:nth-child(2) {
           color: #299ff6;
-          font-size: rem(25);
+          font-size: rem(24);
         }
       }
       .content-con {
@@ -639,27 +636,22 @@ export default {
           display: flex;
           flex-direction: row;
           img {
-            width: rem(146);
-            height: rem(160);
+            width: rem(160);
+            height: rem(120);
           }
           .content-con-text {
             display: flex;
             flex-direction: column;
-            margin-left: rem(15);
+            margin-left: rem(24);
             margin-top: rem(15);
             span:nth-child(1) {
               color: #000;
-              font-size: rem(25);
+              font-size: rem(28);
               line-height: rem(35);
             }
-            // span:nth-child(2) {
-            //   color: #989898;
-            //   font-size: rem(25);
-            //   line-height: rem(44);
-            // }
             span:nth-child(2) {
               color: #1d80e8;
-              font-size: rem(25);
+              font-size: rem(30);
               line-height: rem(44);
               margin-top: rem(30);
             }

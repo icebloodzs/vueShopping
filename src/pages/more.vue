@@ -27,12 +27,12 @@
                 <span>剩余{{item.surplus}}份</span>
               </div>
             </div>
-             <span v-if="!item.surplus" class="button" :style="{backgroundColor:notenoughcolor}">已抢光</span>
-          <span v-else class="button" @click="routerClickdetails(item.id)">立即抢购</span>
+            <span v-if="!item.surplus" class="button" :style="{backgroundColor:notenoughcolor}">已抢光</span>
+            <span v-else class="button" @click="routerClickdetails(item.id)">立即抢购</span>
           </div>
         </div>
-         <p class="nomore" v-show="nomore">--------我是有底线的--------</p>
-      <!--上拉加载更多的组件-->
+        <p class="nomore" v-show="nomore">--------我是有底线的--------</p>
+        <!--上拉加载更多的组件-->
         <mu-infinite-scroll :scroller="scroller" :loading="loading" @load="loadMore" />
       </div>
       <div v-if="activeTab === 'tab2'">
@@ -58,7 +58,7 @@
           </div>
         </div>
         <p class="nomore" v-show="nomore2">--------我是有底线的--------</p>
-      <!--上拉加载更多的组件-->
+        <!--上拉加载更多的组件-->
         <mu-infinite-scroll :scroller="scroller" :loading="loading2" @load="loadMore2" />
       </div>
 
@@ -88,10 +88,10 @@ export default {
       nomore2: false,
       scroller: null,
       page: 1,
-      page2:1,
+      page2: 1,
       loading: false,
       loading2: false,
-      notenoughcolor:'#ccc'
+      notenoughcolor: "#ccc"
     };
   },
   mounted() {
@@ -123,7 +123,7 @@ export default {
     async getMoreData() {
       let classId = this.$route.query.classId;
       if (classId) {
-        const { data } = await api.get("goods_list", {  
+        const { data } = await api.get("goods_list", {
           classification_id: classId
         });
         this.items = data.data;
@@ -134,24 +134,23 @@ export default {
       if (!this.items.length) {
         this.onhint = true;
       }
-     
     },
-     //进行中更多商品数据获取
+    //进行中更多商品数据获取
     async getMoreDatas() {
       let arr = [];
       let that = this;
-       let classId = this.$route.query.classId;
-          if (classId) {
-        const { data } = await api.get("goods_list", {  
+      let classId = this.$route.query.classId;
+      if (classId) {
+        const { data } = await api.get("goods_list", {
           classification_id: classId,
           page: this.page
         });
-         arr = data.data;
+        arr = data.data;
       } else {
-        const { data } = await api.get("goods_list",{
+        const { data } = await api.get("goods_list", {
           page: this.page
         });
-         arr = data.data;
+        arr = data.data;
       }
       if (arr.length === 0) {
         that.loading = false;
@@ -183,7 +182,7 @@ export default {
         this.items2 = data.data;
       } else {
         const { data } = await api.get("goods_list", {
-          status: "1",
+          status: "1"
         });
         this.items2 = data.data;
       }
@@ -191,24 +190,24 @@ export default {
         this.endhint = true;
       }
     },
-      //已结束更多商品数据获取
+    //已结束更多商品数据获取
     async getMoreDatas2() {
       let arr = [];
       let that = this;
-       let classId = this.$route.query.classId;
-          if (classId) {
-        const { data } = await api.get("goods_list", {  
-           status: "1",
+      let classId = this.$route.query.classId;
+      if (classId) {
+        const { data } = await api.get("goods_list", {
+          status: "1",
           classification_id: classId,
           page: this.page2
         });
-         arr = data.data;
+        arr = data.data;
       } else {
-        const { data } = await api.get("goods_list",{
+        const { data } = await api.get("goods_list", {
           status: "1",
           page: this.page2
         });
-         arr = data.data;
+        arr = data.data;
       }
       if (arr.length === 0) {
         that.loading2 = false;
@@ -228,7 +227,7 @@ export default {
           this.getMoreDatas2();
         }, 1000);
       }
-    },
+    }
   }
 };
 </script>
@@ -237,7 +236,6 @@ export default {
 @import "../assets/sass/_base.scss";
 .wrapper {
   @include wrapper;
-  // height: 100vh;
   .nomore {
     color: #666;
     text-align: center;
@@ -264,43 +262,41 @@ export default {
     top: 0;
     height: rem(80);
     line-height: rem(90);
-    left: rem(25);
+    // left: rem(25);
+    padding-left: rem(25);
     color: #666666;
     z-index: 10;
   }
   .mu-tab-link {
-    font-size: rem(30);
+    font-size: rem(32);
     background-color: #fff;
     color: #000;
     border: 1px solid #fff;
     height: rem(80);
     line-height: rem(80);
-  }
-  .mu-tab-active {
-    color: #1979e7;
-  }
-  .mu-tabs {
-    span:nth-child(5) {
-      background-color: #1f7ee8 !important;
+    &.mu-tab-active {
+      color: #1979e7;
+      height: rem(80);
     }
   }
   .content {
     position: relative;
-    margin-top: rem(5);
+    margin-top: rem(6);
+    margin-bottom: rem(16);
     .time {
       position: absolute;
       font-size: rem(30);
+      line-height: 1;
       color: #fff;
-      top: rem(270);
-      left: rem(15);
+      top: rem(268);
+      left: rem(12);
     }
     .focus {
       position: absolute;
-      font-size: rem(22);
+      font-size: rem(24);
       color: #fff;
-      top: rem(275);
-      right: rem(25);
-
+      top: rem(270);
+      right: rem(28);
       .iconfont {
         top: -0.42rem;
         left: -0.43rem;
@@ -311,17 +307,15 @@ export default {
         color: #1f7ee8;
       }
     }
-    margin-bottom: rem(40);
     img {
       width: 100%;
-      height: rem(320);
+      height: rem(318);
     }
     .tilte {
       display: block;
-      font-size: rem(25);
-      padding-top: rem(23);
-      padding-bottom: rem(23);
-      padding-left: rem(24);
+      font-size: rem(30);
+      line-height: rem(74);
+      padding-left: rem(30);
       background-color: #fff;
     }
     .content-bottom {
@@ -329,16 +323,16 @@ export default {
       justify-content: space-between;
       align-items: center;
       background-color: #fff;
-      padding-bottom: rem(10);
+      padding-bottom: rem(23);
       .price {
-        margin-left: rem(24);
+        margin-left: rem(30);
         .price-list {
           span:nth-child(1) {
             color: #1e7fea;
-            font-size: rem(30);
+            font-size: rem(36);
           }
           span:nth-child(2) {
-            font-size: rem(25);
+            font-size: rem(26);
             color: #d2d2d2;
             text-decoration: line-through;
             margin-left: rem(10);
@@ -347,13 +341,12 @@ export default {
         .remain {
           display: flex;
           flex-direction: row;
-          font-size: rem(25);
           color: #d2d2d2;
           height: rem(25);
           line-height: rem(25);
           margin-top: rem(20);
           .progress {
-            width: rem(200);
+            width: rem(201);
             margin-right: rem(6);
             height: rem(14);
             border-radius: rem(7);
@@ -363,29 +356,30 @@ export default {
             display: block;
             margin-top: rem(-10);
             color: #666;
+            font-size: rem(24);
           }
         }
       }
       .button {
         margin-right: rem(24);
-        width: rem(200);
-        height: rem(60);
+        width: rem(209);
+        height: rem(68);
         background-color: #ff9c00;
         text-align: center;
-        line-height: rem(60);
-        font-size: rem(25);
+        line-height: rem(68);
+        font-size: rem(26);
         color: #fff;
-        border-radius: rem(5);
+        border-radius: rem(10);
       }
       .button-end {
         margin-right: rem(24);
-        width: rem(200);
-        height: rem(60);
+        width: rem(209);
+        height: rem(68);
         background-color: #d2d2d2;
         text-align: center;
-        line-height: rem(60);
+        line-height: rem(68);
         font-size: rem(25);
-        border-radius: rem(5);
+        border-radius: rem(10);
         color: #fff;
       }
     }
@@ -394,7 +388,7 @@ export default {
 </style>
 <style lang="scss">
 @import "../style/mixin";
-.tabs {
+.tabs.mu-tabs {
   height: rem(90) !important;
   background-color: #fff !important;
   .actleft {

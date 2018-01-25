@@ -6,7 +6,9 @@
     <div class="circles index" @click="routerClickhome">首页</div>
     <div class="circles personal" @click="routerClickcenter">个人<br>中心</div>
     <div class="classify">
-      <div class="classify-list list1" v-for="item in classify" @click="clickClassify(item.id)"><img :src="item.icon">{{item.name}}</div>
+      <div class="classify-list list1" v-for="item in classify" @click="clickClassify(item.id)"><img :src="item.icon">
+        <span>{{item.name}}</span>
+      </div>
     </div>
     <div class="more">
       <span>大牌抢购</span>
@@ -32,8 +34,8 @@
             <span>剩余{{item.surplus}}份</span>
           </div>
         </div>
-         <span v-if="!item.surplus" class="content-right" :style="{backgroundColor:notenoughcolor}">已抢光</span>
-          <span v-else class="content-right" @click="routerDetail(item.id)">立即抢购</span>
+        <span v-if="!item.surplus" class="content-right" :style="{backgroundColor:notenoughcolor}">已抢光</span>
+        <span v-else class="content-right" @click="routerDetail(item.id)">立即抢购</span>
       </div>
       <p class="nomore" v-show="nomore">--------我是有底线的--------</p>
       <!--上拉加载更多的组件-->
@@ -67,7 +69,7 @@ export default {
       scroller: null,
       page: 1,
       loading: false,
-      notenoughcolor:'#ccc'
+      notenoughcolor: "#ccc"
     };
   },
   created() {},
@@ -79,10 +81,10 @@ export default {
     this.getConfigData();
   },
   methods: {
-    routerDetail(goodsid){
+    routerDetail(goodsid) {
       this.$router.push({
         path: "/dist/details",
-        query: {id:goodsid}
+        query: { id: goodsid }
       });
     },
     routerClick() {
@@ -160,8 +162,8 @@ export default {
 .wrapper {
   position: relative;
   background-color: #fbfcfe;
-  height: 100%;
-   .nomore {
+  height: 100vh;
+  .nomore {
     color: #666;
     text-align: center;
     line-height: 2;
@@ -196,17 +198,22 @@ export default {
     justify-content: space-around;
     background-color: #fff;
     height: rem(170);
-
     .classify-list {
       height: rem(170);
       display: flex;
       flex-direction: column;
       align-items: center;
-      font-size: rem(27);
+      font-size: rem(28);
+      span {
+        line-height: rem(28);
+        margin-top: rem(23);
+        color: #333;
+        font-weight: 600;
+      }
       img {
-        height: rem(66);
-        margin-top: rem(35);
-        margin-bottom: rem(20);
+        width: rem(47);
+        height: rem(46);
+        margin-top: rem(36);
       }
     }
   }
@@ -216,15 +223,16 @@ export default {
     height: rem(90);
     align-items: center;
     background-color: #fff;
-    margin-top: rem(20);
+    margin-top: rem(22);
     border-bottom: 1px solid #e9e9e9;
     span:nth-child(1) {
-      font-size: rem(33);
+      font-size: rem(36);
       font-weight: 600;
       margin-left: rem(37);
+      line-height: rem(90);
     }
     span:nth-child(2) {
-      font-size: rem(30);
+      font-size: rem(28);
       color: #17bafb;
       margin-right: rem(35);
       .iconfont {
@@ -244,7 +252,6 @@ export default {
     left: 0;
   }
   .content {
-    // margin-bottom: rem(23);
     .content-item {
       position: relative;
       height: rem(212);
@@ -253,14 +260,15 @@ export default {
       flex-direction: row;
       margin-bottom: rem(15);
       .content-img {
-        width: rem(212);
-        margin-right: rem(5);
+        width: rem(163);
+        height: rem(163);
+        margin: rem(23) rem(24) 0 rem(30);
       }
       .content-middle {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        margin: rem(30) 0;
+        margin: rem(29) 0 rem(25) 0;
         span:nth-child(1) {
           width: rem(300);
           font-size: rem(30);
@@ -268,7 +276,7 @@ export default {
         }
         .price {
           span {
-            font-size: rem(25);
+            font-size: rem(24);
             color: #d2d2d2;
             text-decoration: line-through;
             line-height: 1.5;
@@ -276,11 +284,9 @@ export default {
           span:nth-child(1) {
             color: #1e80eb;
             font-size: rem(40);
-
             text-decoration: none;
           }
           span:nth-child(2) {
-            font-size: rem(25);
             color: #1e7fea;
             text-decoration: none;
           }
@@ -295,9 +301,9 @@ export default {
           justify-content: space-between;
           flex-wrap: nowrap;
           .progress {
-            width: rem(200);
+            width: rem(201);
             margin-right: rem(6);
-            height: rem(14);
+            height: rem(13);
             border-radius: rem(7);
             background-color: #e4e4e4;
           }
@@ -316,11 +322,10 @@ export default {
         background-color: #ff9c00;
         right: rem(30);
         top: rem(70);
-        width: rem(150);
+        width: rem(152);
         height: rem(66);
-        font-size: rem(25);
+        font-size: rem(26);
         color: #fff;
-//  background-color: rgb(254, 254, 254);
         text-align: center;
         line-height: rem(66);
         border-radius: rem(5);
@@ -332,12 +337,12 @@ export default {
 <style lang="scss">
 @import "../style/mixin";
 .mu-infinite-scroll {
-  background-color: rgb(254, 254, 255);
-   overflow: auto;
-   -webkit-overflow-scrolling: touch;
+  padding-bottom:0px!important;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
   .mu-infinite-scroll-text {
     font-size: rem(30);
-    line-height:2;
+    line-height: 2;
   }
 }
 </style>

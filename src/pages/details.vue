@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <img :src="item.thumbnail" style="height:4.27rem">
+    <img :src="item.thumbnail">
     <div class="focus">
       <i class="iconfont">&#xe826;</i>
       <span>1236人在关注</span>
@@ -28,10 +28,12 @@
           <div class="content-indate-left">此商品有效期至</div>
           <div class="content-indate-right">{{item.end_time}}</div>
         </div>
-        <div class="content-purchase"v-if="purchase">
-          <div class="content-purchase-left"><div v-for="item in purnum"><img :src="item.fan_head_image" ></div></div>
-          <div class="content-purchase-right">已有
-            <span>{{pur_num}}</span>人抢购</div>
+        <div class="content-purchase" v-if="purchase">
+          <div class="content-purchase-left">
+            <div v-for="item in purnum"><img :src="item.fan_head_image"></div>
+          </div>
+          <div class="content-purchase-right">
+            已有<span>{{pur_num}}</span>人抢购</div>
         </div>
       </div>
       <div v-if="offLine" class="content-website">
@@ -48,7 +50,7 @@
           </a>
         </div>
         <router-link :to="{path:'/dist/website',query:{id:item.id}}" tag="div" class="content-website-all">
-          <div class="content-website-all-left">查看全部{{count}}家网点</div>
+          <div class="content-website-all-left">查看全部 {{count}} 家网点</div>
           <div class="content-website-all-right">
             <i class="iconfont">&#xe62d;</i>
           </div>
@@ -73,7 +75,7 @@ export default {
   },
   created() {
     this.getData();
-    this.getNumData()
+    this.getNumData();
   },
   data() {
     return {
@@ -86,11 +88,11 @@ export default {
       lng: [],
       lat: [],
       purnum: [],
-      pur_num:[],
-      purchase:true,
-      gaintype:[],
-      detailconstyle:{
-        fontSize:'0.4rem!important'
+      pur_num: [],
+      purchase: true,
+      gaintype: [],
+      detailconstyle: {
+        fontSize: "0.4rem!important"
       }
     };
   },
@@ -103,7 +105,13 @@ export default {
       // let fan_id =  Window.AppConfig.uid
       this.$router.push({
         path: "/dist/submit",
-        query: { fan_id: 30, id: id, lng: this.lng, lat: this.lat,gaintype:this.gaintype }
+        query: {
+          fan_id: 30,
+          id: id,
+          lng: this.lng,
+          lat: this.lat,
+          gaintype: this.gaintype
+        }
       });
     },
     routerClickgoback() {
@@ -120,12 +128,12 @@ export default {
       this.lng = _data.longitude;
       this.lat = _data.latitude;
       const { data } = await api.get("goods_detail", {
-        'goods_id': goods_id,
-        'lng': this.lng,
-        'lat': this.lat
+        goods_id: goods_id,
+        lng: this.lng,
+        lat: this.lat
       });
       this.item = data;
-      this.gaintype = this.item.extract_type
+      this.gaintype = this.item.extract_type;
       if (this.item.extract_type === 1) {
         this.offLine = false;
       } else {
@@ -135,20 +143,22 @@ export default {
       }
     },
     //商品已购人数及头像获取
-     async getNumData() {
-        let goods_id = this.$route.query.id;
-      const { data } = await api.get("bought_list",{
-         'goods_id': goods_id,
+    async getNumData() {
+      let goods_id = this.$route.query.id;
+      const { data } = await api.get("bought_list", {
+        goods_id: goods_id
       });
       this.purnum = data.data;
-      this.pur_num = this.purnum.length
-      if(!this.pur_num){this.purchase=false}
-      if(this.pur_num>6){
-        for(let i = 0, len = this.pur_num.length; i < 6; i++){
-          this.purnum[i] = data.data[i]
+      this.pur_num = this.purnum.length;
+      if (!this.pur_num) {
+        this.purchase = false;
+      }
+      if (this.pur_num > 6) {
+        for (let i = 0, len = this.pur_num.length; i < 6; i++) {
+          this.purnum[i] = data.data[i];
         }
       }
-    },
+    }
   }
 };
 </script>
@@ -157,12 +167,15 @@ export default {
 @import "../assets/sass/_base.scss";
 .wrapper {
   @include wrapper;
+  img {
+    height: rem(318);
+  }
   .focus {
     position: absolute;
-    font-size: rem(22);
+    font-size: rem(24);
     color: #fff;
-    top: rem(275);
-    right: rem(25);
+    top: rem(260);
+    right: rem(15);
     z-index: 2;
     .iconfont {
       font-family: "iconfont";
@@ -206,8 +219,7 @@ export default {
       .content-title {
         font-size: rem(30);
         text-align: left;
-
-        line-height: rem(80);
+        line-height: rem(74);
       }
       .content-price {
         display: flex;
@@ -215,6 +227,7 @@ export default {
         justify-content: space-between;
         height: rem(60);
         padding-right: rem(30);
+        margin-top: rem(6);
         .content-price-left {
           display: flex;
           flex-direction: row;
@@ -228,17 +241,17 @@ export default {
           }
           .original-price {
             display: block;
-            line-height: rem(60);
-            font-size: rem(60);
+            line-height: rem(65);
+            font-size: rem(65);
             color: #1e7deb;
             margin-right: rem(15);
           }
           .content-price-left-con {
             display: flex;
             flex-direction: column;
-            height: rem(60);
+            height: rem(65);
             span:nth-child(1) {
-              font-size: rem(20);
+              font-size: rem(22);
               line-height: rem(20);
               color: #878787;
               text-decoration: line-through;
@@ -248,39 +261,41 @@ export default {
               display: block;
               height: rem(25);
               margin-top: rem(10);
-              font-size: rem(25);
+              font-size: rem(24);
               line-height: rem(25);
             }
           }
         }
       }
       .content-indate {
-        font-size: rem(25);
+        font-size: rem(24);
         color: #999999;
         display: flex;
         justify-content: space-between;
         margin-top: rem(30);
-        line-height: rem(88);
+        line-height: rem(86);
         border-top: 1px solid #e9e9e9;
         border-bottom: 1px solid #e9e9e9;
         padding-right: rem(30);
+        padding-bottom: rem(3);
       }
       .content-purchase {
         display: flex;
         justify-content: space-between;
-        height: rem(116);
-
+        height: rem(112);
         align-items: center;
         img {
-          height: rem(66);
-          border-radius: rem(33);
-          margin-right: rem(25);
+          width: rem(64);
+          height: rem(64);
+          border-radius: rem(32);
+          margin-right: rem(19);
         }
         .content-purchase-right {
-          font-size: rem(25);
-          line-height: rem(66);
+          font-size: rem(28);
+          line-height: rem(112);
           padding-right: rem(30);
           span {
+            text-align: center;
             color: #28a2f5;
           }
         }
@@ -291,9 +306,10 @@ export default {
       padding-left: rem(30);
       background-color: #fff;
       .content-website-title {
-        height: rem(90);
+        height: rem(88);
         font-size: rem(30);
         line-height: rem(90);
+        font-weight: 600;
       }
       .content-website-con {
         display: flex;
@@ -304,21 +320,24 @@ export default {
         .content-website-con-left {
           display: flex;
           flex-direction: column;
-            padding: rem(15) rem(15) rem(15) 0;
+          padding: rem(24) rem(55) rem(29) 0;
           line-height: rem(48);
           span:nth-child(1) {
-            font-size: rem(27);
+            font-size: rem(28);
+            line-height: 1;
           }
           span:nth-child(2) {
-            font-size: rem(25);
+            margin-top: rem(10);
+            font-size: rem(24);
             color: #666666;
+            line-height: rem(44);
           }
           span:nth-child(3) {
-            font-size: rem(22);
+            font-size: rem(24);
             color: #999999;
             .iconfont {
               font-family: "iconfont";
-              font-size: rem(30);
+              font-size: rem(28);
               font-style: normal;
             }
           }
@@ -326,14 +345,14 @@ export default {
         .content-website-con-right {
           display: block;
           border-left: 1px solid #e9e9e9;
-          width: rem(120);
+          width: rem(150);
           height: rem(70);
-          padding: rem(10) rem(30);
-          margin-right: rem(30);
+          padding: rem(15) rem(74) rem(15) rem(35);
           text-decoration: none;
           .iconfont {
             font-family: "iconfont";
-            font-size: rem(45);
+            font-size: rem(40);
+            line-height: rem(40);
             font-style: normal;
             color: #666;
           }
@@ -342,10 +361,11 @@ export default {
       .content-website-all {
         display: flex;
         justify-content: space-between;
-        height: rem(90);
-        line-height: rem(90);
+        height: rem(88);
+        line-height: rem(88);
         .content-website-all-left {
-          color: #0280e6;
+          color: rgb(0,129,226);
+          font-size: rem(28);
         }
         .content-website-all-right {
           margin-right: rem(30);
@@ -354,6 +374,7 @@ export default {
             font-size: rem(30);
             font-style: normal;
             color: #c7c8cd;
+            font-weight: 600;
           }
         }
       }
@@ -361,17 +382,18 @@ export default {
     .content-detail {
       background-color: #fff;
       padding-left: rem(30);
-      margin-top: rem(20);
+      margin-top: rem(22);
       .content-detail-title {
         font-size: rem(30);
-        line-height: rem(90);
+        line-height: rem(88);
         text-align: left;
         border-bottom: 1px solid #e9e9e9;
+        font-weight: 600;
       }
       .content-detail-con {
         height: 100%;
         background-color: #fff;
-        font-size: rem(30)!important;
+        font-size: rem(30) !important;
         line-height: 1.5;
         padding-bottom: rem(100);
       }
@@ -380,12 +402,12 @@ export default {
   .button {
     width: 100%;
     height: rem(98);
-    line-height: rem(98);
+    line-height: rem(96);
     color: #fff;
     text-align: center;
     position: fixed;
     bottom: 0;
-    background-color: #1f80eb;
+    background-color: rgb(31,127,234);
     font-size: rem(30);
   }
 }

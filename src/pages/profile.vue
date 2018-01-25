@@ -114,18 +114,22 @@ export default {
       let id = this.$route.query.id;
       let lng = this.$route.query.lng;
       let lat = this.$route.query.lat;
-      if(id&&lng&&lat){
-      this.$router.push({
-        path: "/dist/submit",
-        query: {
-          fan_id: 30,
-          id: id,
-          lng: lng,
-          lat: lat,
-          addtressid: addtressId
-        }
-      });
-    }else{return false}
+      let gaintype = this.$route.query.gaintype;
+      if (id && lng && lat) {
+        this.$router.push({
+          path: "/dist/submit",
+          query: {
+            fan_id: 30,
+            id: id,
+            lng: lng,
+            lat: lat,
+            addtressid: addtressId,
+            gaintype: gaintype
+          }
+        });
+      } else {
+        return false;
+      }
     }
   }
 };

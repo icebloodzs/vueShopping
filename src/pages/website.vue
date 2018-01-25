@@ -93,42 +93,46 @@ export default {
 
       .content-website-con {
         display: flex;
+        border-top: 1px solid #e9e9e9;
         border-bottom: 1px solid #e9e9e9;
         justify-content: space-between;
         align-items: center;
         .content-website-con-left {
           display: flex;
           flex-direction: column;
+          padding: rem(24) rem(55) rem(29) 0;
           line-height: rem(48);
-          padding: rem(15) rem(15) rem(15) 0;
           span:nth-child(1) {
             font-size: rem(28);
+            line-height: 1;
           }
           span:nth-child(2) {
-            font-size: rem(25);
-            color: #666;
-            line-height: rem(40);
+            margin-top: rem(10);
+            font-size: rem(24);
+            color: #666666;
+            line-height: rem(44);
           }
           span:nth-child(3) {
-            font-size: rem(22);
-            color: #999;
+            font-size: rem(24);
+            color: #999999;
             .iconfont {
               font-family: "iconfont";
-              font-size: rem(30);
+              font-size: rem(28);
               font-style: normal;
             }
           }
         }
         .content-website-con-right {
           display: block;
-          text-decoration: none;
           border-left: 1px solid #e9e9e9;
-          width: rem(120);
+          width: rem(150);
           height: rem(70);
-          padding: rem(10) rem(30);
+          padding: rem(15) rem(74) rem(15) rem(35);
+          text-decoration: none;
           .iconfont {
             font-family: "iconfont";
-            font-size: rem(45);
+            font-size: rem(40);
+            line-height: rem(40);
             font-style: normal;
             color: #666;
           }
