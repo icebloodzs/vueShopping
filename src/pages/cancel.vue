@@ -75,7 +75,7 @@
 </template>
 <script>
 import api from "@/api";
-import { getLocation, setConfig } from "@/utils/wx";
+import {getLocation} from '@/sdk/wx'
 export default {
   components: {},
   data() {
@@ -107,7 +107,6 @@ export default {
     },
     async getPayData() {
       let order_id = this.$route.query.order_id;
-      await setConfig(Window.AppConfig);
       let _data = await getLocation();
       this.lng = _data.longitude;
       this.lat = _data.latitude;

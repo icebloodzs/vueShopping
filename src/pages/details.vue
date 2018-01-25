@@ -58,7 +58,7 @@
       </div>
       <div class="content-detail">
         <div class="content-detail-title">商品详情</div>
-        <div class="content-detail-con" v-html="item.description" :style="detailconstyle"></div>
+        <div class="content-detail-con" v-html="replaceRem(item.description)" :style="detailconstyle"></div>
       </div>
     </div>
     <div class="button" @click="routerClicksubmit">立即抢购</div>
@@ -66,148 +66,150 @@
 
 </template>
 <script>
-import api from "@/api";
-import { getLocation, setConfig } from "@/utils/wx";
-import detailsdown from "../components/detailsdown.vue";
-export default {
-  components: {
-    detailsdown: detailsdown
-  },
-  created() {
-    this.getData();
-    this.getNumData();
-  },
-  data() {
-    return {
-      activeTab: "tab1",
-      offLine: [],
-      listImg: [],
-      site: [],
-      item: [],
-      count: [],
-      lng: [],
-      lat: [],
-      purnum: [],
-      pur_num: [],
-      purchase: true,
-      gaintype: [],
-      detailconstyle: {
-        fontSize: "0.4rem!important"
-      }
-    };
-  },
-  methods: {
-    handleTabChange(val) {
-      this.activeTab = val;
+  import api from '@/api'
+  import detailsdown from '../components/detailsdown.vue'
+
+  import { getLocation } from '@/sdk/wx'
+
+  export default {
+    components: {
+      detailsdown: detailsdown,
     },
-    routerClicksubmit() {
-      let id = this.$route.query.id;
-      // let fan_id =  Window.AppConfig.uid
-      this.$router.push({
-        path: "/dist/submit",
-        query: {
-          fan_id: 30,
-          id: id,
-          lng: this.lng,
-          lat: this.lat,
-          gaintype: this.gaintype
+    created () {
+      this.getData()
+      this.getNumData()
+    },
+    data () {
+      return {
+        activeTab: 'tab1',
+        offLine: [],
+        listImg: [],
+        site: [],
+        item: [],
+        count: [],
+        lng: [],
+        lat: [],
+        purnum: [],
+        pur_num: [],
+        purchase: true,
+        gaintype: [],
+        detailconstyle: {
+          fontSize: '0.4rem!important',
+        },
+      }
+    },
+    methods: {
+
+      replaceRem(content) {
+        content = content.replace(/(\d+)px/g, function(s, t) {
+          s = s.replace('px', '');
+          let value = parseInt(s) * 0.0083;//   此处 1rem =120px
+          return value + "rem";
+        });
+
+        return content
+      },
+
+      handleTabChange (val) {
+        this.activeTab = val
+      },
+      routerClicksubmit () {
+        let id = this.$route.query.id
+        // let fan_id =  Window.AppConfig.uid
+        this.$router.push({
+          path: '/dist/submit',
+          query: {fan_id: 30, id: id, lng: this.lng, lat: this.lat, gaintype: this.gaintype},
+        })
+      },
+      routerClickgoback () {
+        this.$router.go(-1)
+      },
+      routerClickdetails () {
+        this.$router.push('/dist/detail')
+      },
+      //商品详情获取
+      async getData () {
+        let goods_id = this.$route.query.id
+        let _data = await getLocation()
+        this.lng = _data.longitude
+        this.lat = _data.latitude
+        const {data} = await api.get('goods_detail', {
+          'goods_id': goods_id,
+          'lng': this.lng,
+          'lat': this.lat,
+        })
+        this.item = data
+        this.gaintype = this.item.extract_type
+        if (this.item.extract_type === 1) {
+          this.offLine = false
+        } else {
+          this.offLine = true
+          this.count = this.item.site.length
+          this.site = this.item.site[0]
         }
-      });
-    },
-    routerClickgoback() {
-      this.$router.go(-1);
-    },
-    routerClickdetails() {
-      this.$router.push("/dist/detail");
-    },
-    //商品详情获取
-    async getData() {
-      let goods_id = this.$route.query.id;
-      await setConfig(Window.AppConfig);
-      let _data = await getLocation();
-      this.lng = _data.longitude;
-      this.lat = _data.latitude;
-      const { data } = await api.get("goods_detail", {
-        goods_id: goods_id,
-        lng: this.lng,
-        lat: this.lat
-      });
-      this.item = data;
-      this.gaintype = this.item.extract_type;
-      if (this.item.extract_type === 1) {
-        this.offLine = false;
-      } else {
-        this.offLine = true;
-        this.count = this.item.site.length;
-        this.site = this.item.site[0];
-      }
-    },
-    //商品已购人数及头像获取
-    async getNumData() {
-      let goods_id = this.$route.query.id;
-      const { data } = await api.get("bought_list", {
-        goods_id: goods_id
-      });
-      this.purnum = data.data;
-      this.pur_num = this.purnum.length;
-      if (!this.pur_num) {
-        this.purchase = false;
-      }
-      if (this.pur_num > 6) {
-        for (let i = 0, len = this.pur_num.length; i < 6; i++) {
-          this.purnum[i] = data.data[i];
+      },
+      //商品已购人数及头像获取
+      async getNumData () {
+        let goods_id = this.$route.query.id
+        const {data} = await api.get('bought_list', {
+          'goods_id': goods_id,
+        })
+        this.purnum = data.data
+        this.pur_num = this.purnum.length
+        if (!this.pur_num) {this.purchase = false}
+        if (this.pur_num > 6) {
+          for (let i = 0, len = this.pur_num.length; i < 6; i++) {
+            this.purnum[i] = data.data[i]
+          }
         }
-      }
-    }
+      },
+    },
   }
-};
 </script>
 <style lang="scss" scoped>
-@import "../style/mixin";
-@import "../assets/sass/_base.scss";
-.wrapper {
-  @include wrapper;
-  img {
-    height: rem(318);
-  }
-  .focus {
-    position: absolute;
-    font-size: rem(24);
-    color: #fff;
-    top: rem(260);
-    right: rem(15);
-    z-index: 2;
-    .iconfont {
-      font-family: "iconfont";
-      font-style: normal;
-      top: -0.1rem;
-      left: -0.43rem;
-      width: rem(17);
-      font-size: rem(30);
-      height: rem(22);
+  @import "../style/mixin";
+  @import "../assets/sass/_base.scss";
+
+  .wrapper {
+    @include wrapper;
+    .focus {
       position: absolute;
-      color: #1f7ee8;
+      font-size: rem(22);
+      color: #fff;
+      top: rem(275);
+      right: rem(25);
+      z-index: 2;
+      .iconfont {
+        font-family: "iconfont";
+        font-style: normal;
+        top: -0.1rem;
+        left: -0.43rem;
+        width: rem(17);
+        font-size: rem(30);
+        height: rem(22);
+        position: absolute;
+        color: #1f7ee8;
+      }
     }
-  }
-  .goback {
-    width: rem(60);
-    height: rem(60);
-    border-radius: rem(30);
-    background-color: rgba(0, 0, 0, 0.7);
-    color: #fff;
-    position: absolute;
-    top: rem(12);
-    left: rem(15);
-    z-index: 1;
-    text-align: center;
-    .iconfont {
-      font-family: "iconfont";
-      font-size: rem(36);
-      font-style: normal;
-      line-height: rem(60);
-      margin-left: rem(10);
+    .goback {
+      width: rem(60);
+      height: rem(60);
+      border-radius: rem(30);
+      background-color: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      position: absolute;
+      top: rem(12);
+      left: rem(15);
+      z-index: 1;
+      text-align: center;
+      .iconfont {
+        font-family: "iconfont";
+        font-size: rem(36);
+        font-style: normal;
+        line-height: rem(60);
+        margin-left: rem(10);
+      }
     }
-  }
 
   .content {
     display: flex;
@@ -231,7 +233,7 @@ export default {
         .content-price-left {
           display: flex;
           flex-direction: row;
-          align-items: flex-end;
+          justify-content: space-between;
           height: rem(60);
           .original-icon {
             display: block;
@@ -257,7 +259,7 @@ export default {
               text-decoration: line-through;
               margin-top: rem(5);
             }
-            span:nth-child(2) {
+            .original-price {
               display: block;
               height: rem(25);
               margin-top: rem(10);
@@ -339,6 +341,7 @@ export default {
               font-family: "iconfont";
               font-size: rem(28);
               font-style: normal;
+              color: #666;
             }
           }
         }

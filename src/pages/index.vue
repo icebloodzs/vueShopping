@@ -6,8 +6,8 @@
     <div class="circles index" @click="routerClickhome">首页</div>
     <div class="circles personal" @click="routerClickcenter">个人<br>中心</div>
     <div class="classify">
-      <div class="classify-list list1" v-for="item in classify" @click="clickClassify(item.id)"><img :src="item.icon">
-        <span>{{item.name}}</span>
+      <div class="classify-list list1" v-for="item in classify" @click="clickClassify(item.id)">
+        <img :src="item.icon">{{item.name}}
       </div>
     </div>
     <div class="more">
@@ -47,7 +47,6 @@
 <script>
 import Banner from "../components/Banner.vue";
 import api from "@/api";
-import InfiniteLoading from "vue-infinite-loading";
 
 export default {
   components: {
@@ -60,7 +59,6 @@ export default {
       items: [],
       classify: [],
       goodsList: [],
-      config: [],
       fan_id: 30,
       config: [],
       total: [],
@@ -78,7 +76,6 @@ export default {
     this.getImgData();
     this.getClassifyData();
     this.getGoodsData();
-    this.getConfigData();
   },
   methods: {
     routerDetail(goodsid) {
@@ -101,12 +98,6 @@ export default {
     },
     routerClickhome() {
       this.$router.go(0);
-    },
-    //配置获取
-    async getConfigData() {
-      const { data } = await api.get("app_config");
-      this.config = data;
-      Window.AppConfig.uid = this.config.uid;
     },
     // 轮播图数据获取
     async getImgData() {

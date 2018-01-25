@@ -65,7 +65,7 @@
 </template>
 <script>
 import api from "@/api";
-import { getLocation, setConfig } from "@/utils/wx";
+import { getLocation } from "@/sdk/wx";
 export default {
   components: {},
   data() {
@@ -114,7 +114,6 @@ export default {
         this.type = "store";
         this.gaintype = 2;
       }
-      await setConfig(Window.AppConfig);
       let _data = await getLocation();
       this.lng = _data.longitude;
       this.lat = _data.latitude;
