@@ -70,9 +70,7 @@
 <script>
   import api from '@/api'
   import detailsdown from '../components/detailsdown.vue'
-
   import { getLocation } from '@/sdk/wx'
-
   export default {
     components: {
       detailsdown: detailsdown,
@@ -125,6 +123,7 @@
       //商品详情获取
       async getData () {
         let goods_id = this.$route.query.id
+        this.isloading = true
         let _data = await getLocation()
         this.lng = _data.longitude
         this.lat = _data.latitude
@@ -136,6 +135,7 @@
         this.item = data
         this.gaintype = this.item.extract_type
         this.replaceRem(this.item.description)
+        this.isloading = false
         if (this.item.extract_type === 1) {
           this.offLine = false
         } else {

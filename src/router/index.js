@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import Hello from '@/components/Hello'
 import index from '../pages/index'
 import more from '../pages/more'
 import mycenter from '../pages/mycenter'

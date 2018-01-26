@@ -22,16 +22,16 @@ export default {
   /*color: #2c3e50;
   margin-top: 60px;*/
 }
-::-webkit-scrollbar {
-    width: rem(2);
-    height: rem(2);
-}
+// ::-webkit-scrollbar {
+//     width: rem(1);
+//     height: rem(1);
+// }
 
-::-webkit-scrollbar-track {
-    background: transparent;
-}
+// ::-webkit-scrollbar-track {
+//     background: transparent;
+// }
 
-::-webkit-scrollbar-thumb {
-    background: rgba(0,0,0,.1);
-}
+// ::-webkit-scrollbar-thumb {
+//     background: rgba(0,0,0,.1);
+// }
 </style>

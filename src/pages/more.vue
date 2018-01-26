@@ -8,7 +8,7 @@
     </mu-tabs>
     <div class="main">
       <div v-if="activeTab === 'tab1'">
-        <div class="hint" v-if='onhint'><img src="../assets/img/vn2l_fw658.png"></div>
+        <div class="hint" v-if='onhint'><img :src="this.src"></div>
         <div class="content" v-for="item in items">
           <img :src="item.thumbnail">
           <moredown :endTime="item.end_time"></moredown>
@@ -76,6 +76,7 @@ export default {
   data() {
     return {
       actleft: true,
+      src:`${Window.AppConfig.assetsPath}/assets/img/vn2l_fw658.png`,
       isActive: false,
       activeTab: "tab1",
       endTime: "",

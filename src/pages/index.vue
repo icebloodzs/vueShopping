@@ -52,7 +52,6 @@ import api from "@/api";
 export default {
   components: {
     "app-banner": Banner
-    // InfiniteLoading
   },
   data() {
     return {
