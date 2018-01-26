@@ -44,7 +44,6 @@ export default {
           );
         }
       },
-      // loop: true,
       observer: true, //修改swiper自己或子元素时，自动初始化swiper
       observeParents: true, //修改swiper的父元素时，自动初始化swiper
       // speed: 600,
@@ -53,7 +52,6 @@ export default {
   }
 };
 </script>
-
 <style scoped lang="scss">
 @import "../style/mixin";
 .swiper-container {
