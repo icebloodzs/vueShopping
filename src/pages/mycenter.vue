@@ -1,6 +1,7 @@
 <template>
   <!--个人中心-->
   <div class="wrapper">
+    <div class="loading" v-if="isloading">加载中. . .</div>
     <div class="header">
       <img :src="user.headimgurl">
       <div class="header-middle">
@@ -182,6 +183,7 @@ export default {
   data() {
     return {
       bottomNav: "",
+      isloading:false,
       classObject: {
         tabone: true,
         tabtwo: false,
@@ -281,6 +283,7 @@ export default {
     //后三列数据获取
     async getCenterData(val) {
       let fan_id = this.$route.query.fan_id;
+      this.isloading = true
       const { data } = await api.get("order_list", {
         fan_id: fan_id,
         status: val
@@ -299,10 +302,12 @@ export default {
           }
         }
       }
+      this.isloading = false
     },
     //全部订单获取
     async getAllCenterData() {
       let fan_id = this.$route.query.fan_id;
+      this.isloading = true
       const { data } = await api.get("order_list", {
         fan_id: fan_id
       });
@@ -333,6 +338,7 @@ export default {
           this.items5[i] = this.allitems[i];
         }
       }
+      this.isloading = false
     },
     //全部更多订单数据获取
     async getMoreData() {

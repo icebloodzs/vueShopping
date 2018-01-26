@@ -1,6 +1,8 @@
 <template>
+ 
   <!--首页-->
   <div class="wrapper">
+    <div class="loading" v-if="isloading">加载中. . .</div>
     <!-- 轮播 -->
     <app-banner :listImg="listImg"></app-banner>
     <div class="circles index" @click="routerClickhome">首页</div>
@@ -67,7 +69,8 @@ export default {
       scroller: null,
       page: 1,
       loading: false,
-      notenoughcolor: "#ccc"
+      notenoughcolor: "#ccc",
+      isloading:false
     };
   },
   created() {},
@@ -111,10 +114,12 @@ export default {
     },
     //首页商品数据获取
     async getGoodsData() {
+      this.isloading = true
       const { data } = await api.get("goods_list", {
         order: "index"
       });
       this.goodsList = data.data;
+      this.isloading = false
     },
     //更多商品数据获取
     async getMoreData() {
@@ -154,6 +159,7 @@ export default {
   position: relative;
   background-color: #fbfcfe;
   height: 100vh;
+  
   .nomore {
     color: #666;
     text-align: center;
@@ -327,6 +333,20 @@ export default {
 </style>
 <style lang="scss">
 @import "../style/mixin";
+.loading{
+    position: absolute;
+    width: rem(200);
+    height: rem(130);
+    background-color: rgba($color: #000000, $alpha: .6);
+    line-height: rem(130);
+    text-align: center;
+    font-size: rem(32);
+    top: 40%;
+    left:35%;
+    z-index: 2018;
+    color: #fff;
+    border-radius: rem(10);
+  }
 .mu-infinite-scroll {
   padding-bottom:0px!important;
   overflow: auto;

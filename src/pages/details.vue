@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper">
+    <div class="loading" v-if="isloading">加载中. . .</div>
     <img :src="item.thumbnail">
     <div class="focus">
       <i class="iconfont">&#xe826;</i>
@@ -33,7 +34,8 @@
             <div v-for="item in purnum"><img :src="item.fan_head_image"></div>
           </div>
           <div class="content-purchase-right">
-            已有<span>{{pur_num}}</span>人抢购</div>
+            已有<span>{{pur_num}}</span>人抢购
+          </div>
         </div>
       </div>
       <div v-if="offLine" class="content-website">
@@ -58,7 +60,7 @@
       </div>
       <div class="content-detail">
         <div class="content-detail-title">商品详情</div>
-        <div class="content-detail-con" v-html="replaceRem(item.description)" :style="detailconstyle"></div>
+        <div class="content-detail-con" v-html="this.description" :style="detailconstyle"></div>
       </div>
     </div>
     <div class="button" @click="routerClicksubmit">立即抢购</div>
@@ -81,7 +83,6 @@
     },
     data () {
       return {
-        activeTab: 'tab1',
         offLine: [],
         listImg: [],
         site: [],
@@ -93,29 +94,23 @@
         pur_num: [],
         purchase: true,
         gaintype: [],
+        isloading:false,
+        description:[],
         detailconstyle: {
           fontSize: '0.4rem!important',
         },
       }
     },
     methods: {
-
       replaceRem(content) {
-        content = content.replace(/(\d+)px/g, function(s, t) {
+        this.description = content.replace(/(\d+)px/g, function(s, t) {
           s = s.replace('px', '');
-          let value = parseInt(s) * 0.0083;//   此处 1rem =120px
+          let value = parseInt(s)/75;//   此处 1rem =75px
           return value + "rem";
         });
-
-        return content
-      },
-
-      handleTabChange (val) {
-        this.activeTab = val
       },
       routerClicksubmit () {
         let id = this.$route.query.id
-        // let fan_id =  Window.AppConfig.uid
         this.$router.push({
           path: '/dist/submit',
           query: {fan_id: 30, id: id, lng: this.lng, lat: this.lat, gaintype: this.gaintype},
@@ -140,6 +135,7 @@
         })
         this.item = data
         this.gaintype = this.item.extract_type
+        this.replaceRem(this.item.description)
         if (this.item.extract_type === 1) {
           this.offLine = false
         } else {
@@ -172,13 +168,18 @@
 
   .wrapper {
     @include wrapper;
+    img{
+      width: 100%;
+      height: rem(318);
+    }
     .focus {
       position: absolute;
-      font-size: rem(22);
+      font-size: rem(24);
       color: #fff;
-      top: rem(275);
-      right: rem(25);
+      top: rem(279);
+      right: rem(15);
       z-index: 2;
+      line-height: 1;
       .iconfont {
         font-family: "iconfont";
         font-style: normal;
