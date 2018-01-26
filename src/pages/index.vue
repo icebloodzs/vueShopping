@@ -1,5 +1,4 @@
 <template>
- 
   <!--首页-->
   <div class="wrapper">
     <div class="loading" v-if="isloading">加载中. . .</div>
