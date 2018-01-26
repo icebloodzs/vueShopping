@@ -1,13 +1,11 @@
 <template>
   <div class="wrapper">
+    <div class="loading" v-if="isloading">加载中. . .</div>
     <i class="iconfont" @click="routerClickgoback">&#xe600;</i>
-
     <mu-tabs class="tabs" :value="activeTab" @change="handleTabChange" :lineClass="{ blue:isActive,actleft:actleft }">
       <mu-tab value="tab1" @active="tab1Active" title="进行中" />
       <mu-tab value="tab2" @active="tab2Active" title="已结束" />
     </mu-tabs>
-
-
     <div class="main">
       <div v-if="activeTab === 'tab1'">
         <div class="hint" v-if='onhint'><img src="../assets/img/vn2l_fw658.png"></div>
@@ -42,7 +40,6 @@
         <div class="hint" v-if='endhint'><img src="../assets/img/vn2l_fw658.png"></div>
         <div class="content" v-for="item in items2">
           <img :src="item.thumbnail">
-          <!-- <moredown :endTime="endTime"></moredown> -->
           <div class="focus">
             <i class="iconfont">&#xe826;</i>1236人在关注</div>
           <span class="tilte">{{item.name}}</span>
@@ -81,10 +78,10 @@ export default {
       actleft: true,
       isActive: false,
       activeTab: "tab1",
-      value: 37,
       endTime: "",
       items: [],
       items2: [],
+      isloading:false,
       endhint: false,
       onhint: false,
       nomore: false,
@@ -125,6 +122,7 @@ export default {
     // 进行中分类数据获取
     async getMoreData() {
       let classId = this.$route.query.classId;
+      this.isloading = true
       if (classId) {
         const { data } = await api.get("goods_list", {
           classification_id: classId
@@ -134,6 +132,7 @@ export default {
         const { data } = await api.get("goods_list");
         this.items = data.data;
       }
+      this.isloading = false
       if (!this.items.length) {
         this.onhint = true;
       }
@@ -177,6 +176,7 @@ export default {
     // 已结束分类数据获取
     async getMoreData2() {
       let classId = this.$route.query.classId;
+      this.isloading = true
       if (classId) {
         const { data } = await api.get("goods_list", {
           status: "1",
@@ -189,6 +189,7 @@ export default {
         });
         this.items2 = data.data;
       }
+      this.isloading = false
       if (!this.items2.length) {
         this.endhint = true;
       }

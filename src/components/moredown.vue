@@ -1,5 +1,5 @@
 <template>
-    <div class="time">距结束 &nbsp {{hour}}：{{min}}：{{sec}}</div>
+    <div class="time">距结束 &nbsp; {{hour}}：{{min}}：{{sec}}</div>
 </template>
 <script>
 export default {

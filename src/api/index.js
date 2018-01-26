@@ -6,7 +6,7 @@ const callApi = (action, method, data) => {
     let headers = {}
 
     if (process.env.NODE_ENV === 'development') {
-        headers['Token'] = 'VWRLM0hwOUFrMGhXOGJjMDNGbXRTU1VQZkZXTFVHZW1QdmRERUhSSUdSST0.'
+        headers['Token'] = 'elo4aEFQdDVMMGZwMFJVb3pub1Rqd1piSklGclY4ZjBjNSthOXNUd1VORT0.'
     }
 
     return axios({
