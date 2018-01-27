@@ -93,6 +93,7 @@ export default {
         let id = this.$route.query.id;
         let lng = this.$route.query.lng;
         let lat = this.$route.query.lat;
+        let gaintype = this.$route.query.gaintype;
         if (!id&&lng&&lat) {
           setTimeout(() => {
             that.$router.push({
@@ -101,11 +102,11 @@ export default {
             });
           }, 1000);
         }
-        if (id&&lng&&lat) {
+        if (id&&lng&&lat&&gaintype) {
            setTimeout(() => {
           that.$router.push({
             path: "/dist/profile",
-            query: { fan_id: 30, id: id, lng: lng, lat: lat }
+            query: { fan_id: 30, id: id, lng: lng, lat: lat, gaintype :gaintype  }
           });
             }, 1000);
         }

@@ -115,7 +115,7 @@ export default {
       let lng = this.$route.query.lng;
       let lat = this.$route.query.lat;
       let gaintype = this.$route.query.gaintype;
-      if (id && lng && lat) {
+      if (id && lng && lat&&gaintype) {
         this.$router.push({
           path: "/dist/submit",
           query: {

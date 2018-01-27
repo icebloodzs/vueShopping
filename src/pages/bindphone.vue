@@ -19,7 +19,7 @@
                     保存
                 </div>
             </div>
-             <mu-toast v-if="toast" :message="message" @close="hideToast"/>
+             <mu-toast v-if="toast" :message="this.message" @close="hideToast"/>
         </div>
     </div>
 </template>
@@ -105,8 +105,6 @@ export default {
             this.$router.go(-1);
           },2000)
         }
-        // this.$router.push("/dist/submit");
-        // this.$router.go(-1);
       }
     },
      hideToast () {
@@ -147,7 +145,6 @@ export default {
         font-size: rem(25);
         color: #1f80eb;
         border: rem(2) solid #1f80eb;
-        width: rem(170);
         text-align: center;
         line-height: rem(52);
         height: rem(52);

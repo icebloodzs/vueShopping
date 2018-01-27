@@ -24,7 +24,7 @@
         <mu-tab @active="tab4Active" value="5" title="已完成" />
       </mu-tabs>
       <div v-if="bottomNav === ''">
-        <div class="hint" v-if='!allitems.length'><img src="../assets/img/vn2l_fw658.png"></div>
+        <div class="hint" v-if='!allitems.length'></div>
         <div class="content" v-for="item in items2">
           <div class="content-head">
             <span>{{item.created_at}}</span>
@@ -92,7 +92,7 @@
         <mu-infinite-scroll :scroller="scroller" :loading="loading" @load="loadMore" />
       </div>
       <div v-if="bottomNav === '1'">
-        <div class="hint" v-if='!items.length'><img src="../assets/img/vn2l_fw658.png"></div>
+        <div class="hint" v-if='!items.length'></div>
         <div class="content" v-for="item in items">
           <div class="content-head">
             <span>{{item.created_at}}</span>
@@ -114,7 +114,7 @@
         <mu-infinite-scroll :scroller="scroller" :loading="loading2" @load="loadMore2" />
       </div>
       <div v-if="bottomNav === '4'">
-        <div class="hint" v-if='!items.length'><img src="../assets/img/vn2l_fw658.png"></div>
+        <div class="hint" v-if='!items.length'></div>
         <div class="content" @click="routerClickCancel(item.id,item.extract_type)" v-for="item in items">
           <div class="content-head">
             <span>{{item.created_at}}</span>
@@ -135,7 +135,7 @@
         <mu-infinite-scroll :scroller="scroller" :loading="loading3" @load="loadMore3" />
       </div>
       <div v-if="bottomNav === '5'">
-        <div class="hint" v-if='!items.length'><img src="../assets/img/vn2l_fw658.png"></div>
+        <div class="hint" v-if='!items.length'></div>
         <div class="content" v-for="item in items4">
           <div class="content-head">
             <span>2012-12-12 &nbsp; 17:06:24</span>
@@ -464,7 +464,6 @@ export default {
     //已完成更多订单数据获取
     async getMoreDoneData() {
       let that = this;
-
       let fan_id = this.$route.query.fan_id;
       let arr = [];
       let arr4 = [];
@@ -516,6 +515,7 @@ export default {
 @import "../assets/sass/_base.scss";
 .wrapper {
   @include wrapper;
+  height: 100vh;
   .nomore {
     color: #666;
     text-align: center;
@@ -587,15 +587,11 @@ export default {
   }
   .main {
     .hint {
-      padding-top: rem(88);
-      background-color: #fff;
+      padding-top: rem(300);
       width: 100%;
-      img {
-        display: block;
-        margin: 0 auto;
-        width: rem(197);
-        height: rem(287);
-      }
+      height: rem(1010);
+      background: #fff url(../assets/img/vn2l_fw658.png) no-repeat 50% 25%;
+      background-size: rem(197) rem(287);
     }
     .mu-tab-link {
       font-size: rem(30);
@@ -614,19 +610,19 @@ export default {
     }
     .content {
       width: 100%;
-      padding: rem(27) rem(24) 0 rem(24);
+      padding: rem(27) rem(24) rem(20) rem(24);
       background-color: #fff;
-      margin: rem(15) auto;
+      margin: rem(16) auto;
       .content-head {
         display: flex;
         justify-content: space-between;
+        line-height: 1;
+         font-size: rem(24);
         span:nth-child(1) {
           color: #656565;
-          font-size: rem(24);
         }
         span:nth-child(2) {
           color: #299ff6;
-          font-size: rem(24);
         }
       }
       .content-con {
@@ -641,6 +637,7 @@ export default {
         .content-con-left {
           display: flex;
           flex-direction: row;
+          margin-top: rem(10);
           img {
             width: rem(160);
             height: rem(120);

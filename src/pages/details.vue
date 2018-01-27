@@ -60,7 +60,7 @@
       </div>
       <div class="content-detail">
         <div class="content-detail-title">商品详情</div>
-        <div class="content-detail-con" v-html="this.description" :style="detailconstyle"></div>
+        <div class="content-detail-con" v-html="this.description"></div>
       </div>
     </div>
     <div class="button" @click="routerClicksubmit">立即抢购</div>
@@ -68,150 +68,156 @@
 
 </template>
 <script>
-  import api from '@/api'
-  import detailsdown from '../components/detailsdown.vue'
-  import { getLocation } from '@/sdk/wx'
-  export default {
-    components: {
-      detailsdown: detailsdown,
+import api from "@/api";
+import detailsdown from "../components/detailsdown.vue";
+import { getLocation } from "@/sdk/wx";
+export default {
+  components: {
+    detailsdown: detailsdown
+  },
+  created() {
+    this.getData();
+    this.getNumData();
+  },
+  data() {
+    return {
+      offLine: [],
+      listImg: [],
+      site: [],
+      item: [],
+      count: [],
+      lng: [],
+      lat: [],
+      purnum: [],
+      pur_num: [],
+      purchase: true,
+      gaintype: [],
+      isloading: false,
+      description: []
+    };
+  },
+  methods: {
+    replaceRem(content) {
+      this.description = content.replace(/([\d.]+)px/g, "inherit");
     },
-    created () {
-      this.getData()
-      this.getNumData()
+    routerClicksubmit() {
+      let id = this.$route.query.id;
+      this.$router.push({
+        path: "/dist/submit",
+        query: {
+          fan_id: 30,
+          id: id,
+          lng: this.lng,
+          lat: this.lat,
+          gaintype: this.gaintype
+        }
+      });
     },
-    data () {
-      return {
-        offLine: [],
-        listImg: [],
-        site: [],
-        item: [],
-        count: [],
-        lng: [],
-        lat: [],
-        purnum: [],
-        pur_num: [],
-        purchase: true,
-        gaintype: [],
-        isloading:false,
-        description:[],
-        detailconstyle: {
-          fontSize: '0.4rem!important',
-        },
+    routerClickgoback() {
+      this.$router.go(-1);
+    },
+    routerClickdetails() {
+      this.$router.push("/dist/detail");
+    },
+    //商品详情获取
+    async getData() {
+      let goods_id = this.$route.query.id;
+      this.isloading = true;
+      let _data = await getLocation();
+      this.lng = _data.longitude;
+      this.lat = _data.latitude;
+      const { data } = await api.get("goods_detail", {
+        goods_id: goods_id,
+        lng: this.lng,
+        lat: this.lat
+      });
+      this.item = data;
+      this.gaintype = this.item.extract_type;
+      this.replaceRem(this.item.description);
+      this.isloading = false;
+      if (this.item.extract_type === 1) {
+        this.offLine = false;
+      } else {
+        this.offLine = true;
+        this.count = this.item.site.length;
+        this.site = this.item.site[0];
       }
     },
-    methods: {
-      replaceRem(content) {
-        this.description = content.replace(/([\d.]+)px/g, 'inherit');
-      },
-      routerClicksubmit () {
-        let id = this.$route.query.id
-        this.$router.push({
-          path: '/dist/submit',
-          query: {fan_id: 30, id: id, lng: this.lng, lat: this.lat, gaintype: this.gaintype},
-        })
-      },
-      routerClickgoback () {
-        this.$router.go(-1)
-      },
-      routerClickdetails () {
-        this.$router.push('/dist/detail')
-      },
-      //商品详情获取
-      async getData () {
-        let goods_id = this.$route.query.id
-        this.isloading = true
-        let _data = await getLocation()
-        this.lng = _data.longitude
-        this.lat = _data.latitude
-        const {data} = await api.get('goods_detail', {
-          'goods_id': goods_id,
-          'lng': this.lng,
-          'lat': this.lat,
-        })
-        this.item = data
-        this.gaintype = this.item.extract_type
-        this.replaceRem(this.item.description)
-        this.isloading = false
-        if (this.item.extract_type === 1) {
-          this.offLine = false
-        } else {
-          this.offLine = true
-          this.count = this.item.site.length
-          this.site = this.item.site[0]
+    //商品已购人数及头像获取
+    async getNumData() {
+      let goods_id = this.$route.query.id;
+      const { data } = await api.get("bought_list", {
+        goods_id: goods_id
+      });
+      this.purnum = data.data;
+      this.pur_num = this.purnum.length;
+      if (!this.pur_num) {
+        this.purchase = false;
+      }
+      if (this.pur_num > 6) {
+        for (let i = 0, len = this.pur_num.length; i < 6; i++) {
+          this.purnum[i] = data.data[i];
         }
-      },
-      //商品已购人数及头像获取
-      async getNumData () {
-        let goods_id = this.$route.query.id
-        const {data} = await api.get('bought_list', {
-          'goods_id': goods_id,
-        })
-        this.purnum = data.data
-        this.pur_num = this.purnum.length
-        if (!this.pur_num) {this.purchase = false}
-        if (this.pur_num > 6) {
-          for (let i = 0, len = this.pur_num.length; i < 6; i++) {
-            this.purnum[i] = data.data[i]
-          }
-        }
-      },
-    },
+      }
+    }
   }
+};
 </script>
 <style lang="scss" scoped>
-  @import "../style/mixin";
-  @import "../assets/sass/_base.scss";
+@import "../style/mixin";
+@import "../assets/sass/_base.scss";
 
-  .wrapper {
-    @include wrapper;
-    img{
-      width: 100%;
-      height: rem(318);
-    }
-    .focus {
+.wrapper {
+  @include wrapper;
+  img {
+    width: 100%;
+    height: rem(318);
+  }
+  .focus {
+    position: absolute;
+    font-size: rem(24);
+    color: #fff;
+    top: rem(279);
+    right: rem(15);
+    z-index: 2;
+    line-height: 1;
+    .iconfont {
+      font-family: "iconfont";
+      font-style: normal;
+      top: -0.1rem;
+      left: -0.43rem;
+      width: rem(17);
+      font-size: rem(30);
+      height: rem(22);
       position: absolute;
-      font-size: rem(24);
-      color: #fff;
-      top: rem(279);
-      right: rem(15);
-      z-index: 2;
-      line-height: 1;
-      .iconfont {
-        font-family: "iconfont";
-        font-style: normal;
-        top: -0.1rem;
-        left: -0.43rem;
-        width: rem(17);
-        font-size: rem(30);
-        height: rem(22);
-        position: absolute;
-        color: #1f7ee8;
-      }
+      color: #1f7ee8;
     }
-    .goback {
-      width: rem(60);
-      height: rem(60);
-      border-radius: rem(30);
-      background-color: rgba(0, 0, 0, 0.7);
-      color: #fff;
-      position: absolute;
-      top: rem(12);
-      left: rem(15);
-      z-index: 1;
-      text-align: center;
-      .iconfont {
-        font-family: "iconfont";
-        font-size: rem(36);
-        font-style: normal;
-        line-height: rem(60);
-        margin-left: rem(10);
-      }
+  }
+  .goback {
+    width: rem(60);
+    height: rem(60);
+    border-radius: rem(30);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    position: absolute;
+    top: rem(12);
+    left: rem(15);
+    z-index: 1;
+    text-align: center;
+    .iconfont {
+      font-family: "iconfont";
+      font-size: rem(36);
+      font-style: normal;
+      line-height: rem(60);
+      margin-left: rem(10);
     }
+  }
 
   .content {
     display: flex;
     flex-direction: column;
     width: 100%;
+    height: 100%;
     .content-head {
       background-color: #fff;
       padding-left: rem(30);
@@ -231,10 +237,9 @@
           display: flex;
           flex-direction: row;
           justify-content: space-between;
-          height: rem(60);
+          height: rem(65);
           .original-icon {
-            display: block;
-            line-height: rem(45);
+            line-height: 1.6;
             font-size: rem(45);
             color: #1e7deb;
           }
@@ -283,12 +288,17 @@
         justify-content: space-between;
         height: rem(112);
         align-items: center;
-        img {
-          width: rem(64);
-          height: rem(64);
-          border-radius: rem(32);
-          margin-right: rem(19);
+        .content-purchase-left {
+          display: flex;
+          flex-direction: row;
+          img {
+            width: rem(64);
+            height: rem(64);
+            border-radius: rem(32);
+            margin-right: rem(19);
+          }
         }
+
         .content-purchase-right {
           font-size: rem(28);
           line-height: rem(112);
@@ -364,7 +374,7 @@
         height: rem(88);
         line-height: rem(88);
         .content-website-all-left {
-          color: rgb(0,129,226);
+          color: rgb(0, 129, 226);
           font-size: rem(28);
         }
         .content-website-all-right {
@@ -393,9 +403,10 @@
       .content-detail-con {
         height: 100%;
         background-color: #fff;
-        font-size: rem(30) !important;
+        font-size: rem(30);
         line-height: 1.5;
         padding-bottom: rem(100);
+        padding-right: rem(20);
       }
     }
   }
@@ -407,7 +418,7 @@
     text-align: center;
     position: fixed;
     bottom: 0;
-    background-color: rgb(31,127,234);
+    background-color: rgb(31, 127, 234);
     font-size: rem(30);
   }
 }

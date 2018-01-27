@@ -98,7 +98,7 @@ export default {
       this.$router.push({ path: "/dist/more", query: { classId: classId } });
     },
     routerClickhome() {
-      this.$router.go(0);
+      this.$router.push({path:"/"});
     },
     // 轮播图数据获取
     async getImgData() {
@@ -138,7 +138,7 @@ export default {
       that.loading = false;
     },
     //  上拉加载
-    async loadMore() {
+    loadMore() {
       if (!this.nomore) {
         this.loading = true;
         this.page += 1;
@@ -156,12 +156,10 @@ export default {
 .wrapper {
   position: relative;
   background-color: #fbfcfe;
-  height: 100vh;
-  
   .nomore {
     color: #666;
     text-align: center;
-    line-height: 2;
+    line-height: rem(30);
     font-size: rem(30);
   }
   .circles {

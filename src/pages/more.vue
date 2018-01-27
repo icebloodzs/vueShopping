@@ -2,13 +2,17 @@
   <div class="wrapper">
     <div class="loading" v-if="isloading">加载中. . .</div>
     <i class="iconfont" @click="routerClickgoback">&#xe600;</i>
-    <mu-tabs class="tabs" :value="activeTab" @change="handleTabChange" :lineClass="{ blue:isActive,actleft:actleft }">
+    <div class="head-tabs">
+      <div class="head-tab">
+         <mu-tabs class="tabs" :value="activeTab" @change="handleTabChange" :lineClass="{ blue:isActive,actleft:actleft }">
       <mu-tab value="tab1" @active="tab1Active" title="进行中" />
       <mu-tab value="tab2" @active="tab2Active" title="已结束" />
     </mu-tabs>
+      </div>
+    </div>
     <div class="main">
       <div v-if="activeTab === 'tab1'">
-        <div class="hint" v-if='onhint'><img src="../assets/img/vn2l_fw658.png"></div>
+        <div class="hint" v-if='onhint'></div>
         <div class="content" v-for="item in items">
           <img :src="item.thumbnail">
           <moredown :endTime="item.end_time"></moredown>
@@ -37,7 +41,7 @@
         <mu-infinite-scroll :scroller="scroller" :loading="loading" @load="loadMore" />
       </div>
       <div v-if="activeTab === 'tab2'">
-        <div class="hint" v-if='endhint'><img src="../assets/img/vn2l_fw658.png"></div>
+        <div class="hint" v-if='endhint'></div>
         <div class="content" v-for="item in items2">
           <img :src="item.thumbnail">
           <div class="focus">
@@ -246,16 +250,19 @@ export default {
     line-height: 1.5;
     font-size: rem(30);
   }
-  .hint {
-    padding-top: rem(88);
+  .head-tabs{
     background-color: #fff;
-    width: 100%;
-    img {
-      display: block;
-      margin: 0 auto;
-      width: rem(197);
-      height: rem(287);
+    .head-tab{
+       width: rem(440);
+    margin: 0 auto;
     }
+   
+  }
+  .hint {
+    padding-top: rem(600);
+    width: 100%;
+    background: #fff url(../assets/img/vn2l_fw658.png) no-repeat  center;
+    background-size: rem(197) rem(287);
   }
   .iconfont {
     font-family: "iconfont";
@@ -284,7 +291,7 @@ export default {
     }
   }
   .content {
-    position: relative;
+    position: relative; 
     margin-top: rem(6);
     margin-bottom: rem(16);
     .time {
@@ -302,8 +309,8 @@ export default {
       top: rem(270);
       right: rem(28);
       .iconfont {
-        top: -0.42rem;
-        left: -0.43rem;
+        top: -0.40rem;
+        left: -0.75rem;
         width: rem(17);
         font-size: rem(30);
         height: rem(22);
@@ -399,9 +406,9 @@ export default {
     background: #1979e7 !important;
     height: rem(4) !important;
     width: rem(150) !important;
-    transform: translate3d(rem(110), 0px, 0px) !important;
+    transform: translate3d(rem(38), 0px, 0px) !important;
     &.blue {
-      transform: translate3d(rem(490), 0px, 0px) !important;
+      transform: translate3d(rem(260), 0px, 0px) !important;
     }
   }
 }

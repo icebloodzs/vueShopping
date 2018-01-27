@@ -171,6 +171,7 @@ export default {
       (this.isActive = false), (this.isActives = true);
     },
     routerClickadd() {
+      let gaintype = this.$route.query.gaintype;
       let fan_id = this.$route.query.fan_id;
       let id = this.$route.query.id;
       let lng = this.$route.query.lng;
@@ -182,7 +183,8 @@ export default {
           id: id,
           lng: lng,
           lat: lat,
-          action: "addfirstprofile"
+          action: "addfirstprofile",
+          gaintype :gaintype 
         }
       });
     },

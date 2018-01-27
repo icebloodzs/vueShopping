@@ -177,11 +177,10 @@ export default {
       padding-right: rem(27);
       height: rem(180);
       background-color: #fff;
-
       img {
-        width: rem(225);
-        height: rem(180);
-        margin-right: rem(10);
+        width: rem(160);
+        height: rem(123);
+        margin: rem(23) rem(24) 0 rem(30);
       }
       .pay-head-right {
         display: flex;
