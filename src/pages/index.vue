@@ -47,7 +47,7 @@
 
 <script>
 import Banner from "../components/Banner.vue";
-import api from "@/api";
+import {api} from 'h5sdk'
 
 export default {
   components: {

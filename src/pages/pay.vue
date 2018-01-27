@@ -64,8 +64,8 @@
 
 </template>
 <script>
-import api from "@/api";
-import { getLocation } from "@/sdk/wx";
+import {api} from 'h5sdk'
+import { getLocation } from "h5sdk/sdk/wx";
 export default {
   components: {},
   data() {

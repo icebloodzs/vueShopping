@@ -25,7 +25,7 @@
   </div>
 </template>
 <script>
-import api from "@/api";
+import {api} from 'h5sdk'
 export default {
   components: {},
   data() {

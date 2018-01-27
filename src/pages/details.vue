@@ -68,9 +68,9 @@
 
 </template>
 <script>
-import api from "@/api";
+import {api} from 'h5sdk'
 import detailsdown from "../components/detailsdown.vue";
-import { getLocation } from "@/sdk/wx";
+import { getLocation } from "h5sdk/sdk/wx";
 export default {
   components: {
     detailsdown: detailsdown

@@ -22,7 +22,7 @@ module.exports = {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src')
+      '@': resolve('src'),
     }
   },
   module: {
@@ -35,7 +35,7 @@ module.exports = {
         test: /\.js$/,
         loader: 'babel-loader',
         include: [resolve('src'), resolve('test'),resolve('node_modules/_dom7@2.0.1@dom7/dist/dom7.modular')
-        ,resolve('node_modules/_swiper@4.0.7@swiper/dist/js/swiper.esm.bundle')
+        ,resolve('node_modules/_swiper@4.1.0@swiper/dist/js/swiper.esm.bundle'),resolve('node_modules/_h5sdk@1.0.0@h5sdk/sdk')
       ]
       },
       {

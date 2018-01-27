@@ -71,7 +71,7 @@
 
 </template>
 <script>
-import api from "@/api";
+import {api} from 'h5sdk'
 import moredown from "../components/moredown.vue";
 export default {
   components: {
