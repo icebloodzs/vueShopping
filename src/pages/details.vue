@@ -101,11 +101,7 @@
     },
     methods: {
       replaceRem(content) {
-        this.description = content.replace(/(\d+)px/g, function(s, t) {
-          s = s.replace('px', '');
-          let value = parseInt(s)/75;//   此处 1rem =75px
-          return value + "rem";
-        });
+        this.description = content.replace(/([\d.]+)px/g, 'inherit');
       },
       routerClicksubmit () {
         let id = this.$route.query.id
