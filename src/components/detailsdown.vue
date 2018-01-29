@@ -1,16 +1,21 @@
 <template>
-    <div class="content-price-right">
-        距结束
-        <span>{{hour}}</span>:
-        <span>{{min}}</span>:
-        <span>{{sec}}</span>
-    </div>
+  <div class="content-price-right">
+    距结束
+    <span>{{hour}}</span>:
+    <span>{{min}}</span>:
+    <span>{{sec}}</span>
+  </div>
 </template>
 <script>
 export default {
   props: {
     endTime: {
       type: String
+    }
+  },
+  computed: {
+    endTtime: function() {
+      return this.endTime.substring(0, 10)+"T"+this.endTime.substring(11);
     }
   },
   data: function() {
@@ -24,7 +29,7 @@ export default {
   },
   methods: {
     timeDown() {
-      const endTime = new Date(this.endTime);
+      const endTime = new Date(this.endTtime);
       const nowTime = new Date();
       let leftTime = parseInt((endTime.getTime() - nowTime.getTime()) / 1000);
       let d = parseInt(leftTime / (24 * 60 * 60));

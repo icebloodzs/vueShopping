@@ -88,7 +88,8 @@ export default {
       message: "",
       topPopup: false,
       order_id: [],
-      addressid: []
+      addressid: [],
+      url:[]
     };
   },
   mounted() {
@@ -153,8 +154,6 @@ export default {
       let fan_id = this.$route.query.fan_id;
       let goods_id = this.$route.query.id;
       let amount = this.counter;
-      // let lng = this.$route.query.lng;
-      // let lat = this.$route.query.lat;
       const { data } = await this.api.get("create_order", {
         goods_id: goods_id,
         fan_id: fan_id,
@@ -192,6 +191,9 @@ export default {
       const { data } = await this.api.get("pay", {
         order_id: order_id
       });
+      console.log(data)
+      this.url = data.url
+      window.location.href = this.url
     },
     async getGoodsData() {
       let goods_id = this.$route.query.id;

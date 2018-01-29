@@ -243,6 +243,7 @@ export default {
 @import "../assets/sass/_base.scss";
 .wrapper {
   @include wrapper;
+  height: 100vh;
   .nomore {
     color: #666;
     text-align: center;

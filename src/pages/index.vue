@@ -154,6 +154,7 @@ export default {
 .wrapper {
   position: relative;
   background-color: #fbfcfe;
+  height: 100vh;
   .nomore {
     color: #666;
     text-align: center;
