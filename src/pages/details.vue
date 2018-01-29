@@ -69,8 +69,11 @@
 </template>
 <script>
 import {api} from 'h5sdk'
+import {wx} from 'h5sdk'
 import detailsdown from "../components/detailsdown.vue";
 import { getLocation } from "h5sdk/sdk/wx";
+wx.setConfig(Window.AppConfig.wxJsConfig)
+
 export default {
   components: {
     detailsdown: detailsdown
@@ -124,6 +127,7 @@ export default {
       let goods_id = this.$route.query.id;
       this.isloading = true;
       let _data = await getLocation();
+      console.log(_data)
       this.lng = _data.longitude;
       this.lat = _data.latitude;
       const { data } = await api.get("goods_detail", {

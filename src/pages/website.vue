@@ -30,6 +30,8 @@
 </template>
 <script>
 import {api} from 'h5sdk'
+import {wx} from 'h5sdk'
+wx.setConfig(Window.AppConfig.wxJsConfig)
 import { getLocation } from "h5sdk/sdk/wx";
 export default {
   components: {},
