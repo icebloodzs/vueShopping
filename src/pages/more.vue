@@ -243,6 +243,7 @@ export default {
 @import "../assets/sass/_base.scss";
 .wrapper {
   @include wrapper;
+  height: 100vh;
   .nomore {
     color: #666;
     text-align: center;
@@ -257,9 +258,10 @@ export default {
     }
   }
   .hint {
-    padding-top: rem(600);
+    padding-top: rem(300);
     width: 100%;
-    background: #fff url(../assets/img/vn2l_fw658.png) no-repeat center;
+    height: rem(1110);
+    background: #fff url(../assets/img/vn2l_fw658.png) no-repeat 50% 25% ;
     background-size: rem(197) rem(287);
   }
   .iconfont {
