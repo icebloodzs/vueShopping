@@ -19,7 +19,7 @@
                     保存
                 </div>
             </div>
-             <mu-toast v-if="toast" :message="this.message" @close="hideToast"/>
+             <!-- <mu-toast v-if="toast" :message="this.message" @close="hideToast"/> -->
         </div>
     </div>
 </template>
@@ -28,7 +28,7 @@ export default {
   components: {},
   data() {
     return {
-      toast: false,
+      // toast: false,
       disabled: false,
       btntxt: "获取验证码",
       phone: "",
@@ -91,25 +91,25 @@ export default {
           'captcha':code
         });
         this.items = data;
-        this.message = this.items.message;
-        if(this.items.error){
-        this.toast = true
-        if (this.toastTimer) clearTimeout(this.toastTimer)
-        this.toastTimer = setTimeout(() => { this.toast = false }, 1000)
-        } else{
-           this.toast = true
-          if (this.toastTimer) clearTimeout(this.toastTimer)
-          this.toastTimer = setTimeout(() => { this.toast = false }, 1000)
+        // this.message = this.items.message;
+        // if(this.items.error){
+        // this.toast = true
+        // if (this.toastTimer) clearTimeout(this.toastTimer)
+        // this.toastTimer = setTimeout(() => { this.toast = false }, 1000)
+        // } else{
+        //    this.toast = true
+        //   if (this.toastTimer) clearTimeout(this.toastTimer)
+        //   this.toastTimer = setTimeout(() => { this.toast = false }, 1000)
           setTimeout(()=>{
             this.$router.go(-1);
           },2000)
-        }
+        // }
       }
     },
-     hideToast () {
-      this.toast = false
-      if (this.toastTimer) clearTimeout(this.toastTimer)
-    }
+    //  hideToast () {
+    //   this.toast = false
+    //   if (this.toastTimer) clearTimeout(this.toastTimer)
+    // }
   }
 };
 </script>

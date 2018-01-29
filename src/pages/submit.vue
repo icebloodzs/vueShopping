@@ -164,7 +164,6 @@ export default {
         address_id: this.addressid
       });
       this.order_id = data.order_id;
-      console.log(data.order_id)
       }else{
         this.order_id = orderId
       }

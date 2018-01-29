@@ -345,7 +345,6 @@ export default {
         }
       }
       this.isloading = false
-      console.log(this.items2)
     },
     //全部更多订单数据获取
     async getMoreData() {

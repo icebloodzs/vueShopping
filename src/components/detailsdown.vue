@@ -29,7 +29,6 @@ export default {
   },
   methods: {
     timeDown() {
-      console.log(this.endTtime)
       const endTime = new Date(this.endTtime);
       const nowTime = new Date();
       let leftTime = parseInt((endTime.getTime() - nowTime.getTime()) / 1000);
