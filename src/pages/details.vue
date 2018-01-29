@@ -34,7 +34,8 @@
             <div v-for="item in purnum"><img :src="item.fan_head_image"></div>
           </div>
           <div class="content-purchase-right">
-            已有<span>{{pur_num}}</span>人抢购
+            已有
+            <span>{{pur_num}}</span>人抢购
           </div>
         </div>
       </div>
@@ -68,11 +69,11 @@
 
 </template>
 <script>
-import {api} from 'h5sdk'
-import {wx} from 'h5sdk'
+import { api } from "h5sdk";
+import { wx } from "h5sdk";
 import detailsdown from "../components/detailsdown.vue";
-import { getLocation } from "h5sdk/sdk/wx";
-wx.setConfig(Window.AppConfig.wxJsConfig)
+wx.setConfig(Window.AppConfig.wxJsConfig);
+// import { getLocation } from "h5sdk/sdk/wx";
 
 export default {
   components: {
@@ -126,8 +127,8 @@ export default {
     async getData() {
       let goods_id = this.$route.query.id;
       this.isloading = true;
-      let _data = await getLocation();
-      console.log(_data)
+      let _data = await wx.getLocation();
+      console.log(_data);
       this.lng = _data.longitude;
       this.lat = _data.latitude;
       const { data } = await api.get("goods_detail", {

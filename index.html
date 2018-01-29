@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <!-- 微信 JSSDK -->
@@ -7,15 +8,19 @@
   <title>中原银行抢购</title>
   <script>
     Window.AppConfig = {
-      debug:true,
+      debug: false,
       id: '1wxAvPWzQro2G4RXkBrd', // 当前应用的ID
       uid: '1', // 微信用户辨识id
       version: 1, // 当前应用的版本
       basePath: 'http://dev.mp.duduapp.net/h5/1wxAvPWzQro2G4RXkBrd', // 当前应用地址 注意后面没有/斜杠
       assetsPath: 'http://cdn.com', // 当前应用静态资源存放路径 注意后面没有/斜杠
-      wxJsConfig: {
-        // 微信jssdk初始化配置
-      },
+      wxJsConfig: { "debug": false, "beta": false,
+       "appId": "wxb5933d30702eeb85", 
+       "nonceStr": "dJys1qB09a", 
+       "timestamp": 1517195691,
+        "url": "http:\/\/dev.mp.duduapp.net\/h5\/LVlrgz4p2j5QbAnv8BGE", 
+       "signature": "4a1b7b953054e88f9c5691ccf345b9103173c33b", 
+       "jsApiList": ["chooseImage", "uploadImage", "onMenuShareTimeline", "onMenuShareAppMessage", "onMenuShareQQ", "onMenuShareWeibo", "onMenuShareQZone"] },
       api: { // 后端api地址列表
         'visit': 'http://domain/api/visit',
         'share': 'http://domain/api/share'
@@ -25,7 +30,9 @@
     }
   </script>
 </head>
+
 <body>
-<div id="app"></div>
+  <div id="app"></div>
 </body>
+
 </html>
