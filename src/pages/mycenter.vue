@@ -25,7 +25,7 @@
       </mu-tabs>
       <div v-if="bottomNav === ''">
         <div class="hint" v-if='!allitems.length'></div>
-        <div class="content" v-for="item in items2">
+        <div class="content" @click="routerClickdetail(item.id,item.extract_type)" v-for="item in items2">
           <div class="content-head">
             <span>{{item.created_at}}</span>
             <span>待付款</span>
@@ -38,7 +38,7 @@
                 <span>￥{{item.actual_price}}</span>
               </div>
             </div>
-            <div class="content-con-button" @click="routerClickPay(item.id,item.extract_type)">支付</div>
+            <div class="content-con-button" @click.stop="routerClickPay(item.id)">支付</div>
           </div>
         </div>
         <div class="content" @click="routerClickCancel(item.id)" v-for="item in items3">
@@ -56,7 +56,7 @@
             </div>
           </div>
         </div>
-        <div class="content" v-for="item in items4">
+        <div class="content" @click="routerClickdetail(item.id,item.extract_type)" v-for="item in items4">
           <div class="content-head">
             <span>2012-12-12 &nbsp; 17:06:24</span>
             <span>已完成</span>
@@ -69,10 +69,10 @@
                 <span>￥{{item.actual_price}}</span>
               </div>
             </div>
-            <div class="content-physical-button" @click="routerClickPhysical(item.id)">查看物流</div>
+            <div class="content-physical-button" @click.stop="routerClickPhysical(item.id)">查看物流</div>
           </div>
         </div>
-        <div class="content" v-for="item in items5">
+        <div class="content" @click="routerClickCancel(item.id,item.extract_type)" v-for="item in items5">
           <div class="content-head">
             <span>2012-12-12 &nbsp; 17:06:24</span>
             <span>已核销</span>
@@ -93,7 +93,7 @@
       </div>
       <div v-if="bottomNav === '1'">
         <div class="hint" v-if='!items.length'></div>
-        <div class="content" v-for="item in items">
+        <div class="content" @click="routerClickdetail(item.id,item.extract_type)" v-for="item in items" >
           <div class="content-head">
             <span>{{item.created_at}}</span>
             <span>待付款</span>
@@ -106,7 +106,7 @@
                 <span>￥{{item.actual_price}}</span>
               </div>
             </div>
-            <div class="content-con-button" @click="routerClickPay(item.id,item.extract_type)">支付</div>
+            <div class="content-con-button" @click.stop="routerClickPay(item.id)">支付</div>
           </div>
         </div>
         <p class="nomore" v-show="nomore2">--------我是有底线的--------</p>
@@ -136,7 +136,7 @@
       </div>
       <div v-if="bottomNav === '5'">
         <div class="hint" v-if='!items.length'></div>
-        <div class="content" v-for="item in items4">
+        <div class="content" @click="routerClickdetail(item.id,item.extract_type)" v-for="item in items4">
           <div class="content-head">
             <span>2012-12-12 &nbsp; 17:06:24</span>
             <span>已完成</span>
@@ -149,15 +149,15 @@
                 <span>￥{{item.actual_price}}</span>
               </div>
             </div>
-            <div class="content-physical-button" @click="routerClickPhysical(item.id)">查看物流</div>
+            <div class="content-physical-button" @click.stop="routerClickPhysical(item.id)">查看物流</div>
           </div>
         </div>
-        <div class="content" v-for="item in items5">
+        <div class="content" @click="routerClickCancel(item.id,item.extract_type)" v-for="item in items5">
           <div class="content-head">
             <span>2012-12-12 &nbsp; 17:06:24</span>
             <span>已核销</span>
           </div>
-          <div class="content-con tab4" @click="routerClickCancel(item.id)">
+          <div class="content-con tab4">
             <div class="content-con-left">
               <img :src="item.thumbnail" alt="">
               <div class="content-con-text">
@@ -210,7 +210,8 @@ export default {
       loading: false,
       loading2: false,
       loading3: false,
-      loading4: false
+      loading4: false,
+      url:[]
     };
   },
   created() {},
@@ -220,6 +221,12 @@ export default {
     this.getUserData();
   },
   methods: {
+    routerClickdetail(order_id,extract_type){
+      this.$router.push({
+        path: "/dist/pay",
+        query: { order_id: order_id, extract_type: extract_type }
+      });
+    },
     handleTabChange(val) {
       this.bottomNav = val;
       this.getCenterData(val);
@@ -231,11 +238,12 @@ export default {
     routerClickhome() {
       this.$router.push("/");
     },
-    routerClickPay(order_id, extract_type) {
-      this.$router.push({
-        path: "/dist/pay",
-        query: { order_id: order_id, extract_type: extract_type }
+    async routerClickPay(order_id) {
+      const { data } = await this.api.get("pay", {
+        order_id: order_id
       });
+      this.url = data.url
+      window.location.href = this.url
     },
     routerClickCancel(order_id, extract_type) {
       this.$router.push({
@@ -337,6 +345,7 @@ export default {
         }
       }
       this.isloading = false
+      console.log(this.items2)
     },
     //全部更多订单数据获取
     async getMoreData() {

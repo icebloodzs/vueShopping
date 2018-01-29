@@ -21,7 +21,7 @@
           </div>
         </div>
       </div>
-      <div class="pay-button" @click="routerClicksubmit(items.goods_id,items.id)">立即付款</div>
+      <!-- <div class="pay-button" @click="routerClicksubmit(items.goods_id,items.id)">立即付款</div> -->
       <div class="pay-con">
         <div class="content-pay">
           <div v-if="type === 'store'" class="content-store">
@@ -207,7 +207,7 @@ export default {
       }
     }
     .content-pay {
-      margin: 0 rem(25);
+      margin: rem(30) rem(25);
       padding: 0 rem(20);
       background-color: #fff;
       .gain-info {

@@ -199,7 +199,6 @@ export default {
       const { data } = await this.api.get("pay", {
         order_id: order_id
       });
-      console.log(data)
       this.url = data.url
       window.location.href = this.url
     },
