@@ -21,7 +21,7 @@
           </div>
         </div>
       </div>
-      <div class="pay-button" @click="routerClicksubmit(items.goods_id)">立即付款</div>
+      <div class="pay-button" @click="routerClicksubmit(items.goods_id,items.id)">立即付款</div>
       <div class="pay-con">
         <div class="content-pay">
           <div v-if="type === 'store'" class="content-store">
@@ -84,7 +84,7 @@ export default {
     routerClickgoback() {
       this.$router.go(-1);
     },
-    routerClicksubmit(goodsId) {
+    routerClicksubmit(goodsId,order_id) {
       this.$router.push({
         path: "/dist/submit",
         query: {
@@ -92,7 +92,8 @@ export default {
           id: goodsId,
           lng: this.lng,
           lat: this.lat,
-          gaintype: this.gaintype
+          gaintype: this.gaintype,
+          order_id:order_id
         }
       });
     },

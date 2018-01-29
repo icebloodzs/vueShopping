@@ -4,10 +4,10 @@
     <i class="iconfont" @click="routerClickgoback">&#xe600;</i>
     <div class="head-tabs">
       <div class="head-tab">
-         <mu-tabs class="tabs" :value="activeTab" @change="handleTabChange" :lineClass="{ blue:isActive,actleft:actleft }">
-      <mu-tab value="tab1" @active="tab1Active" title="进行中" />
-      <mu-tab value="tab2" @active="tab2Active" title="已结束" />
-    </mu-tabs>
+        <mu-tabs class="tabs" :value="activeTab" @change="handleTabChange" :lineClass="{ blue:isActive,actleft:actleft }">
+          <mu-tab value="tab1" @active="tab1Active" title="进行中" />
+          <mu-tab value="tab2" @active="tab2Active" title="已结束" />
+        </mu-tabs>
       </div>
     </div>
     <div class="main">
@@ -84,7 +84,7 @@ export default {
       endTime: "",
       items: [],
       items2: [],
-      isloading:false,
+      isloading: false,
       endhint: false,
       onhint: false,
       nomore: false,
@@ -125,7 +125,7 @@ export default {
     // 进行中分类数据获取
     async getMoreData() {
       let classId = this.$route.query.classId;
-      this.isloading = true
+      this.isloading = true;
       if (classId) {
         const { data } = await this.api.get("goods_list", {
           classification_id: classId
@@ -135,7 +135,7 @@ export default {
         const { data } = await this.api.get("goods_list");
         this.items = data.data;
       }
-      this.isloading = false
+      this.isloading = false;
       if (!this.items.length) {
         this.onhint = true;
       }
@@ -144,8 +144,8 @@ export default {
     async getMoreDatas() {
       let arr = [];
       let that = this;
-       let classId = this.$route.query.classId;
-          if (classId) {
+      let classId = this.$route.query.classId;
+      if (classId) {
         const { data } = await this.api.get("goods_list", {
           classification_id: classId,
           page: this.page
@@ -179,7 +179,7 @@ export default {
     // 已结束分类数据获取
     async getMoreData2() {
       let classId = this.$route.query.classId;
-      this.isloading = true
+      this.isloading = true;
       if (classId) {
         const { data } = await this.api.get("goods_list", {
           status: "1",
@@ -192,7 +192,7 @@ export default {
         });
         this.items2 = data.data;
       }
-      this.isloading = false
+      this.isloading = false;
       if (!this.items2.length) {
         this.endhint = true;
       }
@@ -201,10 +201,10 @@ export default {
     async getMoreDatas2() {
       let arr = [];
       let that = this;
-       let classId = this.$route.query.classId;
-          if (classId) {
+      let classId = this.$route.query.classId;
+      if (classId) {
         const { data } = await this.api.get("goods_list", {
-           status: "1",
+          status: "1",
           classification_id: classId,
           page: this.page2
         });
@@ -243,25 +243,23 @@ export default {
 @import "../assets/sass/_base.scss";
 .wrapper {
   @include wrapper;
-  height: 100vh;
   .nomore {
     color: #666;
     text-align: center;
     line-height: 1.5;
     font-size: rem(30);
   }
-  .head-tabs{
+  .head-tabs {
     background-color: #fff;
-    .head-tab{
-       width: rem(440);
-    margin: 0 auto;
+    .head-tab {
+      width: rem(440);
+      margin: 0 auto;
     }
-   
   }
   .hint {
     padding-top: rem(600);
     width: 100%;
-    background: #fff url(../assets/img/vn2l_fw658.png) no-repeat  center;
+    background: #fff url(../assets/img/vn2l_fw658.png) no-repeat center;
     background-size: rem(197) rem(287);
   }
   .iconfont {
@@ -291,7 +289,7 @@ export default {
     }
   }
   .content {
-    position: relative; 
+    position: relative;
     margin-top: rem(6);
     margin-bottom: rem(16);
     .time {
@@ -309,7 +307,7 @@ export default {
       top: rem(270);
       right: rem(28);
       .iconfont {
-        top: -0.40rem;
+        top: -0.4rem;
         left: -0.75rem;
         width: rem(17);
         font-size: rem(30);

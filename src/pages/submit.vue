@@ -56,14 +56,15 @@
         <div class="mu-list-head">
           <strong>支付方式</strong>
         </div>
-        <div class="mu-list-item" :class="{active: isActive}" @click="isActive1">
+        <!-- <div class="mu-list-item" :class="{active: isActive}" @click="isActive1">
           <img src="../assets/img/zhongyuan_logo_02.png" alt=""> 中原银行卡支付（2366）
-        </div>
-        <div class="mu-list-item" :class="{actives: isActives}" @click="isActive2">
+        </div> -->
+        <div class="mu-list-item" :class="{actives: isActives}">
           <img src="../assets/img/weixin_logo_02.png" alt=""> 微信支付
         </div>
-        <i class="iconfont" :class="{iconfontsite: isActive}">&#xe721;</i>
-        <div class="mu-list-button" @click="payNow">立即支付</div>
+        <!-- <i class="iconfont" :class="{iconfontsite: isActive}">&#xe721;</i> -->
+        <i class="iconfont">&#xe721;</i>
+        <div class="mu-list-button" @click.stop="payNow">立即支付</div>
       </div>
     </div>
   </div>
@@ -77,7 +78,7 @@ export default {
       counter: 1,
       bottomSheet: false,
       isActive: true,
-      isActives: false,
+      isActives: true,
       order_id: [],
       goods: [],
       tel: "",
@@ -131,7 +132,11 @@ export default {
       }
     },
     async openBottomSheet() {
+      let orderId = this.$route.query.order_id;
       let gaintype = this.$route.query.gaintype;
+      let fan_id = this.$route.query.fan_id;
+      let goods_id = this.$route.query.id;
+      let amount = this.counter;
       if (gaintype == 1) {
         if (this.alladdress.length == 0) {
           this.message = "您还没有填写收获地址呢";
@@ -151,23 +156,26 @@ export default {
           this.bottomSheet = true;
         }
       }
-      let fan_id = this.$route.query.fan_id;
-      let goods_id = this.$route.query.id;
-      let amount = this.counter;
-      const { data } = await this.api.get("create_order", {
+      if(!orderId){
+        const { data } = await this.api.get("create_order", {
         goods_id: goods_id,
         fan_id: fan_id,
         amount: amount,
         address_id: this.addressid
       });
       this.order_id = data.order_id;
+      console.log(data.order_id)
+      }else{
+        this.order_id = orderId
+      }
+      
     },
-    isActive1() {
-      (this.isActive = true), (this.isActives = false);
-    },
-    isActive2() {
-      (this.isActive = false), (this.isActives = true);
-    },
+    // isActive1() {
+    //   (this.isActive = true), (this.isActives = false);
+    // },
+    // isActive2() {
+    //   (this.isActive = false), (this.isActives = true);
+    // },
     routerClickadd() {
       let gaintype = this.$route.query.gaintype;
       let fan_id = this.$route.query.fan_id;
