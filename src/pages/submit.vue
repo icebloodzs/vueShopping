@@ -70,7 +70,6 @@
 
 </template>
 <script>
-import {api} from 'h5sdk'
 export default {
   components: {},
   data() {
@@ -156,7 +155,7 @@ export default {
       let amount = this.counter;
       // let lng = this.$route.query.lng;
       // let lat = this.$route.query.lat;
-      const { data } = await api.get("create_order", {
+      const { data } = await this.api.get("create_order", {
         goods_id: goods_id,
         fan_id: fan_id,
         amount: amount,
@@ -190,7 +189,7 @@ export default {
     },
     async payNow() {
       let order_id = this.order_id;
-      const { data } = await api.get("pay", {
+      const { data } = await this.api.get("pay", {
         order_id: order_id
       });
     },
@@ -199,7 +198,7 @@ export default {
       let gaintype = this.$route.query.gaintype;
       let lng = this.$route.query.lng;
       let lat = this.$route.query.lat;
-      const { data } = await api.get("goods_detail", {
+      const { data } = await this.api.get("goods_detail", {
         goods_id: goods_id,
         lng: lng,
         lat: lat
@@ -208,7 +207,7 @@ export default {
     },
     async getTelData() {
       let fan_id = this.$route.query.fan_id;
-      const { data } = await api.get("get_bind_mobile", {
+      const { data } = await this.api.get("get_bind_mobile", {
         fan_id: fan_id
       });
       if (data.data) {
@@ -219,7 +218,7 @@ export default {
       let that = this;
       let fan_id = this.$route.query.fan_id;
       let addtressid = this.$route.query.addtressid;
-      const { data } = await api.get("shipping_address_list", {
+      const { data } = await this.api.get("shipping_address_list", {
         fan_id: fan_id
       });
       this.alladdress = data.data;

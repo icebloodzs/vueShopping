@@ -32,7 +32,7 @@ export default {
         el: ".swiper-pagination",
         type: "fraction",
         renderFraction: function(currentClass, totalClass) {
-          // if (that.counter.length <= 1) return;
+          if (that.counter.length <= 1) return;
           return (
             '<span class="' +
             currentClass +

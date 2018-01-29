@@ -24,7 +24,6 @@
     </div>
 </template>
 <script>
-import {api} from 'h5sdk'
 export default {
   components: {},
   data() {
@@ -46,7 +45,7 @@ export default {
     async sendCaptcha() {
       let mobile = this.phone;
       let fan_id = this.$route.query.fan_id;
-      const { data } = await api.get("send_captcha", {
+      const { data } = await this.api.get("send_captcha", {
         'fan_id': fan_id,
         'mobile': mobile
       });
@@ -86,7 +85,7 @@ export default {
       if (this.code == "") {
         alert("请输入验证码");
       } else {
-        const { data } = await api.get("modify_bind_mobile", {
+        const { data } = await this.api.get("modify_bind_mobile", {
           'fan_id': fan_id,
           'mobile': mobile,
           'captcha':code

@@ -29,10 +29,6 @@
 
 </template>
 <script>
-import {api} from 'h5sdk'
-import {wx} from 'h5sdk'
-wx.setConfig(Window.AppConfig.wxJsConfig)
-import { getLocation } from "h5sdk/sdk/wx";
 export default {
   components: {},
   created() {
@@ -51,10 +47,10 @@ export default {
     },
     async getData() {
       let goods_id = this.$route.query.id;
-      let _data = await getLocation();
+      let _data = await this.wx.getLocation();
       this.lng = _data.longitude;
       this.lat = _data.latitude;
-      const { data } = await api.get("goods_detail", {
+      const { data } = await this.api.get("goods_detail", {
         goods_id: goods_id,
         lng: this.lng,
         lat: this.lat

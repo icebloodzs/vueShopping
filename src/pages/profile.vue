@@ -36,7 +36,6 @@
 
 </template>
 <script>
-import {api} from 'h5sdk'
 export default {
   components: {},
   created() {
@@ -87,7 +86,7 @@ export default {
     },
     async getData() {
       let fan_id = this.$route.query.fan_id;
-      const { data } = await api.get("shipping_address_list", {
+      const { data } = await this.api.get("shipping_address_list", {
         fan_id: fan_id
       });
       this.items = data.data;
@@ -95,7 +94,7 @@ export default {
     async del(profile_id) {
       let fan_id = this.$route.query.fan_id;
       let id = profile_id;
-      const { data } = await api.get("shipping_address_del", {
+      const { data } = await this.api.get("shipping_address_del", {
         fan_id: fan_id,
         id: id
       });

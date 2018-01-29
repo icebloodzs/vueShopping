@@ -176,7 +176,6 @@
 </template>
 
 <script>
-import {api} from 'h5sdk'
 export default {
   components: {},
   data() {
@@ -274,7 +273,7 @@ export default {
     },
     async getUserData() {
       let fan_id = this.$route.query.fan_id;
-      const { data } = await api.get("user_info", {
+      const { data } = await this.api.get("user_info", {
         fan_id: fan_id
       });
       this.user = data.data[0];
@@ -283,7 +282,7 @@ export default {
     async getCenterData(val) {
       let fan_id = this.$route.query.fan_id;
       this.isloading = true
-      const { data } = await api.get("order_list", {
+      const { data } = await this.api.get("order_list", {
         fan_id: fan_id,
         status: val
       });
@@ -307,7 +306,7 @@ export default {
     async getAllCenterData() {
       let fan_id = this.$route.query.fan_id;
       this.isloading = true
-      const { data } = await api.get("order_list", {
+      const { data } = await this.api.get("order_list", {
         fan_id: fan_id
       });
       this.allitems = data.data;
@@ -349,7 +348,7 @@ export default {
       let arr5 = [];
       let that = this;
       let len = arr.length;
-      const { data } = await api.get("order_list", {
+      const { data } = await this.api.get("order_list", {
         fan_id: fan_id,
         page: this.page
       });
@@ -405,7 +404,7 @@ export default {
       let that = this;
       let fan_id = this.$route.query.fan_id;
       let arr = [];
-      const { data } = await api.get("order_list", {
+      const { data } = await this.api.get("order_list", {
         fan_id: fan_id,
         status: 1,
         page: this.page2
@@ -435,7 +434,7 @@ export default {
       let that = this;
       let fan_id = this.$route.query.fan_id;
       let arr = [];
-      const { data } = await api.get("order_list", {
+      const { data } = await this.api.get("order_list", {
         fan_id: fan_id,
         status: 4,
         page: this.page3
@@ -467,7 +466,7 @@ export default {
       let arr = [];
       let arr4 = [];
       let arr5 = [];
-      const { data } = await api.get("order_list", {
+      const { data } = await this.api.get("order_list", {
         fan_id: fan_id,
         status: 5,
         page: this.page4

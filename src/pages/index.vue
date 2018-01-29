@@ -47,7 +47,6 @@
 
 <script>
 import Banner from "../components/Banner.vue";
-import {api} from 'h5sdk'
 export default {
   components: {
     "app-banner": Banner
@@ -101,18 +100,18 @@ export default {
     },
     // 轮播图数据获取
     async getImgData() {
-      const { data } = await api.get("carousel_images");
+      const { data } = await this.api.get("carousel_images");
       this.listImg = data.data;
     },
     // 分类数据获取
     async getClassifyData() {
-      const { data } = await api.get("classifications");
+      const { data } = await this.api.get("classifications");
       this.classify = data.data;
     },
     //首页商品数据获取
     async getGoodsData() {
       this.isloading = true
-      const { data } = await api.get("goods_list", {
+      const { data } = await this.api.get("goods_list", {
         order: "index"
       });
       this.goodsList = data.data;
@@ -122,7 +121,7 @@ export default {
     async getMoreData() {
       let arr = [];
       let that = this;
-      const { data } = await api.get("goods_list", {
+      const { data } = await this.api.get("goods_list", {
         order: "index",
         page: this.page
       });

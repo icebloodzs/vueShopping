@@ -25,7 +25,6 @@
 
 </template>
 <script>
-import {api} from 'h5sdk'
 export default {
   components: {},
   data() {
@@ -51,7 +50,7 @@ export default {
     async getData() {
       let id = this.$route.query.id;
       let fan_id = this.$route.query.fan_id;
-      const { data } = await api.get("shipping_address_list", {
+      const { data } = await this.api.get("shipping_address_list", {
         fan_id: fan_id
       });
       this.items = data.data;
@@ -68,7 +67,7 @@ export default {
       let consignee_name = this.name;
       let detail_address = this.address;
       let mobile = this.phone;
-      const { data } = await api.get("shipping_address_edit", {
+      const { data } = await this.api.get("shipping_address_edit", {
         'fan_id': fan_id,
         'consignee_name': consignee_name,
         'detail_address': detail_address,

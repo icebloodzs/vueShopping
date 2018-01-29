@@ -71,7 +71,6 @@
 
 </template>
 <script>
-import {api} from 'h5sdk'
 import moredown from "../components/moredown.vue";
 export default {
   components: {
@@ -128,12 +127,12 @@ export default {
       let classId = this.$route.query.classId;
       this.isloading = true
       if (classId) {
-        const { data } = await api.get("goods_list", {
+        const { data } = await this.api.get("goods_list", {
           classification_id: classId
         });
         this.items = data.data;
       } else {
-        const { data } = await api.get("goods_list");
+        const { data } = await this.api.get("goods_list");
         this.items = data.data;
       }
       this.isloading = false
@@ -147,13 +146,13 @@ export default {
       let that = this;
        let classId = this.$route.query.classId;
           if (classId) {
-        const { data } = await api.get("goods_list", {
+        const { data } = await this.api.get("goods_list", {
           classification_id: classId,
           page: this.page
         });
         arr = data.data;
       } else {
-        const { data } = await api.get("goods_list", {
+        const { data } = await this.api.get("goods_list", {
           page: this.page
         });
         arr = data.data;
@@ -182,13 +181,13 @@ export default {
       let classId = this.$route.query.classId;
       this.isloading = true
       if (classId) {
-        const { data } = await api.get("goods_list", {
+        const { data } = await this.api.get("goods_list", {
           status: "1",
           classification_id: classId
         });
         this.items2 = data.data;
       } else {
-        const { data } = await api.get("goods_list", {
+        const { data } = await this.api.get("goods_list", {
           status: "1"
         });
         this.items2 = data.data;
@@ -204,14 +203,14 @@ export default {
       let that = this;
        let classId = this.$route.query.classId;
           if (classId) {
-        const { data } = await api.get("goods_list", {
+        const { data } = await this.api.get("goods_list", {
            status: "1",
           classification_id: classId,
           page: this.page2
         });
         arr = data.data;
       } else {
-        const { data } = await api.get("goods_list", {
+        const { data } = await this.api.get("goods_list", {
           status: "1",
           page: this.page2
         });

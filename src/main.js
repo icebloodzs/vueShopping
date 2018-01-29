@@ -9,6 +9,14 @@ import 'muse-ui/dist/theme-light.css' // 使用 carbon 主题
 import * as filters from './utils/filter' //import * as obj from "xxx" 会将 "xxx" 中所有 export 导出的内容组合成一个对象返回
 import './config/flexible'
 import util from './config/util'
+import {api} from 'h5sdk'
+import {wx} from 'h5sdk'
+
+wx.setConfig(Window.AppConfig.wxJsConfig);
+
+Vue.prototype.api= api;
+Vue.prototype.wx= wx;
+
 Vue.use(util);
 Vue.use(MuseUI)
 // Vue.config.productionTip = false

@@ -69,12 +69,7 @@
 
 </template>
 <script>
-import { api } from "h5sdk";
-import { wx } from "h5sdk";
 import detailsdown from "../components/detailsdown.vue";
-wx.setConfig(Window.AppConfig.wxJsConfig);
-// import { getLocation } from "h5sdk/sdk/wx";
-
 export default {
   components: {
     detailsdown: detailsdown
@@ -127,11 +122,11 @@ export default {
     async getData() {
       let goods_id = this.$route.query.id;
       this.isloading = true;
-      let _data = await wx.getLocation();
+      let _data = await this.wx.getLocation();
       console.log(_data);
       this.lng = _data.longitude;
       this.lat = _data.latitude;
-      const { data } = await api.get("goods_detail", {
+      const { data } = await this.api.get("goods_detail", {
         goods_id: goods_id,
         lng: this.lng,
         lat: this.lat
@@ -151,7 +146,7 @@ export default {
     //商品已购人数及头像获取
     async getNumData() {
       let goods_id = this.$route.query.id;
-      const { data } = await api.get("bought_list", {
+      const { data } = await this.api.get("bought_list", {
         goods_id: goods_id
       });
       this.purnum = data.data;
