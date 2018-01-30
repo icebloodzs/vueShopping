@@ -90,7 +90,7 @@ export default {
       topPopup: false,
       order_id: [],
       addressid: [],
-      url:[]
+      url: []
     };
   },
   mounted() {
@@ -132,11 +132,7 @@ export default {
       }
     },
     async openBottomSheet() {
-      let orderId = this.$route.query.order_id;
       let gaintype = this.$route.query.gaintype;
-      let fan_id = this.$route.query.fan_id;
-      let goods_id = this.$route.query.id;
-      let amount = this.counter;
       if (gaintype == 1) {
         if (this.alladdress.length == 0) {
           this.message = "您还没有填写收获地址呢";
@@ -156,18 +152,6 @@ export default {
           this.bottomSheet = true;
         }
       }
-      if(!orderId){
-        const { data } = await this.api.get("create_order", {
-        goods_id: goods_id,
-        fan_id: fan_id,
-        amount: amount,
-        address_id: this.addressid
-      });
-      this.order_id = data.order_id;
-      }else{
-        this.order_id = orderId
-      }
-      
     },
     // isActive1() {
     //   (this.isActive = true), (this.isActives = false);
@@ -189,17 +173,26 @@ export default {
           lng: lng,
           lat: lat,
           action: "addfirstprofile",
-          gaintype :gaintype 
+          gaintype: gaintype
         }
       });
     },
     async payNow() {
-      let order_id = this.order_id;
-      const { data } = await this.api.get("pay", {
-        order_id: order_id
+      let fan_id = this.$route.query.fan_id;
+      let goods_id = this.$route.query.id;
+      let amount = this.counter;
+      let _data = await this.api.get("create_order", {
+        goods_id: goods_id,
+        fan_id: fan_id,
+        amount: amount,
+        address_id: this.addressid
       });
-      this.url = data.url
-      window.location.href = this.url
+      this.order_id = _data.data.order_id;
+      const { data } = await this.api.get("pay", {
+        order_id: this.order_id
+      });
+      this.url = data.url;
+      window.location.href = this.url;
     },
     async getGoodsData() {
       let goods_id = this.$route.query.id;
@@ -268,7 +261,7 @@ export default {
           id: id,
           lng: lng,
           lat: lat,
-          gaintype:gaintype
+          gaintype: gaintype
         }
       });
     }
