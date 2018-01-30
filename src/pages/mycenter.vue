@@ -717,10 +717,9 @@ export default {
   }
   .main {
     .hint {
-      padding-top: rem(300);
+      padding-top: rem(500);
       width: 100%;
-      height: rem(1010);
-      background: #fff url(../assets/img/vn2l_fw658.png) no-repeat 50% 25%;
+      background: #fff url(../assets/img/vn2l_fw658.png) no-repeat 50% 95%;
       background-size: rem(197) rem(287);
     }
     .mu-tab-link {
