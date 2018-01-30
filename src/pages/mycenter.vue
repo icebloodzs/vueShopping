@@ -26,7 +26,7 @@
       <div v-if="bottomNav === 'all'">
         <div class="hint" v-if='!allitems.length'></div>
         <!-- 待付款 -->
-        <div class="content" @click="routerClickdetail(item.id,item.extract_type)" v-for="item in items">
+        <div class="content" @click="routerClickdetail(item.id,item.extract_type)" v-for="item in items1">
           <div class="content-head">
             <span>{{item.created_at}}</span>
             <span>待付款</span>
@@ -292,7 +292,7 @@ export default {
     this.scroller = this.$el;
     // this.getAllCenterData();
     this.getUserData();
-    this.getCenterData("all");
+    // this.getCenterData("all");
   },
   methods: {
     routerClickdetail(order_id, extract_type) {
@@ -301,14 +301,12 @@ export default {
         query: { order_id: order_id, extract_type: extract_type }
       });
     },
-
     handleTabChange(val) {
       this.bottomNav = val;
       this.getCenterData(val);
     },
     routerClickcenter() {
       this.$router.go(0);
-      this.getCenterData();
     },
     routerClickhome() {
       this.$router.push("/");
@@ -408,43 +406,47 @@ export default {
         console.log(data);
         for (let i = 0, len = this.allitems.length; i < len; i++) {
           // 未支付
-          if (this.allitems[i].status == "1") {
-            this.items = [];
-            this.items.push(this.allitems[i]);
+          if (this.allitems[i].status == 1) {
+            this.items1 = [];
+            this.items1.push(this.allitems[i]);
+            // this.items[i] = this.allitems[i];
           }
           // 未核销
-          if (this.allitems[i].status == "4") {
-            this.items2[i] = this.allitems[i];
+          if (this.allitems[i].status == 4) {
+            this.items2 = [];
+            this.items2.push(this.allitems[i]);
           }
           // 已支付
-          if (this.allitems[i].status == "2") {
-            this.items3[i] = this.allitems[i];
+          if (this.allitems[i].status == 2) {
+             this.items3 = [];
+            this.items3.push(this.allitems[i]);
           }
           //已发货
-          if (this.allitems[i].status == "3") {
-            this.items4[i] = this.allitems[i];
+          if (this.allitems[i].status == 3) {
+             this.items4 = [];
+            this.items4.push(this.allitems[i]);
           }
           //已核销
           if (
-            this.allitems[i].status == "5" &&
-            this.allitems[i].extract_type == "2"
+            this.allitems[i].status == 5 &&
+            this.allitems[i].extract_type == 2
           ) {
-            this.items5[i] = this.allitems[i];
+             this.items5 = [];
+            this.items5.push(this.allitems[i]);
           }
           // 已完成
           if (
-            this.allitems[i].status == "5" &&
-            this.allitems[i].extract_type == "1"
+            this.allitems[i].status == 5 &&
+            this.allitems[i].extract_type == 1
           ) {
-            this.items6[i] = this.allitems[i];
+             this.items6 = [];
+            this.items6.push(this.allitems[i]);
           }
         }
+         console.log(this.items1)
         this.isloading = false;
       }
     },
-    // async getAllCenterData(){
-
-    // },
     //全部更多订单数据获取
     async getMoreData() {
       let fan_id = this.$route.query.fan_id;
@@ -461,7 +463,6 @@ export default {
         page: this.page
       });
       arr = data.data;
-      console.log(arr);
       if (arr.length == 0) {
         that.loading = false;
         that.nomore = true;
@@ -717,9 +718,10 @@ export default {
   }
   .main {
     .hint {
-      padding-top: rem(500);
+      padding-top: rem(300);
       width: 100%;
-      background: #fff url(../assets/img/vn2l_fw658.png) no-repeat 50% 95%;
+      height: rem(1010);
+      background: #fff url(../assets/img/vn2l_fw658.png) no-repeat 50% 25%;
       background-size: rem(197) rem(287);
     }
     .mu-tab-link {
