@@ -1,5 +1,5 @@
 <template>
-    <div class="time">距结束 &nbsp; {{hour}}：{{min}}：{{sec}}</div>
+  <div class="time">距结束 &nbsp; {{hour}}：{{min}}：{{sec}}</div>
 </template>
 <script>
 export default {
@@ -17,9 +17,14 @@ export default {
       sec: ""
     };
   },
+  computed: {
+    endTtime: function() {
+      return this.endTime.substring(0, 10) + "T" + this.endTime.substring(11);
+    }
+  },
   methods: {
     timeDown() {
-      const endTime = new Date(this.endTime);
+      const endTime = new Date(this.endTtime);
       const nowTime = new Date();
       let leftTime = parseInt((endTime.getTime() - nowTime.getTime()) / 1000);
       let d = parseInt(leftTime / (24 * 60 * 60));

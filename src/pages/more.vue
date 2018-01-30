@@ -14,6 +14,7 @@
       <div v-if="activeTab === 'tab1'">
         <div class="hint" v-if='onhint'></div>
         <div class="content" v-for="item in items">
+          <div class="banner-img"></div>
           <img :src="item.thumbnail">
           <moredown :endTime="item.end_time"></moredown>
           <div class="focus">
@@ -273,7 +274,6 @@ export default {
     top: 0;
     height: rem(80);
     line-height: rem(90);
-    // left: rem(25);
     padding-left: rem(25);
     color: #666666;
     z-index: 10;
@@ -294,6 +294,15 @@ export default {
     position: relative;
     margin-top: rem(6);
     margin-bottom: rem(16);
+    .banner-img{
+      position: absolute;
+      width: 100%;
+      top: 0;
+      height: rem(318);
+      background:-webkit-gradient(linear,left top,left bottom,
+       from(rgba(255,255,255,0)),
+       to(rgba(0,0,0,.5)));
+    }
     .time {
       position: absolute;
       font-size: rem(30);
@@ -321,6 +330,7 @@ export default {
     img {
       width: 100%;
       height: rem(318);
+      z-index: 2018;
     }
     .tilte {
       display: block;

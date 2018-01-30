@@ -18,14 +18,15 @@
     </div>
     <div class="main">
       <mu-tabs class="centertab" :value="bottomNav" @change="handleTabChange" :lineClass="classObject">
-        <mu-tab value="" @active="tab1Active" title="全部" />
-        <mu-tab @active="tab2Active" @click="checkPay" value="1" title="待付款" />
-        <mu-tab @click="checkCancel" value="4" title="未核销" />
-        <mu-tab @active="tab4Active" value="5" title="已完成" />
+        <mu-tab @active="tab1Active" value="all" title="全部" />
+        <mu-tab @active="tab2Active" value="1" title="待付款" />
+        <mu-tab @click="checkCancel" value="2" title="未核销" />
+        <mu-tab @active="tab4Active" value="3" title="已完成" />
       </mu-tabs>
-      <div v-if="bottomNav === ''">
+      <div v-if="bottomNav === 'all'">
         <div class="hint" v-if='!allitems.length'></div>
-        <div class="content" @click="routerClickdetail(item.id,item.extract_type)" v-for="item in items2">
+        <!-- 待付款 -->
+        <div class="content" @click="routerClickdetail(item.id,item.extract_type)" v-for="item in items">
           <div class="content-head">
             <span>{{item.created_at}}</span>
             <span>待付款</span>
@@ -41,7 +42,8 @@
             <div class="content-con-button" @click.stop="routerClickPay(item.id)">支付</div>
           </div>
         </div>
-        <div class="content" @click="routerClickCancel(item.id)" v-for="item in items3">
+        <!-- 未核销 -->
+        <div class="content" @click="routerClickCancel(item.id)" v-for="item in items2">
           <div class="content-head">
             <span>{{item.created_at}}</span>
             <span class="use">待使用</span>
@@ -56,10 +58,27 @@
             </div>
           </div>
         </div>
-        <div class="content" @click="routerClickdetail(item.id,item.extract_type)" v-for="item in items4">
+        <!-- 已支付 -->
+        <div class="content" @click="routerClickdetail(item.id,item.extract_type)" v-for="item in items3">
           <div class="content-head">
-            <span>2012-12-12 &nbsp; 17:06:24</span>
-            <span>已完成</span>
+            <span>{{item.created_at}}</span>
+            <span>已支付</span>
+          </div>
+          <div class="content-con tab4">
+            <div class="content-con-left">
+              <img :src="item.thumbnail" alt="">
+              <div class="content-con-text">
+                <span>{{item.goods_name}}</span>
+                <span>￥{{item.actual_price}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 已发货 -->
+        <div class="content" @click="routerClickCancel(item.id,item.extract_type)" v-for="item in items4">
+          <div class="content-head">
+            <span>{{item.created_at}}</span>
+            <span>已发货</span>
           </div>
           <div class="content-con tab4">
             <div class="content-con-left">
@@ -72,10 +91,27 @@
             <div class="content-physical-button" @click.stop="routerClickPhysical(item.id)">查看物流</div>
           </div>
         </div>
-        <div class="content" @click="routerClickCancel(item.id,item.extract_type)" v-for="item in items5">
+        <!-- 已核销 -->
+        <div class="content" @click="routerClickdetail(item.id,item.extract_type)" v-for="item in items5">
           <div class="content-head">
-            <span>2012-12-12 &nbsp; 17:06:24</span>
+            <span>{{item.created_at}}</span>
             <span>已核销</span>
+          </div>
+          <div class="content-con tab4">
+            <div class="content-con-left">
+              <img :src="item.thumbnail" alt="">
+              <div class="content-con-text">
+                <span>{{item.goods_name}}</span>
+                <span>￥{{item.actual_price}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 已完成 -->
+        <div class="content" @click="routerClickdetail(item.id,item.extract_type)" v-for="item in items6">
+          <div class="content-head">
+            <span>{{item.created_at}}</span>
+            <span>已完成</span>
           </div>
           <div class="content-con tab4">
             <div class="content-con-left">
@@ -93,7 +129,7 @@
       </div>
       <div v-if="bottomNav === '1'">
         <div class="hint" v-if='!items.length'></div>
-        <div class="content" @click="routerClickdetail(item.id,item.extract_type)" v-for="item in items" >
+        <div class="content" @click="routerClickdetail(item.id,item.extract_type)" v-for="item in items">
           <div class="content-head">
             <span>{{item.created_at}}</span>
             <span>待付款</span>
@@ -113,7 +149,7 @@
         <!--上拉加载更多的组件-->
         <mu-infinite-scroll :scroller="scroller" :loading="loading2" @load="loadMore2" />
       </div>
-      <div v-if="bottomNav === '4'">
+      <div v-if="bottomNav === '2'">
         <div class="hint" v-if='!items.length'></div>
         <div class="content" @click="routerClickCancel(item.id,item.extract_type)" v-for="item in items">
           <div class="content-head">
@@ -134,12 +170,27 @@
         <!--上拉加载更多的组件-->
         <mu-infinite-scroll :scroller="scroller" :loading="loading3" @load="loadMore3" />
       </div>
-      <div v-if="bottomNav === '5'">
-        <div class="hint" v-if='!items.length'></div>
-        <div class="content" @click="routerClickdetail(item.id,item.extract_type)" v-for="item in items4">
+      <div v-if="bottomNav === '3'">
+        <div class="hint" v-if='!itemss.length'></div>
+        <div class="content" @click="routerClickdetail(item.id,item.extract_type)" v-for="item in itemss3">
           <div class="content-head">
-            <span>2012-12-12 &nbsp; 17:06:24</span>
-            <span>已完成</span>
+            <span>{{item.created_at}}</span>
+            <span>已支付</span>
+          </div>
+          <div class="content-con tab4">
+            <div class="content-con-left">
+              <img :src="item.thumbnail" alt="">
+              <div class="content-con-text">
+                <span>{{item.goods_name}}</span>
+                <span>￥{{item.actual_price}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="content" @click="routerClickCancel(item.id,item.extract_type)" v-for="item in itemss4">
+          <div class="content-head">
+            <span>{{item.created_at}}</span>
+            <span>已发货</span>
           </div>
           <div class="content-con tab4">
             <div class="content-con-left">
@@ -152,10 +203,25 @@
             <div class="content-physical-button" @click.stop="routerClickPhysical(item.id)">查看物流</div>
           </div>
         </div>
-        <div class="content" @click="routerClickCancel(item.id,item.extract_type)" v-for="item in items5">
+        <div class="content" @click="routerClickdetail(item.id,item.extract_type)" v-for="item in itemss5">
           <div class="content-head">
-            <span>2012-12-12 &nbsp; 17:06:24</span>
+            <span>{{item.created_at}}</span>
             <span>已核销</span>
+          </div>
+          <div class="content-con tab4">
+            <div class="content-con-left">
+              <img :src="item.thumbnail" alt="">
+              <div class="content-con-text">
+                <span>{{item.goods_name}}</span>
+                <span>￥{{item.actual_price}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="content" @click="routerClickdetail(item.id,item.extract_type)" v-for="item in itemss6">
+          <div class="content-head">
+            <span>{{item.created_at}}</span>
+            <span>已完成</span>
           </div>
           <div class="content-con tab4">
             <div class="content-con-left">
@@ -180,8 +246,8 @@ export default {
   components: {},
   data() {
     return {
-      bottomNav: "",
-      isloading:false,
+      bottomNav: "all",
+      isloading: false,
       classObject: {
         tabone: true,
         tabtwo: false,
@@ -190,10 +256,17 @@ export default {
       },
       allitems: [],
       items: [],
+      itemss: [],
+      items1: [],
       items2: [],
       items3: [],
       items4: [],
       items5: [],
+      items6: [],
+      itemss3: [],
+      itemss4: [],
+      itemss5: [],
+      itemss6: [],
       pay: true,
       cancel: true,
       used: true,
@@ -211,22 +284,24 @@ export default {
       loading2: false,
       loading3: false,
       loading4: false,
-      url:[]
+      url: []
     };
   },
   created() {},
   mounted() {
     this.scroller = this.$el;
-    this.getAllCenterData();
+    // this.getAllCenterData();
     this.getUserData();
+    this.getCenterData("all");
   },
   methods: {
-    routerClickdetail(order_id,extract_type){
+    routerClickdetail(order_id, extract_type) {
       this.$router.push({
         path: "/dist/pay",
         query: { order_id: order_id, extract_type: extract_type }
       });
     },
+
     handleTabChange(val) {
       this.bottomNav = val;
       this.getCenterData(val);
@@ -242,8 +317,8 @@ export default {
       const { data } = await this.api.get("pay", {
         order_id: order_id
       });
-      this.url = data.url
-      window.location.href = this.url
+      this.url = data.url;
+      window.location.href = this.url;
     },
     routerClickCancel(order_id, extract_type) {
       this.$router.push({
@@ -263,7 +338,6 @@ export default {
       this.classObject.tabthree = false;
       this.classObject.tabfour = false;
     },
-    checkPay() {},
     checkCancel() {
       this.classObject.tabone = false;
       this.classObject.tabtwo = false;
@@ -286,66 +360,91 @@ export default {
       });
       this.user = data.data[0];
     },
-    //后三列数据获取
+    //全部、待付款、未核销、已完成数据获取
     async getCenterData(val) {
       let fan_id = this.$route.query.fan_id;
-      this.isloading = true
-      const { data } = await this.api.get("order_list", {
-        fan_id: fan_id,
-        status: val
-      });
-      this.items = data.data;
-      //已完成数据分类
-      if (val == 5) {
-        for (let i = 0, len = this.items.length; i < len; i++) {
-          if (this.items[i].status == 5 && this.items[i].extract_type == 1) {
-            this.items4[i] = this.items[i];
+      this.isloading = true;
+      //全部
+      if (val === "1" || val === "2") {
+        const { data } = await this.api.get("order_list", {
+          fan_id: fan_id,
+          status: val
+        });
+        this.items = data.data;
+        this.isloading = false;
+      }
+      if (val == "3") {
+        const { data } = await this.api.get("order_list", {
+          fan_id: fan_id,
+          status: val
+        });
+        this.itemss = data.data;
+        this.isloading = false;
+        for (let i = 0, len = this.itemss.length; i < len; i++) {
+          // 已支付
+          if (this.itemss[i].status == 2) {
+            this.itemss3[i] = this.itemss[i];
+          }
+          //已发货
+          if (this.itemss[i].status == 3) {
+            this.itemss4[i] = this.itemss[i];
+          }
+          //已核销
+          if (this.itemss[i].status == 5 && this.itemss[i].extract_type == 2) {
+            this.itemss5[i] = this.itemss[i];
+          }
+          // 已完成
+          if (this.itemss[i].status == 5 && this.itemss[i].extract_type == 1) {
+            this.itemss6[i] = this.itemss[i];
           }
         }
-        for (let i = 0, len = this.items.length; i < len; i++) {
-          if (this.items[i].status == 5 && this.items[i].extract_type == 2) {
-            this.items5[i] = this.items[i];
+      }
+      if (val == "all") {
+        //全部订单获取
+        const { data } = await this.api.get("order_list", {
+          fan_id: fan_id
+        });
+        this.allitems = data.data;
+        console.log(data);
+        for (let i = 0, len = this.allitems.length; i < len; i++) {
+          // 未支付
+          if (this.allitems[i].status == "1") {
+            this.items = [];
+            this.items.push(this.allitems[i]);
+          }
+          // 未核销
+          if (this.allitems[i].status == "4") {
+            this.items2[i] = this.allitems[i];
+          }
+          // 已支付
+          if (this.allitems[i].status == "2") {
+            this.items3[i] = this.allitems[i];
+          }
+          //已发货
+          if (this.allitems[i].status == "3") {
+            this.items4[i] = this.allitems[i];
+          }
+          //已核销
+          if (
+            this.allitems[i].status == "5" &&
+            this.allitems[i].extract_type == "2"
+          ) {
+            this.items5[i] = this.allitems[i];
+          }
+          // 已完成
+          if (
+            this.allitems[i].status == "5" &&
+            this.allitems[i].extract_type == "1"
+          ) {
+            this.items6[i] = this.allitems[i];
           }
         }
+        this.isloading = false;
       }
-      this.isloading = false
     },
-    //全部订单获取
-    async getAllCenterData() {
-      let fan_id = this.$route.query.fan_id;
-      this.isloading = true
-      const { data } = await this.api.get("order_list", {
-        fan_id: fan_id
-      });
-      this.allitems = data.data;
-      for (let i = 0, len = this.allitems.length; i < len; i++) {
-        if (this.allitems[i].status == 1) {
-          this.items2[i] = this.allitems[i];
-        }
-      }
-      for (let i = 0, len = this.allitems.length; i < len; i++) {
-        if (this.allitems[i].status == 4) {
-          this.items3[i] = this.allitems[i];
-        }
-      }
-      for (let i = 0, len = this.allitems.length; i < len; i++) {
-        if (
-          this.allitems[i].status == 5 &&
-          this.allitems[i].extract_type == 1
-        ) {
-          this.items4[i] = this.allitems[i];
-        }
-      }
-      for (let i = 0, len = this.allitems.length; i < len; i++) {
-        if (
-          this.allitems[i].status == 5 &&
-          this.allitems[i].extract_type == 2
-        ) {
-          this.items5[i] = this.allitems[i];
-        }
-      }
-      this.isloading = false
-    },
+    // async getAllCenterData(){
+
+    // },
     //全部更多订单数据获取
     async getMoreData() {
       let fan_id = this.$route.query.fan_id;
@@ -354,14 +453,16 @@ export default {
       let arr3 = [];
       let arr4 = [];
       let arr5 = [];
+      let arr6 = [];
+      let arr7 = [];
       let that = this;
-      let len = arr.length;
       const { data } = await this.api.get("order_list", {
         fan_id: fan_id,
         page: this.page
       });
       arr = data.data;
-      if (len == 0) {
+      console.log(arr);
+      if (arr.length == 0) {
         that.loading = false;
         that.nomore = true;
         return false;
@@ -377,24 +478,38 @@ export default {
         }
       }
       for (let i = 0, len = arr.length; i < len; i++) {
-        if (arr[i].status == 5 && arr[i].extract_type == 1) {
+        if (arr[i].status == 2) {
           arr4[i] = arr[i];
         }
       }
       for (let i = 0, len = arr.length; i < len; i++) {
-        if (arr[i].status == 5 && arr[i].extract_type == 2) {
+        if (arr[i].status == 3) {
           arr5[i] = arr[i];
         }
       }
-      that.items2 = [...that.items2, ...arr2];
-      that.items3 = [...that.items3, ...arr3];
-      that.items4 = [...that.items4, ...arr4];
-      that.items5 = [...that.items5, ...arr5];
+      for (let i = 0, len = arr.length; i < len; i++) {
+        if (arr[i].status == 5 && arr[i].extract_type == 2) {
+          arr6[i] = arr[i];
+        }
+      }
+      for (let i = 0, len = arr.length; i < len; i++) {
+        if (arr[i].status == 5 && arr[i].extract_type == 1) {
+          arr7[i] = arr[i];
+        }
+      }
+      that.items = [...that.items, ...arr2];
+      that.items2 = [...that.items2, ...arr3];
+      that.items3 = [...that.items3, ...arr4];
+      that.items4 = [...that.items4, ...arr5];
+      that.items5 = [...that.items5, ...arr6];
+      that.items6 = [...that.items6, ...arr7];
       arr = [];
       arr2 = [];
       arr3 = [];
       arr4 = [];
       arr5 = [];
+      arr6 = [];
+      arr7 = [];
       that.loading = false;
     },
     //  全部上拉加载
@@ -444,7 +559,7 @@ export default {
       let arr = [];
       const { data } = await this.api.get("order_list", {
         fan_id: fan_id,
-        status: 4,
+        status: 2,
         page: this.page3
       });
       arr = data.data;
@@ -472,11 +587,13 @@ export default {
       let that = this;
       let fan_id = this.$route.query.fan_id;
       let arr = [];
+      let arr3 = [];
       let arr4 = [];
       let arr5 = [];
+      let arr6 = [];
       const { data } = await this.api.get("order_list", {
         fan_id: fan_id,
-        status: 5,
+        status: 3,
         page: this.page4
       });
       arr = data.data;
@@ -486,20 +603,28 @@ export default {
         return;
       }
       for (let i = 0, len = arr.length; i < len; i++) {
-        if (arr[i].status == 5 && arr[i].extract_type == 1) {
+        if (arr[i].status == 2) {
+          arr3[i] = arr[i];
+        }
+        if (arr[i].status == 3) {
           arr4[i] = arr[i];
         }
-      }
-      for (let i = 0, len = arr.length; i < len; i++) {
         if (arr[i].status == 5 && arr[i].extract_type == 2) {
           arr5[i] = arr[i];
         }
+         if (arr[i].status == 5 && arr[i].extract_type == 1) {
+          arr6[i] = arr[i];
+        }
       }
-      that.items4 = [...that.items4, ...arr4];
-      that.items5 = [...that.items5, ...arr5];
+      that.itemss3 = [...that.itemss3, ...arr3];
+      that.itemss4 = [...that.itemss4, ...arr4];
+      that.itemss5 = [...that.itemss5, ...arr5];
+      that.itemss6 = [...that.itemss6, ...arr6];
       arr = [];
+      arr3 = [];
       arr4 = [];
       arr5 = [];
+      arr6 = [];
       that.loading4 = false;
     },
     //  已完成上拉加载
@@ -508,7 +633,7 @@ export default {
         this.loading4 = true;
         this.page4 += 1;
         setTimeout(() => {
-          this.getMoreDonelData();
+          this.getMoreDoneData();
         }, 2000);
       }
     }
@@ -585,7 +710,7 @@ export default {
         right: rem(24);
       }
       .personal {
-        bottom:rem(21);
+        bottom: rem(21);
         right: rem(24);
       }
     }
@@ -622,7 +747,7 @@ export default {
         display: flex;
         justify-content: space-between;
         line-height: 1;
-         font-size: rem(24);
+        font-size: rem(24);
         span:nth-child(1) {
           color: #656565;
         }

@@ -17,9 +17,9 @@
       </div>
       <div class="container">
         <!-- <router-link :to="{path:'/dist/details',query:{id:item.id,lng:116.30387397,lat:39.91481908}}" tag="div" class="button">保存</router-link> -->
-        <div @click="saveProfile" class="button">
+        <button @click="saveProfile" class="button" :disabled="disabled">
           保存
-        </div>
+        </button>
       </div>
     </div>
   </div>
@@ -35,7 +35,8 @@ export default {
       name: "",
       phone: "",
       address: "",
-      message: []
+      message: [],
+      disabled: false
     };
   },
   methods: {
@@ -93,7 +94,8 @@ export default {
         let lng = this.$route.query.lng;
         let lat = this.$route.query.lat;
         let gaintype = this.$route.query.gaintype;
-        if (!id&&lng&&lat) {
+        if (!id && lng && lat && gaintype) {
+          this.disabled = true;
           setTimeout(() => {
             that.$router.push({
               path: "/dist/profile",
@@ -101,13 +103,20 @@ export default {
             });
           }, 1000);
         }
-        if (id&&lng&&lat&&gaintype) {
-           setTimeout(() => {
-          that.$router.push({
-            path: "/dist/profile",
-            query: { fan_id: 30, id: id, lng: lng, lat: lat, gaintype :gaintype  }
-          });
-            }, 1000);
+        if (id && lng && lat && gaintype) {
+          this.disabled = true;
+          setTimeout(() => {
+            that.$router.push({
+              path: "/dist/profile",
+              query: {
+                fan_id: 30,
+                id: id,
+                lng: lng,
+                lat: lat,
+                gaintype: gaintype
+              }
+            });
+          }, 1000);
         }
       }
     }
@@ -139,6 +148,7 @@ export default {
       }
     }
     .button {
+      display: block;
       width: rem(700);
       height: rem(70);
       background-color: #1f80eb;
