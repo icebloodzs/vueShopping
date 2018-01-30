@@ -12,7 +12,7 @@
     </div>
     <div class="main">
       <div v-if="activeTab === 'tab1'">
-        <div class="hint" v-if='onhint'><img src="../assets/img/vn2l_fw658.png" alt=""></div>
+        <div class="hint" v-if='onhint'></div>
         <div class="content" v-for="item in items">
           <div class="banner-img"></div>
           <img :src="item.thumbnail">
@@ -42,7 +42,7 @@
         <mu-infinite-scroll :scroller="scroller" :loading="loading" @load="loadMore" />
       </div>
       <div v-if="activeTab === 'tab2'">
-        <div class="hint" v-if='endhint'><img src="../assets/img/vn2l_fw658.png" alt=""></div>
+        <div class="hint" v-if='endhint'></div>
         <div class="content" v-for="item in items2">
           <img :src="item.thumbnail">
           <div class="focus">
@@ -262,15 +262,8 @@ export default {
     padding-top: rem(300);
     width: 100%;
     height: rem(1240);
-    background-color: #fff;
-    img{
-      display: block;
-      width: rem(197);
-      height: rem(287);
-      margin: 0 auto;
-    }
-    // background: #fff url(../assets/img/vn2l_fw658.png) no-repeat 50% 25% ;
-    // background-size: rem(197) rem(287);
+    background: #fff url(../assets/img/vn2l_fw658.png) no-repeat 50% 25% ;
+    background-size: rem(197) rem(287);
   }
   .iconfont {
     font-family: "iconfont";
