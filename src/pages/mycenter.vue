@@ -24,7 +24,7 @@
         <mu-tab @active="tab4Active" value="3" title="已完成" />
       </mu-tabs>
       <div v-if="bottomNav === 'all'">
-        <div class="hint" v-if='!allitems.length'></div>
+        <div class="hint" v-if='!allitems.length'><img src="../assets/img/vn2l_fw658.png" alt=""></div>
         <!-- 待付款 -->
         <div class="content" @click="routerClickdetail(item.id,item.extract_type)" v-for="item in items1">
           <div class="content-head">
@@ -128,7 +128,7 @@
         <mu-infinite-scroll :scroller="scroller" :loading="loading" @load="loadMore" />
       </div>
       <div v-if="bottomNav === '1'">
-        <div class="hint" v-if='!items.length'></div>
+        <div class="hint" v-if='!items.length'><img src="../assets/img/vn2l_fw658.png" alt=""></div>
         <div class="content" @click="routerClickdetail(item.id,item.extract_type)" v-for="item in items">
           <div class="content-head">
             <span>{{item.created_at}}</span>
@@ -150,7 +150,7 @@
         <mu-infinite-scroll :scroller="scroller" :loading="loading2" @load="loadMore2" />
       </div>
       <div v-if="bottomNav === '2'">
-        <div class="hint" v-if='!items.length'></div>
+        <div class="hint" v-if='!items.length'><img src="../assets/img/vn2l_fw658.png" alt=""></div>
         <div class="content" @click="routerClickCancel(item.id,item.extract_type)" v-for="item in items">
           <div class="content-head">
             <span>{{item.created_at}}</span>
@@ -171,7 +171,7 @@
         <mu-infinite-scroll :scroller="scroller" :loading="loading3" @load="loadMore3" />
       </div>
       <div v-if="bottomNav === '3'">
-        <div class="hint" v-if='!itemss.length'></div>
+        <div class="hint" v-if='!itemss.length'><img src="../assets/img/vn2l_fw658.png" alt=""></div>
         <div class="content" @click="routerClickdetail(item.id,item.extract_type)" v-for="item in itemss3">
           <div class="content-head">
             <span>{{item.created_at}}</span>
@@ -290,9 +290,8 @@ export default {
   created() {},
   mounted() {
     this.scroller = this.$el;
-    // this.getAllCenterData();
     this.getUserData();
-    // this.getCenterData("all");
+    this.getCenterData("all");
   },
   methods: {
     routerClickdetail(order_id, extract_type) {
@@ -403,7 +402,6 @@ export default {
           fan_id: fan_id
         });
         this.allitems = data.data;
-        console.log(data);
         for (let i = 0, len = this.allitems.length; i < len; i++) {
           // 未支付
           if (this.allitems[i].status == 1) {
@@ -443,7 +441,6 @@ export default {
             this.items6.push(this.allitems[i]);
           }
         }
-         console.log(this.items1)
         this.isloading = false;
       }
     },
@@ -647,6 +644,7 @@ export default {
 @import "../assets/sass/_base.scss";
 .wrapper {
   @include wrapper;
+  // height: rem(100);
   .nomore {
     color: #666;
     text-align: center;
@@ -717,12 +715,20 @@ export default {
     }
   }
   .main {
+    height: 83.5vh;
     .hint {
       padding-top: rem(300);
       width: 100%;
       height: rem(1010);
-      background: #fff url(../assets/img/vn2l_fw658.png) no-repeat 50% 25%;
-      background-size: rem(197) rem(287);
+      background-color: #fff;
+      img{
+      display: block;
+      width: rem(197);
+      height: rem(287);
+      margin: 0 auto;
+    }
+      // background: #fff url(../assets/img/vn2l_fw658.png) no-repeat 50% 25%;
+      // background-size: rem(197) rem(287);
     }
     .mu-tab-link {
       font-size: rem(30);
