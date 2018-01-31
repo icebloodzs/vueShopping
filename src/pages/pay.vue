@@ -38,7 +38,7 @@
           </div>
         </div>
       </div>
-      <!-- <div class="pay-button" @click="routerClicksubmit(items.goods_id,items.id)">立即付款</div> -->
+      <div class="pay-button" @click="routerClicksubmit(items.id)" v-if="items.status==1">立即付款</div>
       <div class="pay-con">
         <div class="content-pay">
           <div v-if="type === 'store'" class="content-store">
@@ -108,18 +108,12 @@ export default {
         query: { fan_id: 30 }
       });
     },
-    routerClicksubmit(goodsId, order_id) {
-      this.$router.push({
-        path: "/dist/submit",
-        query: {
-          fan_id: 30,
-          id: goodsId,
-          lng: this.lng,
-          lat: this.lat,
-          gaintype: this.gaintype,
-          order_id: order_id
-        }
+    async routerClicksubmit(order_id) {
+      const { data } = await this.api.get("pay", {
+        order_id: order_id
       });
+      this.url = data.url;
+      window.location.href = this.url;
     },
     routerClickdetails(goodsId) {
       this.$router.push({
