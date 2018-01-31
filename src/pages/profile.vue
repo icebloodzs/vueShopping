@@ -4,7 +4,6 @@
       <div class="profile-head">
         <strong>
           <i class="iconfont" @click="routerClickgoback">&#xe600;</i>收获地址</strong>
-
       </div>
       <div class="profile-con">
         <div class="profile-list">
@@ -62,7 +61,27 @@ export default {
   },
   methods: {
     routerClickgoback() {
-      this.$router.go(-1);
+      let submitadd = this.$route.query.submitadd;
+      let fan_id = this.$route.query.fan_id;
+      let id = this.$route.query.id;
+      let lng = this.$route.query.lng;
+      let lat = this.$route.query.lat;
+      let gaintype = this.$route.query.gaintype;
+      if (submitadd) {
+        this.$router.push({
+          path: "/dist/submit",
+          query: {
+            fan_id: 30,
+            id: id,
+            lng: lng,
+            lat: lat,
+            gaintype: gaintype,
+            submitadd: submitadd
+          }
+        });
+      } else {
+        this.$router.go(-1);
+      }
     },
     add() {
       let id = this.$route.query.id;
@@ -112,20 +131,40 @@ export default {
       let lng = this.$route.query.lng;
       let lat = this.$route.query.lat;
       let gaintype = this.$route.query.gaintype;
-      if (id && lng && lat && gaintype) {
-        this.$router.push({
-          path: "/dist/submit",
-          query: {
-            fan_id: 30,
-            id: id,
-            lng: lng,
-            lat: lat,
-            addtressid: addtressId,
-            gaintype: gaintype
-          }
-        });
+      let submitadd = this.$route.query.submitadd;
+      if (submitadd) {
+        if (id && lng && lat && gaintype) {
+          this.$router.push({
+            path: "/dist/submit",
+            query: {
+              fan_id: 30,
+              id: id,
+              lng: lng,
+              lat: lat,
+              addtressid: addtressId,
+              gaintype: gaintype,
+              submitadd: submitadd
+            }
+          });
+        } else {
+          return false;
+        }
       } else {
-        return false;
+        if (id && lng && lat && gaintype) {
+          this.$router.push({
+            path: "/dist/submit",
+            query: {
+              fan_id: 30,
+              id: id,
+              lng: lng,
+              lat: lat,
+              addtressid: addtressId,
+              gaintype: gaintype
+            }
+          });
+        } else {
+          return false;
+        }
       }
     }
   }

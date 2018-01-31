@@ -113,7 +113,12 @@ export default {
       });
     },
     routerClickgoback() {
-      this.$router.go(-1);
+      let submitadd = this.$route.query.submitadd;
+      if(submitadd){
+        this.$router.push("/");
+      }else{ 
+        this.$router.go(-1);
+      }
     },
     routerClickdetails() {
       this.$router.push("/dist/detail");
@@ -123,7 +128,6 @@ export default {
       let goods_id = this.$route.query.id;
       this.isloading = true;
       let _data = await this.wx.getLocation();
-      console.log(_data);
       this.lng = _data.longitude;
       this.lat = _data.latitude;
       const { data } = await this.api.get("goods_detail", {
@@ -132,7 +136,6 @@ export default {
         lat: this.lat
       });
       this.item = data;
-      console.log(data)
       this.gaintype = this.item.extract_type;
       this.replaceRem(this.item.description);
       this.isloading = false;

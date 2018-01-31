@@ -21,6 +21,23 @@
           </div>
         </div>
       </div>
+      <div class="cancel-code" v-if="ticket&&ticket.ticket_code_deadline">
+        <div class="cancel-code-title">
+          <strong>核销码</strong>
+        </div>
+        <div class="cancel-code-con">
+          <div class="cancel-code-icon left"></div>
+          <div class="cancel-code-icon right"></div>
+          <div class="cancel-code-up">
+            <span>有效期至{{ticket.ticket_code_deadline}}</span>
+            <span :style="stateStyle">{{state}}核销</span>
+          </div>
+          <div class="cancel-code-down">
+            核销码:&nbsp;
+            <span :style="codeStyle">{{ticket.ticket_code}}</span>
+          </div>
+        </div>
+      </div>
       <!-- <div class="pay-button" @click="routerClicksubmit(items.goods_id,items.id)">立即付款</div> -->
       <div class="pay-con">
         <div class="content-pay">
@@ -74,7 +91,11 @@ export default {
       lat: [],
       site: [],
       address: [],
-      gaintype: []
+      gaintype: [],
+      ticket: [],
+      codeStyle: [],
+      stateStyle: {},
+      state: "",
     };
   },
   mounted() {
@@ -82,9 +103,12 @@ export default {
   },
   methods: {
     routerClickgoback() {
-      this.$router.go(-1);
+       this.$router.push({
+        path: "/dist/mycenter",
+        query: { fan_id: 30 }
+      });
     },
-    routerClicksubmit(goodsId,order_id) {
+    routerClicksubmit(goodsId, order_id) {
       this.$router.push({
         path: "/dist/submit",
         query: {
@@ -93,7 +117,7 @@ export default {
           lng: this.lng,
           lat: this.lat,
           gaintype: this.gaintype,
-          order_id:order_id
+          order_id: order_id
         }
       });
     },
@@ -121,6 +145,16 @@ export default {
       if (!data.address) {
         this.site = data.sites[0];
         this.type = "store";
+        this.ticket = this.items.ticket;
+        if (this.ticket.ticket_code_status == 1) {
+          this.state = "未";
+          this.codeStyle = "color:#1c7ee9";
+        }
+        if (this.ticket.ticket_code_status == 2) {
+          this.state = "已";
+          this.stateStyle = "color: #1c7ee9;";
+          this.codeStyle = "color: #c8c8c8";
+        }
       }
     }
   }
@@ -163,6 +197,56 @@ export default {
       text-align: center;
       border-radius: rem(12);
       margin: rem(20) rem(25);
+    }
+    .cancel-code {
+      .cancel-code-title {
+        line-height: rem(74);
+        text-align: left;
+        padding-left: rem(50);
+      }
+      .cancel-code-con {
+        margin: 0 rem(25) rem(20);
+        background-color: #fff;
+        position: relative;
+        .cancel-code-icon {
+          width: rem(22);
+          height: rem(22);
+          position: absolute;
+          border-radius: 50%;
+          z-index: 2;
+          background-color: #f4f4f4;
+          top: rem(85);
+        }
+        .left {
+          left: rem(-11);
+          margin-right: rem(30);
+        }
+        .right {
+          margin-left: rem(30);
+          right: rem(-11);
+        }
+        .cancel-code-up {
+          line-height: rem(94);
+          display: flex;
+          justify-content: space-between;
+          span:nth-child(1) {
+            padding-left: rem(25);
+          }
+          span:nth-child(2) {
+            //  color: #1c7ee9;
+            padding-right: rem(35);
+          }
+        }
+        .cancel-code-down {
+          border-top: rem(4) dashed #f4f4f4;
+          line-height: rem(94);
+          text-align: center;
+          //   color: #c8c8c8;
+          //   span {
+          //     color: #1c7ee9;
+          //   }
+        }
+      }
     }
     .pay-head-con {
       display: flex;

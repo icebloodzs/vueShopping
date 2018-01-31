@@ -94,6 +94,7 @@ export default {
         let lng = this.$route.query.lng;
         let lat = this.$route.query.lat;
         let gaintype = this.$route.query.gaintype;
+        let submitadd = this.$route.query.submitadd;
         if (!id && lng && lat && gaintype) {
           this.disabled = true;
           setTimeout(() => {
@@ -113,7 +114,8 @@ export default {
                 id: id,
                 lng: lng,
                 lat: lat,
-                gaintype: gaintype
+                gaintype: gaintype,
+                submitadd:submitadd
               }
             });
           }, 1000);

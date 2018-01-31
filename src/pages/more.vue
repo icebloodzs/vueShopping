@@ -109,7 +109,7 @@ export default {
     routerClickdetails(goodId) {
       this.$router.push({
         path: "/dist/details",
-        query: { id: goodId, lng: 116.30387397, lat: 39.91481908 }
+        query: { id: goodId }
       });
     },
     routerClickgoback() {

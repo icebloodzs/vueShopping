@@ -26,7 +26,7 @@
       <div v-if="bottomNav === 'all'">
         <div class="hint" v-if='!allitems.length'></div>
         <!-- 待付款 -->
-        <div class="content" @click="routerClickdetail(item.id,item.extract_type)" v-for="item in items1">
+        <div class="content" @click="routerClickdetail(item.id)" v-for="item in items1">
           <div class="content-head">
             <span>{{item.created_at}}</span>
             <span>待付款</span>
@@ -59,7 +59,7 @@
           </div>
         </div>
         <!-- 已支付 -->
-        <div class="content" @click="routerClickdetail(item.id,item.extract_type)" v-for="item in items3">
+        <div class="content" @click="routerClickdetail(item.id)" v-for="item in items3">
           <div class="content-head">
             <span>{{item.created_at}}</span>
             <span>已支付</span>
@@ -75,7 +75,7 @@
           </div>
         </div>
         <!-- 已发货 -->
-        <div class="content" @click="routerClickCancel(item.id,item.extract_type)" v-for="item in items4">
+        <div class="content" @click="routerClickCancel(item.id)" v-for="item in items4">
           <div class="content-head">
             <span>{{item.created_at}}</span>
             <span>已发货</span>
@@ -92,7 +92,7 @@
           </div>
         </div>
         <!-- 已核销 -->
-        <div class="content" @click="routerClickdetail(item.id,item.extract_type)" v-for="item in items5">
+        <div class="content" @click="routerClickdetail(item.id)" v-for="item in items5">
           <div class="content-head">
             <span>{{item.created_at}}</span>
             <span>已核销</span>
@@ -129,7 +129,7 @@
       </div>
       <div v-if="bottomNav === '1'">
         <div class="hint" v-if='!items.length'></div>
-        <div class="content" @click="routerClickdetail(item.id,item.extract_type)" v-for="item in items">
+        <div class="content" @click="routerClickdetail(item.id)" v-for="item in items">
           <div class="content-head">
             <span>{{item.created_at}}</span>
             <span>待付款</span>
@@ -151,7 +151,7 @@
       </div>
       <div v-if="bottomNav === '2'">
         <div class="hint" v-if='!items.length'></div>
-        <div class="content" @click="routerClickCancel(item.id,item.extract_type)" v-for="item in items">
+        <div class="content" @click="routerClickCancel(item.id)" v-for="item in items">
           <div class="content-head">
             <span>{{item.created_at}}</span>
             <span class="use">待使用</span>
@@ -172,7 +172,7 @@
       </div>
       <div v-if="bottomNav === '3'">
         <div class="hint" v-if='!itemss.length'></div>
-        <div class="content" @click="routerClickdetail(item.id,item.extract_type)" v-for="item in itemss3">
+        <div class="content" @click="routerClickdetail(item.id)" v-for="item in itemss3">
           <div class="content-head">
             <span>{{item.created_at}}</span>
             <span>已支付</span>
@@ -187,7 +187,7 @@
             </div>
           </div>
         </div>
-        <div class="content" @click="routerClickCancel(item.id,item.extract_type)" v-for="item in itemss4">
+        <div class="content" @click="routerClickCancel(item.id)" v-for="item in itemss4">
           <div class="content-head">
             <span>{{item.created_at}}</span>
             <span>已发货</span>
@@ -203,7 +203,7 @@
             <div class="content-physical-button" @click.stop="routerClickPhysical(item.id)">查看物流</div>
           </div>
         </div>
-        <div class="content" @click="routerClickdetail(item.id,item.extract_type)" v-for="item in itemss5">
+        <div class="content" @click="routerClickdetail(item.id)" v-for="item in itemss5">
           <div class="content-head">
             <span>{{item.created_at}}</span>
             <span>已核销</span>
@@ -218,7 +218,7 @@
             </div>
           </div>
         </div>
-        <div class="content" @click="routerClickdetail(item.id,item.extract_type)" v-for="item in itemss6">
+        <div class="content" @click="routerClickdetail(item.id)" v-for="item in itemss6">
           <div class="content-head">
             <span>{{item.created_at}}</span>
             <span>已完成</span>
@@ -294,10 +294,10 @@ export default {
     this.getCenterData("all");
   },
   methods: {
-    routerClickdetail(order_id, extract_type) {
+    routerClickdetail(order_id){
       this.$router.push({
         path: "/dist/pay",
-        query: { order_id: order_id, extract_type: extract_type }
+        query: { order_id: order_id }
       });
     },
     handleTabChange(val) {
@@ -317,10 +317,10 @@ export default {
       this.url = data.url;
       window.location.href = this.url;
     },
-    routerClickCancel(order_id, extract_type) {
+    routerClickCancel(order_id) {
       this.$router.push({
-        path: "/dist/cancel",
-        query: { order_id: order_id, extract_type: extract_type }
+        path: "/dist/pay",
+        query: { order_id: order_id }
       });
     },
     tab1Active() {
@@ -363,6 +363,7 @@ export default {
       this.isloading = true;
       //待付款、未核销
       if (val === "1" || val === "2") {
+        this.items = []
         const { data } = await this.api.get("order_list", {
           fan_id: fan_id,
           status: val
