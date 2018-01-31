@@ -132,6 +132,7 @@ export default {
         lat: this.lat
       });
       this.item = data;
+      console.log(data)
       this.gaintype = this.item.extract_type;
       this.replaceRem(this.item.description);
       this.isloading = false;

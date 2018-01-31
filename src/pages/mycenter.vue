@@ -361,7 +361,7 @@ export default {
     async getCenterData(val) {
       let fan_id = this.$route.query.fan_id;
       this.isloading = true;
-      //全部
+      //待付款、未核销
       if (val === "1" || val === "2") {
         const { data } = await this.api.get("order_list", {
           fan_id: fan_id,
@@ -370,6 +370,7 @@ export default {
         this.items = data.data;
         this.isloading = false;
       }
+      // 已完成
       if (val == "3") {
         const { data } = await this.api.get("order_list", {
           fan_id: fan_id,
@@ -377,22 +378,26 @@ export default {
         });
         this.itemss = data.data;
         this.isloading = false;
+        this.itemss3 = [];
+        this.itemss4 = [];
+        this.itemss5 = [];
+        this.itemss6 = [];
         for (let i = 0, len = this.itemss.length; i < len; i++) {
           // 已支付
           if (this.itemss[i].status == 2) {
-            this.itemss3[i] = this.itemss[i];
+            this.itemss3.push(this.itemss[i]);
           }
           //已发货
           if (this.itemss[i].status == 3) {
-            this.itemss4[i] = this.itemss[i];
+            this.itemss4.push(this.itemss[i]);
           }
           //已核销
           if (this.itemss[i].status == 5 && this.itemss[i].extract_type == 2) {
-            this.itemss5[i] = this.itemss[i];
+            this.itemss5.push(this.itemss[i]);
           }
           // 已完成
           if (this.itemss[i].status == 5 && this.itemss[i].extract_type == 1) {
-            this.itemss6[i] = this.itemss[i];
+            this.itemss6.push(this.itemss[i]);
           }
         }
       }
@@ -402,26 +407,28 @@ export default {
           fan_id: fan_id
         });
         this.allitems = data.data;
+        this.items1 = [];
+        this.items2 = [];
+        this.items3 = [];
+        this.items4 = [];
+        this.items5 = [];
+        this.items6 = [];
         for (let i = 0, len = this.allitems.length; i < len; i++) {
           // 未支付
           if (this.allitems[i].status == 1) {
-            this.items1 = [];
             this.items1.push(this.allitems[i]);
-            // this.items[i] = this.allitems[i];
+            // this.items1[i] = this.allitems[i];
           }
           // 未核销
           if (this.allitems[i].status == 4) {
-            this.items2 = [];
             this.items2.push(this.allitems[i]);
           }
           // 已支付
           if (this.allitems[i].status == 2) {
-             this.items3 = [];
             this.items3.push(this.allitems[i]);
           }
           //已发货
           if (this.allitems[i].status == 3) {
-             this.items4 = [];
             this.items4.push(this.allitems[i]);
           }
           //已核销
@@ -429,7 +436,6 @@ export default {
             this.allitems[i].status == 5 &&
             this.allitems[i].extract_type == 2
           ) {
-             this.items5 = [];
             this.items5.push(this.allitems[i]);
           }
           // 已完成
@@ -437,7 +443,6 @@ export default {
             this.allitems[i].status == 5 &&
             this.allitems[i].extract_type == 1
           ) {
-             this.items6 = [];
             this.items6.push(this.allitems[i]);
           }
         }
@@ -448,12 +453,12 @@ export default {
     async getMoreData() {
       let fan_id = this.$route.query.fan_id;
       let arr = [];
+      let arr1 = [];
       let arr2 = [];
       let arr3 = [];
       let arr4 = [];
       let arr5 = [];
       let arr6 = [];
-      let arr7 = [];
       let that = this;
       const { data } = await this.api.get("order_list", {
         fan_id: fan_id,
@@ -467,47 +472,37 @@ export default {
       }
       for (let i = 0, len = arr.length; i < len; i++) {
         if (arr[i].status == 1) {
-          arr2[i] = arr[i];
+          arr1.push(arr[i]);
         }
-      }
-      for (let i = 0, len = arr.length; i < len; i++) {
         if (arr[i].status == 4) {
-          arr3[i] = arr[i];
+          arr2.push(arr[i]);
         }
-      }
-      for (let i = 0, len = arr.length; i < len; i++) {
         if (arr[i].status == 2) {
-          arr4[i] = arr[i];
+          arr3.push(arr[i]);
         }
-      }
-      for (let i = 0, len = arr.length; i < len; i++) {
         if (arr[i].status == 3) {
-          arr5[i] = arr[i];
+          arr4.push(arr[i]);
         }
-      }
-      for (let i = 0, len = arr.length; i < len; i++) {
         if (arr[i].status == 5 && arr[i].extract_type == 2) {
-          arr6[i] = arr[i];
+          arr5.push(arr[i]);
         }
-      }
-      for (let i = 0, len = arr.length; i < len; i++) {
         if (arr[i].status == 5 && arr[i].extract_type == 1) {
-          arr7[i] = arr[i];
+          arr6.push(arr[i]);
         }
       }
-      that.items = [...that.items, ...arr2];
-      that.items2 = [...that.items2, ...arr3];
-      that.items3 = [...that.items3, ...arr4];
-      that.items4 = [...that.items4, ...arr5];
-      that.items5 = [...that.items5, ...arr6];
-      that.items6 = [...that.items6, ...arr7];
+      that.items1 = [...that.items1, ...arr1];
+      that.items2 = [...that.items2, ...arr2];
+      that.items3 = [...that.items3, ...arr3];
+      that.items4 = [...that.items4, ...arr4];
+      that.items5 = [...that.items5, ...arr5];
+      that.items6 = [...that.items6, ...arr6];
       arr = [];
+      arr1 = [];
       arr2 = [];
       arr3 = [];
       arr4 = [];
       arr5 = [];
       arr6 = [];
-      arr7 = [];
       that.loading = false;
     },
     //  全部上拉加载
@@ -534,7 +529,7 @@ export default {
       if (arr.length === 0) {
         that.loading2 = false;
         that.nomore2 = true;
-        return;
+        return false;
       }
       that.items = [...that.items, ...arr];
       arr = [];
@@ -602,16 +597,16 @@ export default {
       }
       for (let i = 0, len = arr.length; i < len; i++) {
         if (arr[i].status == 2) {
-          arr3[i] = arr[i];
+          arr3.push(arr[i]);
         }
         if (arr[i].status == 3) {
-          arr4[i] = arr[i];
+          arr4.push(arr[i]);
         }
         if (arr[i].status == 5 && arr[i].extract_type == 2) {
-          arr5[i] = arr[i];
+          arr5.push(arr[i]);
         }
-         if (arr[i].status == 5 && arr[i].extract_type == 1) {
-          arr6[i] = arr[i];
+        if (arr[i].status == 5 && arr[i].extract_type == 1) {
+          arr6.push(arr[i]);
         }
       }
       that.itemss3 = [...that.itemss3, ...arr3];
@@ -715,7 +710,7 @@ export default {
     }
   }
   .main {
-    height: 83.5vh;
+    // height: 83.5vh;
     .hint {
       padding-top: rem(300);
       width: 100%;

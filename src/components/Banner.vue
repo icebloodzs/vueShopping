@@ -1,7 +1,7 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="swiper-slide" @click="routerClickdetails(str.goods_id)" v-for="str in listImg" :style="{ backgroundImage: 'url(' + str.image_url + ')' }" :key="str.id"></div>
+      <div class="swiper-slide" @click="routerClickdetails(str.goods_id,str.expired_at)" v-for="str in listImg" :style="{ backgroundImage: 'url(' + str.image_url + ')' }" :key="str.id"></div>
     </div>
     <div class="swiper-pagination swiper-pagination-white"></div>
   </div>
@@ -9,7 +9,6 @@
 
 <script>
 import Swiper from "swiper";
-import $ from "jquery";
 import "swiper/dist/css/swiper.min.css";
 import "swiper/dist/js/swiper.min.js";
 export default {
@@ -19,12 +18,22 @@ export default {
       counter: this.listImg
     };
   },
-  methods: {
-    routerClickdetails(goods_id) {
-      this.$router.push({path:"/dist/details",query:{id:goods_id,lng:116.30387397,lat:39.91481908}});
+  computed: {
+    imgcounter:function(){
+      return this.counter.length
     }
   },
-  created() { },
+  methods: {
+    routerClickdetails(goods_id, expired_at) {
+      const endTime = new Date(expired_at);
+      const nowTime = new Date();
+      let leftTime = parseInt((endTime.getTime() - nowTime.getTime()) / 1000);
+      if (leftTime >= 0) {
+        this.$router.push({ path: "/dist/details", query: { id: goods_id } });
+      }
+    }
+  },
+  created() {},
   mounted() {
     let that = this;
     var swiper = new Swiper(".swiper-container", {
@@ -32,7 +41,7 @@ export default {
         el: ".swiper-pagination",
         type: "fraction",
         renderFraction: function(currentClass, totalClass) {
-          if (that.counter.length <= 1) return;
+          if (this.imgcounter <= 1) return false;
           return (
             '<span class="' +
             currentClass +
@@ -45,9 +54,8 @@ export default {
         }
       },
       observer: true, //修改swiper自己或子元素时，自动初始化swiper
-      observeParents: true, //修改swiper的父元素时，自动初始化swiper
-      // speed: 600,
-      autoplay: this.counter.length === 1 ? false : true
+      // observeParents: true, //修改swiper的父元素时，自动初始化swiper
+      autoplay: this.counter.length == 1 ? false : true
     });
   }
 };
