@@ -21,7 +21,7 @@
           </div>
         </div>
       </div>
-      <div class="cancel-code" v-if="items.status==4">
+      <div class="cancel-code" v-if="items.status==4||this.ticket.ticket_code_status == 2">
         <div class="cancel-code-title">
           <strong>核销码</strong>
         </div>
