@@ -527,6 +527,7 @@ export default {
         page: this.page2
       });
       arr = data.data;
+      console.log(arr)
       if (arr.length === 0) {
         that.loading2 = false;
         that.nomore2 = true;

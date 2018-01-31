@@ -21,7 +21,7 @@
           </div>
         </div>
       </div>
-      <div class="cancel-code" v-if="ticket&&ticket.ticket_code_deadline">
+      <div class="cancel-code" v-if="items.status==4">
         <div class="cancel-code-title">
           <strong>核销码</strong>
         </div>
@@ -138,6 +138,7 @@ export default {
         lat: this.lat
       });
       this.items = data;
+      console.log(this.items)
       if (data.address) {
         this.address = data.address;
         this.type = "gain";
