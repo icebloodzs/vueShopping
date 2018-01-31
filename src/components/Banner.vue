@@ -27,7 +27,7 @@ export default {
     routerClickdetails(goods_id, expired_at) {
       const endTime = new Date(expired_at);
       const nowTime = new Date();
-      let leftTime = parseInt((endTime.getTime() - nowTime.getTime()) / 1000);
+      let leftTime = parseInt((endTime.getTime() - nowTime.getTime()) / 10000);
       if (leftTime >= 0) {
         this.$router.push({ path: "/dist/details", query: { id: goods_id } });
       }
@@ -54,7 +54,7 @@ export default {
         }
       },
       observer: true, //修改swiper自己或子元素时，自动初始化swiper
-      // observeParents: true, //修改swiper的父元素时，自动初始化swiper
+      observeParents: true, //修改swiper的父元素时，自动初始化swiper
       autoplay: this.counter.length == 1 ? false : true
     });
   }

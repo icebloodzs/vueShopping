@@ -23,7 +23,7 @@
               <span>剩余{{item.surplus}}份</span>
             </div>
           </div>
-          <detailsdown :endTime="item.end_time"></detailsdown>
+          <detailsdown :endTime="item&&item.end_time"></detailsdown>
         </div>
         <div class="content-indate">
           <div class="content-indate-left">此商品有效期至</div>

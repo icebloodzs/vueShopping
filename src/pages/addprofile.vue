@@ -16,7 +16,6 @@
         <mu-text-field class="address" v-model="address" multiLine :rows="3" :rowsMax="6" :errorText="addresswarn" @input="input" :maxLength="50" />
       </div>
       <div class="container">
-        <!-- <router-link :to="{path:'/dist/details',query:{id:item.id,lng:116.30387397,lat:39.91481908}}" tag="div" class="button">保存</router-link> -->
         <button @click="saveProfile" class="button" :disabled="disabled">
           保存
         </button>
@@ -88,15 +87,16 @@ export default {
       } else if (this.address.length > 50) {
         this.addresswarn = "超过啦！！！！";
       } else {
-        this.addprofile();
         let fan_id = this.$route.query.fan_id;
         let id = this.$route.query.id;
         let lng = this.$route.query.lng;
         let lat = this.$route.query.lat;
         let gaintype = this.$route.query.gaintype;
         let submitadd = this.$route.query.submitadd;
+        let center = this.$route.query.center;
         if (lng && lat && gaintype) {
           this.disabled = true;
+          this.addprofile();
           setTimeout(() => {
             that.$router.push({
               path: "/dist/profile",
@@ -106,16 +106,17 @@ export default {
                 lng: lng,
                 lat: lat,
                 gaintype: gaintype,
-                submitadd: submitadd
+                submitadd: submitadd,
               }
             });
           }, 1000);
         } else {
           this.disabled = true;
+          this.addprofile();
           setTimeout(() => {
             that.$router.push({
               path: "/dist/profile",
-              query: { fan_id: fan_id }
+              query: { fan_id: fan_id, center:center }
             });
           }, 1000);
         }

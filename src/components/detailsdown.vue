@@ -15,7 +15,7 @@ export default {
   },
   computed: {
     endTtime: function() {
-      return this.endTime.substring(0, 10)+"T"+this.endTime.substring(11);
+      return this.endTime.substring(0, 10) + "T" + this.endTime.substring(11);
     }
   },
   data: function() {

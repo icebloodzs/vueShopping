@@ -251,7 +251,7 @@ export default {
           }
           this.addressid = that.address.id;
         }
-        if (this.address.detail_address.length>16) {
+        if (this.address.detail_address&&this.address.detail_address.length>16) {
           this.address.detail_address = `${this.address.detail_address.substring(0,15)}...`;
         }
       }

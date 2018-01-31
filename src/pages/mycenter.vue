@@ -6,7 +6,7 @@
       <img :src="user.headimgurl">
       <div class="header-middle">
         <span>{{user.nickname}}</span>
-        <router-link :to="{path:'/dist/profile',query:{fan_id:30}}" tag="div" class="header-profile">
+        <router-link :to="{path:'/dist/profile',query:{fan_id:30,center:'center'}}" tag="div" class="header-profile">
           收货地址 &nbsp;
           <i class="iconfont">&#xe62d;</i>
         </router-link>
@@ -527,7 +527,6 @@ export default {
         page: this.page2
       });
       arr = data.data;
-      console.log(arr)
       if (arr.length === 0) {
         that.loading2 = false;
         that.nomore2 = true;

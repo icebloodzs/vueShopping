@@ -132,7 +132,6 @@ export default {
         lat: this.lat
       });
       this.items = data;
-      console.log(this.items)
       if (data.address) {
         this.address = data.address;
         this.type = "gain";

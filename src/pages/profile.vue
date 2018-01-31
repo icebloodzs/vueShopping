@@ -67,6 +67,7 @@ export default {
       let lng = this.$route.query.lng;
       let lat = this.$route.query.lat;
       let gaintype = this.$route.query.gaintype;
+      let center = this.$route.query.center;
       if (submitadd) {
         this.$router.push({
           path: "/dist/submit",
@@ -79,7 +80,12 @@ export default {
             submitadd: submitadd
           }
         });
-      } else {
+      }else if(center) {
+        this.$router.push({
+        path: "/dist/mycenter",
+        query: { fan_id: fan_id }
+      });
+      }else {
         this.$router.go(-1);
       }
     },
@@ -89,9 +95,10 @@ export default {
       let lat = this.$route.query.lat;
       let fan_id = this.$route.query.fan_id;
       let gaintype = this.$route.query.gaintype;
+      let center = this.$route.query.center;
       this.$router.push({
         path: "/dist/addprofile",
-        query: { fan_id: 30, id: id, lng: lng, lat: lat, gaintype: gaintype }
+        query: { fan_id: 30, id: id, lng: lng, lat: lat, gaintype: gaintype,center:center }
       });
     },
     edit(profile_id) {

@@ -7,7 +7,6 @@ import details from '../pages/details'
 import website from '../pages/website'
 import submit from '../pages/submit'
 import pay from '../pages/pay'
-import cancel from '../pages/cancel'
 import bindphone from '../pages/bindphone'
 import profile from '../pages/profile'
 import addprofile from '../pages/addprofile'
@@ -52,10 +51,6 @@ export default new Router({
       path: '/dist/pay',
       name: 'pay',
       component: pay
-    },{
-      path: '/dist/cancel',
-      name: 'cancel',
-      component: cancel
     },{
       path: '/dist/bindphone',
       name: 'bindphone',
