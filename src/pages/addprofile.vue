@@ -190,7 +190,7 @@ export default {
       margin: 0;
       padding-top: rem(50);
       .mu-text-field-input {
-        width: rem(510);
+        width: rem(500);
         height: rem(90);
         margin-top: rem(-45);
         font-size: rem(32);

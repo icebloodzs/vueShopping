@@ -189,11 +189,12 @@ export default {
       padding-left: rem(242);
       padding-top: rem(50);
       .mu-text-field-input {
-        width: rem(510);
+        width: rem(500);
         height: rem(105);
         margin-top: rem(-50);
         font-size: rem(30);
         color: #666;
+        position: absolute;
       }
     }
     .mu-text-field-line {
