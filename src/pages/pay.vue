@@ -105,14 +105,6 @@ export default {
     },
     async getPayData() {
       let order_id = this.$route.query.order_id;
-      let extract_type = this.$route.query.extract_type;
-      if (extract_type == 1) {
-        this.type = "gain";
-        this.gaintype = 1;
-      } else if (extract_type == 2) {
-        this.type = "store";
-        this.gaintype = 2;
-      }
       let _data = await this.wx.getLocation();
       this.lng = _data.longitude;
       this.lat = _data.latitude;
@@ -124,9 +116,11 @@ export default {
       this.items = data;
       if (data.address) {
         this.address = data.address;
+        this.type = "gain";
       }
-      if (extract_type == 2) {
+      if (!data.address) {
         this.site = data.sites[0];
+        this.type = "store";
       }
     }
   }

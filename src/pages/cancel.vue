@@ -98,7 +98,7 @@ export default {
     routerClickgoback() {
       this.$router.go(-1);
     },
-    routerClickdetails() {
+    routerClickdetails(goodsId) {
       this.$router.push({
         path: "/dist/details",
         query: { id: goodsId, lng: this.lng, lat: this.lat }
@@ -215,8 +215,9 @@ export default {
       height: rem(180);
       background-color: #fff;
       img {
-        width: rem(225);
-        height: rem(180);
+        width: rem(160);
+        height: rem(123);
+        margin: rem(23) rem(24) 0 rem(30);
       }
       .cancel-head-right {
         display: flex;
