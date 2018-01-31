@@ -172,6 +172,7 @@ export default {
 .bind-con {
   background-color: #fff;
   margin-top: rem(20);
+  // height: rem();
   label {
     position: absolute;
     font-size: rem(30);
@@ -200,7 +201,7 @@ export default {
     .mu-text-field-line {
       width: 100%;
       margin-left: rem(45);
-      // margin-top:rem(6);
+      margin-top:rem(61.5);
     }
     .mu-text-field-focus-line {
       display: none;

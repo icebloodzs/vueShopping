@@ -95,16 +95,7 @@ export default {
         let lat = this.$route.query.lat;
         let gaintype = this.$route.query.gaintype;
         let submitadd = this.$route.query.submitadd;
-        if (!id && lng && lat && gaintype) {
-          this.disabled = true;
-          setTimeout(() => {
-            that.$router.push({
-              path: "/dist/profile",
-              query: { fan_id: fan_id }
-            });
-          }, 1000);
-        }
-        if (id && lng && lat && gaintype) {
+        if (lng && lat && gaintype) {
           this.disabled = true;
           setTimeout(() => {
             that.$router.push({
@@ -115,8 +106,16 @@ export default {
                 lng: lng,
                 lat: lat,
                 gaintype: gaintype,
-                submitadd:submitadd
+                submitadd: submitadd
               }
+            });
+          }, 1000);
+        } else {
+          this.disabled = true;
+          setTimeout(() => {
+            that.$router.push({
+              path: "/dist/profile",
+              query: { fan_id: fan_id }
             });
           }, 1000);
         }
