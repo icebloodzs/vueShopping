@@ -2,10 +2,7 @@
   <div class="wrapper">
     <div class="pay">
       <div class="pay-head">
-        <strong>
-          <i class="iconfont" @click="routerClickgoback">&#xe600;</i>
-        </strong>
-        订单详情
+        <i class="iconfont" @click="routerClickgoback">&#xe600;</i>订单详情
       </div>
       <div class="pay-head-con" @click="routerClickdetails(items.goods_id)">
         <img :src="items.goods_thumbnail">
@@ -14,7 +11,7 @@
             <strong>{{items.goods_name}}</strong>
           </div>
           <div class="pay-head-down">
-            <div class="pay-head-down-left">总价:{{items.total}}</div>
+            <div class="pay-head-down-left">总价:￥{{items.total}}</div>
             <div class="pay-head-down-right">
               <i class="iconfont">&#xe62d;</i>
             </div>
@@ -57,6 +54,9 @@
               </a>
             </div>
           </div>
+          <div v-if="type === 'gain'" class="content-gain-info-title">
+            <strong>收货信息</strong>
+          </div>
           <div v-if="type === 'gain'" class="gain-info">
             <span>收货人：&nbsp;{{address.consignee_name}} &nbsp; {{address.mobile}}</span>
             <span>地&nbsp;&nbsp;&nbsp;址：&nbsp;{{address.detail_address}}</span>
@@ -95,7 +95,7 @@ export default {
       ticket: [],
       codeStyle: [],
       stateStyle: {},
-      state: "",
+      state: ""
     };
   },
   mounted() {
@@ -103,7 +103,7 @@ export default {
   },
   methods: {
     routerClickgoback() {
-       this.$router.push({
+      this.$router.push({
         path: "/dist/mycenter",
         query: { fan_id: 30 }
       });
@@ -169,7 +169,6 @@ export default {
       line-height: rem(90);
       text-align: center;
       color: #000;
-      font-weight: 600;
       border-bottom: 1px solid #e9e9e9;
       .iconfont {
         font-family: "iconfont";
@@ -282,10 +281,16 @@ export default {
       margin: rem(30) rem(25);
       padding: 0 rem(20);
       background-color: #fff;
+      .content-gain-info-title {
+        font-size: rem(30);
+        line-height: rem(88);
+        border-bottom: 1px solid #e9e9e9;
+      }
       .gain-info {
         display: flex;
         flex-direction: column;
         background-color: #fff;
+        color: #a1a1a1;
         span {
           padding-left: rem(20);
           font-size: rem(30);
@@ -353,7 +358,6 @@ export default {
       .content-pay-info {
         font-size: rem(30);
         text-align: left;
-
         .content-pay-info-title {
           line-height: rem(88);
           border-bottom: 1px solid #e9e9e9;

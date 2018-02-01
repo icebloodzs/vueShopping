@@ -2,8 +2,7 @@
   <div class="wrapper">
     <div class="profile">
       <div class="profile-head">
-        <strong>
-          <i class="iconfont" @click="routerClickgoback">&#xe600;</i>收获地址</strong>
+          <i class="iconfont" @click="routerClickgoback">&#xe600;</i>收获地址
       </div>
       <div class="profile-con">
         <div class="profile-list">
@@ -247,8 +246,9 @@ export default {
     .add-profile {
       position: fixed;
       width: 100%;
+      font-size: rem(30);
       line-height: rem(90);
-      background-color: rgb(202, 38, 38);
+      background-color: #29a1f7;
       bottom: 0;
       text-align: center;
       color: #fff;

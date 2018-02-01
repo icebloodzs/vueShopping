@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="loading" v-if="isloading">加载中. . .</div>
+    <div class="banner-img"></div>
     <img :src="item.thumbnail">
     <div class="focus">
       <i class="iconfont">&#xe826;</i>
@@ -406,10 +407,10 @@ export default {
       }
       .content-detail-con {
         height: 100%;
-        background-color: #fff;
+        // background-color: #fff;
         font-size: rem(30);
         line-height: 1.5;
-        padding-bottom: rem(100);
+        padding-bottom: rem(325);
         padding-right: rem(20);
       }
     }

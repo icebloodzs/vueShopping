@@ -261,7 +261,7 @@ export default {
     padding-top: rem(300);
     width: 100%;
     height: rem(1240);
-    background: #fff url(../assets/img/vn2l_fw658.png) no-repeat 50% 25% ;
+    background: #fff url(../assets/img/vn2l_fw658.png) no-repeat 50% 25%;
     background-size: rem(197) rem(287);
   }
   .iconfont {
@@ -293,15 +293,6 @@ export default {
     position: relative;
     margin-top: rem(6);
     margin-bottom: rem(16);
-    .banner-img{
-      position: absolute;
-      width: 100%;
-      top: 0;
-      height: rem(318);
-      background:-webkit-gradient(linear,left top,left bottom,
-       from(rgba(255,255,255,0)),
-       to(rgba(0,0,0,.5)));
-    }
     .time {
       position: absolute;
       font-size: rem(30);
@@ -408,6 +399,19 @@ export default {
 </style>
 <style lang="scss">
 @import "../style/mixin";
+.banner-img {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  height: rem(318);
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(rgba(255, 255, 255, 0)),
+    to(rgba(0, 0, 0, 0.5))
+  );
+}
 .tabs.mu-tabs {
   height: rem(90) !important;
   background-color: #fff !important;

@@ -66,7 +66,7 @@ export default {
       page: 1,
       loading: false,
       notenoughcolor: "#ccc",
-      isloading:false
+      isloading: false
     };
   },
   created() {},
@@ -96,7 +96,7 @@ export default {
       this.$router.push({ path: "/dist/more", query: { classId: classId } });
     },
     routerClickhome() {
-      this.$router.push({path:"/"});
+      this.$router.push({ path: "/" });
     },
     // 轮播图数据获取
     async getImgData() {
@@ -110,12 +110,12 @@ export default {
     },
     //首页商品数据获取
     async getGoodsData() {
-      this.isloading = true
+      this.isloading = true;
       const { data } = await this.api.get("goods_list", {
         order: "index"
       });
       this.goodsList = data.data;
-      this.isloading = false
+      this.isloading = false;
     },
     //更多商品数据获取
     async getMoreData() {
@@ -153,8 +153,6 @@ export default {
 @import "../style/mixin";
 .wrapper {
   position: relative;
-  background-color: #fbfcfe;
-  height: 100vh;
   .nomore {
     color: #666;
     text-align: center;
@@ -244,6 +242,7 @@ export default {
     left: 0;
   }
   .content {
+    padding-bottom: rem(150);
     .content-item {
       position: relative;
       height: rem(212);
@@ -328,22 +327,22 @@ export default {
 </style>
 <style lang="scss">
 @import "../style/mixin";
-.loading{
-    position: absolute;
-    width: rem(200);
-    height: rem(130);
-    background-color: rgba($color: #000000, $alpha: .6);
-    line-height: rem(130);
-    text-align: center;
-    font-size: rem(32);
-    top: 40%;
-    left:35%;
-    z-index: 2018;
-    color: #fff;
-    border-radius: rem(10);
-  }
+.loading {
+  position: absolute;
+  width: rem(200);
+  height: rem(130);
+  background-color: rgba($color: #000000, $alpha: 0.6);
+  line-height: rem(130);
+  text-align: center;
+  font-size: rem(32);
+  top: 40%;
+  left: 35%;
+  z-index: 2018;
+  color: #fff;
+  border-radius: rem(10);
+}
 .mu-infinite-scroll {
-  padding-bottom:0px!important;
+  padding-bottom: 0px !important;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   .mu-infinite-scroll-text {

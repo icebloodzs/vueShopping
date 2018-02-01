@@ -638,9 +638,9 @@ export default {
 <style lang="scss" scoped>
 @import "../style/mixin";
 @import "../assets/sass/_base.scss";
+
 .wrapper {
   @include wrapper;
-  // height: rem(100);
   .nomore {
     color: #666;
     text-align: center;
@@ -711,7 +711,7 @@ export default {
     }
   }
   .main {
-    // height: 83.5vh;
+    // padding-bottom:rem(100); 
     .hint {
       padding-top: rem(300);
       width: 100%;

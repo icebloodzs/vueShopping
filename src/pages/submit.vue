@@ -2,8 +2,7 @@
   <div class="wrapper">
     <div class="confirm">
       <div class="confirm-head">
-        <strong>
-          <i class="iconfont" @click="routerClickgoback">&#xe600;</i> 信息确认</strong>
+        <i class="iconfont" @click="routerClickgoback">&#xe600;</i> 信息确认
       </div>
       <mu-popup position="top" :overlay="false" popupClass="demo-popup-top" :open="topPopup">
         {{message}}
@@ -111,15 +110,14 @@ export default {
     routerClickgoback() {
       let submitadd = this.$route.query.submitadd;
       let id = this.$route.query.id;
-      if(submitadd){
-         this.$router.push({
-        path: "/dist/details",
-        query: { id: id ,submitadd:submitadd }
-      });
-      }else{
+      if (submitadd) {
+        this.$router.push({
+          path: "/dist/details",
+          query: { id: id, submitadd: submitadd }
+        });
+      } else {
         this.$router.go(-1);
       }
-      
     },
     bindPhone() {
       let fan_id = this.$route.query.fan_id;
@@ -184,7 +182,7 @@ export default {
           lat: lat,
           action: "addfirstprofile",
           gaintype: gaintype,
-          submitadd:'submitadd'
+          submitadd: "submitadd"
         }
       });
     },
@@ -251,8 +249,14 @@ export default {
           }
           this.addressid = that.address.id;
         }
-        if (this.address.detail_address&&this.address.detail_address.length>16) {
-          this.address.detail_address = `${this.address.detail_address.substring(0,15)}...`;
+        if (
+          this.address.detail_address &&
+          this.address.detail_address.length > 16
+        ) {
+          this.address.detail_address = `${this.address.detail_address.substring(
+            0,
+            15
+          )}...`;
         }
       }
     },
