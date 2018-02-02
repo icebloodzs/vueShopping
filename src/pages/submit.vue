@@ -89,13 +89,15 @@ export default {
       topPopup: false,
       order_id: [],
       addressid: [],
-      url: []
+      lng: [],
+      lat: [],
+      url: [],
+      gaintype:""
     };
   },
   mounted() {
     this.getGoodsData();
     this.getTelData();
-    this.addresstype();
   },
   watch: {
     topPopup(val) {
@@ -129,19 +131,8 @@ export default {
     closeBottomSheet() {
       this.bottomSheet = false;
     },
-    addresstype() {
-      let gaintype = this.$route.query.gaintype;
-      if (gaintype == 2) {
-        this.addressok = false;
-        this.addressno = false;
-      }
-      if (gaintype == 1) {
-        this.getAddressData();
-      }
-    },
     async openBottomSheet() {
-      let gaintype = this.$route.query.gaintype;
-      if (gaintype == 1) {
+      if (this.gaintype == 1) {
         if (this.alladdress.length == 0) {
           this.message = "您还没有填写收获地址呢";
           this.topPopup = true;
@@ -152,7 +143,7 @@ export default {
           this.bottomSheet = true;
         }
       }
-      if (gaintype == 2) {
+      if (this.gaintype == 2) {
         if (!this.tel) {
           this.message = "您还没有绑定手机号呢";
           this.topPopup = true;
@@ -168,7 +159,6 @@ export default {
     //   (this.isActive = false), (this.isActives = true);
     // },
     routerClickadd() {
-      let gaintype = this.$route.query.gaintype;
       let fan_id = this.$route.query.fan_id;
       let id = this.$route.query.id;
       let lng = this.$route.query.lng;
@@ -181,7 +171,7 @@ export default {
           lng: lng,
           lat: lat,
           action: "addfirstprofile",
-          gaintype: gaintype,
+          gaintype: this.gaintype,
           submitadd: "submitadd"
         }
       });
@@ -205,15 +195,23 @@ export default {
     },
     async getGoodsData() {
       let goods_id = this.$route.query.id;
-      let gaintype = this.$route.query.gaintype;
-      let lng = this.$route.query.lng;
-      let lat = this.$route.query.lat;
+      let _data = await this.wx.getLocation();
+      this.lng = _data.longitude;
+      this.lat = _data.latitude;
       const { data } = await this.api.get("goods_detail", {
         goods_id: goods_id,
-        lng: lng,
-        lat: lat
+        lng: this.lng,
+        lat: this.lat
       });
       this.goods = data;
+      this.gaintype = data.extract_type
+      if (this.gaintype == 2) {
+        this.addressok = false;
+        this.addressno = false;
+      }
+      if (this.gaintype == 1) {
+        this.getAddressData();
+      }
     },
     async getTelData() {
       let fan_id = this.$route.query.fan_id;
@@ -265,7 +263,6 @@ export default {
       let id = this.$route.query.id;
       let lng = this.$route.query.lng;
       let lat = this.$route.query.lat;
-      let gaintype = this.$route.query.gaintype;
       this.$router.push({
         path: "/dist/profile",
         query: {
@@ -273,7 +270,7 @@ export default {
           id: id,
           lng: lng,
           lat: lat,
-          gaintype: gaintype
+          gaintype: this.gaintype
         }
       });
     }

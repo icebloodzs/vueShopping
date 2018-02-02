@@ -16,9 +16,7 @@
         <mu-text-field class="address" v-model="address" multiLine :rows="3" :rowsMax="6" :errorText="addresswarn" @input="input" :maxLength="50" />
       </div>
       <div class="container">
-        <div @click="saveProfile" class="button">
-          保存
-        </div>
+        <mu-raised-button label="保存" backgroundColor='#1f80eb' @click="saveProfile" :disabled="this.disabled" class="button"/>
       </div>
     </div>
   </div>
@@ -37,7 +35,8 @@ export default {
       address: "",
       message: [],
       items:[],
-      defaultaddress:[]
+      defaultaddress:[],
+      disabled: false
     };
   },
   mounted(){
@@ -106,6 +105,7 @@ export default {
       } else if (this.address.length > 50) {
         this.addresswarn = "超过啦！！！！";
       } else {
+        this.disabled = true;
         this.editprofile();
         setTimeout(() => {
          this.$router.go(-1);
@@ -140,15 +140,12 @@ export default {
       }
     }
     .button {
+      display: block;
       width: rem(700);
       height: rem(70);
-      background-color: #1f80eb;
       font-size: rem(30);
-      text-align: center;
-      color: #fff;
       line-height: rem(70);
       margin: rem(60) auto;
-      border-radius: rem(5);
     }
   }
 }

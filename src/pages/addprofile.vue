@@ -16,9 +16,7 @@
         <mu-text-field class="address" v-model="address" multiLine :rows="3" :rowsMax="6" :errorText="addresswarn" @input="input" :maxLength="50" />
       </div>
       <div class="container">
-        <button @click="saveProfile" class="button" :disabled="disabled">
-          保存
-        </button>
+        <mu-raised-button label="保存" backgroundColor='#1f80eb' @click="saveProfile" :disabled="this.disabled" class="button"/>
       </div>
     </div>
   </div>
@@ -153,13 +151,13 @@ export default {
       display: block;
       width: rem(700);
       height: rem(70);
-      background-color: #1f80eb;
+      // background-color: #1f80eb;
       font-size: rem(30);
-      text-align: center;
-      color: #fff;
+      // text-align: center;
+      // color: #fff;
       line-height: rem(70);
       margin: rem(60) auto;
-      border-radius: rem(5);
+      // border-radius: rem(5);
     }
   }
 }

@@ -15,9 +15,7 @@
                 <button :disabled="disabled" @click="sendCode" class="btns">{{btntxt}}</button>
             </div>
             <div class="container">
-                <div @click="saveCode" class="button">
-                    保存
-                </div>
+              <mu-raised-button label="保存" backgroundColor='#1f80eb' :disabled="this.disabled2" @click="saveCode" class="button"/>
             </div>
              <!-- <mu-toast v-if="toast" :message="this.message" @close="hideToast"/> -->
         </div>
@@ -34,7 +32,8 @@ export default {
       phone: "",
       code: "",
       items: [],
-      message: []
+      message: [],
+      disabled2: false
     };
   },
   methods: {
@@ -85,6 +84,7 @@ export default {
       if (this.code == "") {
         alert("请输入验证码");
       } else {
+        this.disabled2 = true;
         const { data } = await this.api.get("modify_bind_mobile", {
           'fan_id': fan_id,
           'mobile': mobile,
@@ -154,15 +154,12 @@ export default {
       }
     }
     .button {
+      display: block;
       width: rem(700);
       height: rem(70);
-      background-color: #1f80eb;
       font-size: rem(30);
-      text-align: center;
-      color: #fff;
       line-height: rem(70);
       margin: rem(60) auto;
-      border-radius: rem(5);
     }
   }
 }
