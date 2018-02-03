@@ -12,6 +12,11 @@ import util from './config/util'
 import {api} from 'h5sdk'
 import {wx} from 'h5sdk'
 
+if (process.env.NODE_ENV === 'production') {
+  // eslint-disable-next-line no-undef,camelcase
+  __webpack_public_path__ = Window.AppConfig.assetsPath + '/'
+}
+
 wx.setConfig(Window.AppConfig.wxJsConfig);
 
 Vue.prototype.api= api;
@@ -22,6 +27,7 @@ Vue.use(MuseUI)
 // Vue.config.productionTip = false
 
 Object.keys(filters).forEach(k => Vue.filter(k, filters[k])) //注册过滤器
+
 Vue.filter("currency", function(value) {   //全局方法 Vue.filter() 注册一个自定义过滤器,必须放在Vue实例化前面
   return Number(value).toFixed(2);
 });
