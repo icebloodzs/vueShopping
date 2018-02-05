@@ -104,8 +104,7 @@ export default {
   methods: {
     routerClickgoback() {
       this.$router.push({
-        path: "/dist/mycenter",
-        query: { fan_id: 30 }
+        path: "/dist/mycenter"
       });
     },
     async routerClicksubmit(order_id) {

@@ -6,7 +6,7 @@
       <img :src="user.headimgurl">
       <div class="header-middle">
         <span>{{user.nickname}}</span>
-        <router-link :to="{path:'/dist/profile',query:{fan_id:30,center:'center'}}" tag="div" class="header-profile">
+        <router-link :to="{path:'/dist/profile',query:{center:'center'}}" tag="div" class="header-profile">
           收货地址 &nbsp;
           <i class="iconfont">&#xe62d;</i>
         </router-link>
@@ -351,21 +351,16 @@ export default {
       window.location.href = `http://m.kuaidi100.com/index_all.html?postid=${orderId}#result`;
     },
     async getUserData() {
-      let fan_id = this.$route.query.fan_id;
-      const { data } = await this.api.get("user_info", {
-        fan_id: fan_id
-      });
+      const { data } = await this.api.get("user_info");
       this.user = data.data[0];
     },
     //全部、待付款、未核销、已完成数据获取
     async getCenterData(val) {
-      let fan_id = this.$route.query.fan_id;
       this.isloading = true;
       //待付款、未核销
       if (val === "1" || val === "2") {
         this.items = []
         const { data } = await this.api.get("order_list", {
-          fan_id: fan_id,
           status: val
         });
         this.items = data.data;
@@ -374,7 +369,6 @@ export default {
       // 已完成
       if (val == "3") {
         const { data } = await this.api.get("order_list", {
-          fan_id: fan_id,
           status: val
         });
         this.itemss = data.data;
@@ -404,9 +398,7 @@ export default {
       }
       if (val == "all") {
         //全部订单获取
-        const { data } = await this.api.get("order_list", {
-          fan_id: fan_id
-        });
+        const { data } = await this.api.get("order_list");
         this.allitems = data.data;
         this.items1 = [];
         this.items2 = [];
@@ -452,7 +444,6 @@ export default {
     },
     //全部更多订单数据获取
     async getMoreData() {
-      let fan_id = this.$route.query.fan_id;
       let arr = [];
       let arr1 = [];
       let arr2 = [];
@@ -462,7 +453,6 @@ export default {
       let arr6 = [];
       let that = this;
       const { data } = await this.api.get("order_list", {
-        fan_id: fan_id,
         page: this.page
       });
       arr = data.data;
@@ -519,10 +509,8 @@ export default {
     //待付款更多订单数据获取
     async getMorePayData() {
       let that = this;
-      let fan_id = this.$route.query.fan_id;
       let arr = [];
       const { data } = await this.api.get("order_list", {
-        fan_id: fan_id,
         status: 1,
         page: this.page2
       });
@@ -549,10 +537,8 @@ export default {
     //未核销更多订单数据获取
     async getMoreCancelData() {
       let that = this;
-      let fan_id = this.$route.query.fan_id;
       let arr = [];
       const { data } = await this.api.get("order_list", {
-        fan_id: fan_id,
         status: 2,
         page: this.page3
       });
@@ -579,14 +565,12 @@ export default {
     //已完成更多订单数据获取
     async getMoreDoneData() {
       let that = this;
-      let fan_id = this.$route.query.fan_id;
       let arr = [];
       let arr3 = [];
       let arr4 = [];
       let arr5 = [];
       let arr6 = [];
       const { data } = await this.api.get("order_list", {
-        fan_id: fan_id,
         status: 3,
         page: this.page4
       });

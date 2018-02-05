@@ -43,9 +43,7 @@ export default {
     //请求验证码接口
     async sendCaptcha() {
       let mobile = this.phone;
-      let fan_id = this.$route.query.fan_id;
       const { data } = await this.api.get("send_captcha", {
-        'fan_id': fan_id,
         'mobile': mobile
       });
       this.items = data;
@@ -80,13 +78,11 @@ export default {
     async saveCode() {
       let mobile = this.phone;
       let code = this.code;
-      let fan_id = this.$route.query.fan_id;
       if (this.code == "") {
         alert("请输入验证码");
       } else {
         this.disabled2 = true;
         const { data } = await this.api.get("modify_bind_mobile", {
-          'fan_id': fan_id,
           'mobile': mobile,
           'captcha':code
         });

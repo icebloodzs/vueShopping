@@ -61,7 +61,6 @@ export default {
   methods: {
     routerClickgoback() {
       let submitadd = this.$route.query.submitadd;
-      let fan_id = this.$route.query.fan_id;
       let id = this.$route.query.id;
       let lng = this.$route.query.lng;
       let lat = this.$route.query.lat;
@@ -71,7 +70,6 @@ export default {
         this.$router.push({
           path: "/dist/submit",
           query: {
-            fan_id: 30,
             id: id,
             lng: lng,
             lat: lat,
@@ -81,8 +79,7 @@ export default {
         });
       }else if(center) {
         this.$router.push({
-        path: "/dist/mycenter",
-        query: { fan_id: fan_id }
+        path: "/dist/mycenter"
       });
       }else {
         this.$router.go(-1);
@@ -92,33 +89,28 @@ export default {
       let id = this.$route.query.id;
       let lng = this.$route.query.lng;
       let lat = this.$route.query.lat;
-      let fan_id = this.$route.query.fan_id;
       let gaintype = this.$route.query.gaintype;
       let center = this.$route.query.center;
       this.$router.push({
         path: "/dist/addprofile",
-        query: { fan_id: 30, id: id, lng: lng, lat: lat, gaintype: gaintype,center:center }
+        query: { id: id, lng: lng, lat: lat, gaintype: gaintype,center:center }
       });
     },
     edit(profile_id) {
       let id = profile_id;
       this.$router.push({
         path: "/dist/editprofile",
-        query: { fan_id: 30, id: id }
+        query: {  id: id }
       });
     },
     async getData() {
-      let fan_id = this.$route.query.fan_id;
       const { data } = await this.api.get("shipping_address_list", {
-        fan_id: fan_id
       });
       this.items = data.data;
     },
     async del(profile_id) {
-      let fan_id = this.$route.query.fan_id;
       let id = profile_id;
       const { data } = await this.api.get("shipping_address_del", {
-        fan_id: fan_id,
         id: id
       });
       this.message = data.message;
@@ -132,7 +124,6 @@ export default {
       this.dialog = false;
     },
     select(addtressId) {
-      let fan_id = this.$route.query.fan_id;
       let id = this.$route.query.id;
       let lng = this.$route.query.lng;
       let lat = this.$route.query.lat;
@@ -143,7 +134,6 @@ export default {
           this.$router.push({
             path: "/dist/submit",
             query: {
-              fan_id: 30,
               id: id,
               lng: lng,
               lat: lat,
@@ -160,7 +150,6 @@ export default {
           this.$router.push({
             path: "/dist/submit",
             query: {
-              fan_id: 30,
               id: id,
               lng: lng,
               lat: lat,

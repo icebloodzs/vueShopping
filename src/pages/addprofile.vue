@@ -41,12 +41,10 @@ export default {
       this.$router.go(-1);
     },
     async addprofile() {
-      let fan_id = this.$route.query.fan_id;
       let consignee_name = this.name;
       let detail_address = this.address;
       let mobile = this.phone;
       const { data } = await this.api.get("shipping_address_add", {
-        fan_id: fan_id,
         consignee_name: consignee_name,
         detail_address: detail_address,
         mobile: mobile
@@ -70,9 +68,7 @@ export default {
     },
     saveProfile() {
       let that = this;
-      let fan_id = this.$route.query.fan_id;
       let reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
-      let mobile = this.$route.query.fan_id;
       let action = this.$route.query.action;
       if (this.name == "") {
         this.namewarn = "请填写收货人姓名 ~";
@@ -85,7 +81,6 @@ export default {
       } else if (this.address.length > 50) {
         this.addresswarn = "超过啦！！！！";
       } else {
-        let fan_id = this.$route.query.fan_id;
         let id = this.$route.query.id;
         let lng = this.$route.query.lng;
         let lat = this.$route.query.lat;
@@ -99,7 +94,6 @@ export default {
             that.$router.push({
               path: "/dist/profile",
               query: {
-                fan_id: 30,
                 id: id,
                 lng: lng,
                 lat: lat,
@@ -114,7 +108,7 @@ export default {
           setTimeout(() => {
             that.$router.push({
               path: "/dist/profile",
-              query: { fan_id: fan_id, center:center }
+              query: { center:center }
             });
           }, 1000);
         }

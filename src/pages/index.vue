@@ -57,7 +57,6 @@ export default {
       items: [],
       classify: [],
       goodsList: [],
-      fan_id: 30,
       config: [],
       total: [],
       total_pages: [],
@@ -88,8 +87,7 @@ export default {
     },
     routerClickcenter() {
       this.$router.push({
-        path: "/dist/mycenter",
-        query: { fan_id: this.fan_id }
+        path: "/dist/mycenter"
       });
     },
     clickClassify(classId) {

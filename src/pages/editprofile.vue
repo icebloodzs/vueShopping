@@ -48,9 +48,7 @@ export default {
     },
     async getData() {
       let id = this.$route.query.id;
-      let fan_id = this.$route.query.fan_id;
       const { data } = await this.api.get("shipping_address_list", {
-        fan_id: fan_id
       });
       this.items = data.data;
      for(let i = 0, len = this.items.length; i < len; i++){
@@ -61,13 +59,11 @@ export default {
     this.address=this.defaultaddress.detail_address
     },
     async editprofile() {
-      let fan_id = this.$route.query.fan_id;
       let id = this.$route.query.id;
       let consignee_name = this.name;
       let detail_address = this.address;
       let mobile = this.phone;
       const { data } = await this.api.get("shipping_address_edit", {
-        'fan_id': fan_id,
         'consignee_name': consignee_name,
         'detail_address': detail_address,
         'mobile': mobile,
@@ -93,7 +89,6 @@ export default {
     saveProfile() {
       let that = this;
       var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
-      let fan_id = this.$route.query.fan_id;
       if (this.name == "") {
         this.namewarn = "请填写收货人姓名 ~";
       } else if (this.phone == "") {

@@ -105,11 +105,7 @@ export default {
       this.$router.push({
         path: "/dist/submit",
         query: {
-          // fan_id: 30,
           id: id,
-          // lng: this.lng,
-          // lat: this.lat,
-          // gaintype: this.gaintype
         }
       });
     },

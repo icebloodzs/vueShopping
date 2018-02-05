@@ -122,8 +122,7 @@ export default {
       }
     },
     bindPhone() {
-      let fan_id = this.$route.query.fan_id;
-      this.$router.push({ path: "/dist/bindphone", query: { fan_id: fan_id } });
+      this.$router.push({ path: "/dist/bindphone" });
     },
     routerClickminus() {
       if (this.counter > 1) this.counter -= 1;
@@ -159,14 +158,12 @@ export default {
     //   (this.isActive = false), (this.isActives = true);
     // },
     routerClickadd() {
-      let fan_id = this.$route.query.fan_id;
       let id = this.$route.query.id;
       let lng = this.$route.query.lng;
       let lat = this.$route.query.lat;
       this.$router.push({
         path: "/dist/addprofile",
         query: {
-          fan_id: fan_id,
           id: id,
           lng: lng,
           lat: lat,
@@ -177,12 +174,10 @@ export default {
       });
     },
     async payNow() {
-      let fan_id = this.$route.query.fan_id;
       let goods_id = this.$route.query.id;
       let amount = this.counter;
       let _data = await this.api.get("create_order", {
         goods_id: goods_id,
-        fan_id: fan_id,
         amount: amount,
         address_id: this.addressid
       });
@@ -214,21 +209,15 @@ export default {
       }
     },
     async getTelData() {
-      let fan_id = this.$route.query.fan_id;
-      const { data } = await this.api.get("get_bind_mobile", {
-        fan_id: fan_id
-      });
+      const { data } = await this.api.get("get_bind_mobile");
       if (data.data) {
         this.tel = data.data.mobile;
       }
     },
     async getAddressData() {
       let that = this;
-      let fan_id = this.$route.query.fan_id;
       let addtressid = this.$route.query.addtressid;
-      const { data } = await this.api.get("shipping_address_list", {
-        fan_id: fan_id
-      });
+      const { data } = await this.api.get("shipping_address_list");
       this.alladdress = data.data;
       if (this.alladdress.length == 0) {
         this.addressok = false;
@@ -259,14 +248,12 @@ export default {
       }
     },
     routerClickselect() {
-      let fan_id = this.$route.query.fan_id;
       let id = this.$route.query.id;
       let lng = this.$route.query.lng;
       let lat = this.$route.query.lat;
       this.$router.push({
         path: "/dist/profile",
         query: {
-          fan_id: fan_id,
           id: id,
           lng: lng,
           lat: lat,
